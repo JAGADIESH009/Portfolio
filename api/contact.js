@@ -32,12 +32,14 @@ module.exports = async function handler(req, res) {
     const SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
     const TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
     const PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
+    const PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY; // Optional, bypasses non-browser restriction if provided
 
     if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
       console.error('EmailJS credentials are not fully configured in environment variables.');
-      return res.status(500).json({ success: false, error: 'Server configuration error' });
+      return res.status(500).json({ success: false, error: 'Server configuration error: Missing EmailJS environment variables.' });
     }
 
+    // Construct the correct EmailJS REST API payload
     const payload = {
       service_id: SERVICE_ID,
       template_id: TEMPLATE_ID,
@@ -52,6 +54,11 @@ module.exports = async function handler(req, res) {
       }
     };
 
+    // If a private key is provided, it acts as the access token for non-browser environments
+    if (PRIVATE_KEY) {
+      payload.accessToken = PRIVATE_KEY;
+    }
+
     const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
       method: 'POST',
       headers: {
@@ -64,8 +71,15 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ success: true });
     } else {
       const errorText = await response.text();
-      console.error('EmailJS error:', errorText);
-      return res.status(response.status).json({ success: false, error: errorText || 'Unable to send your message right now. Please try again.' });
+      console.error('EmailJS API Error:', errorText);
+      
+      // Provide a clear error message that points to the exact dashboard setting required
+      let errorMessage = 'Unable to send your message right now. Please try again.';
+      if (response.status === 403 || errorText.includes('non-browser')) {
+         errorMessage = 'EmailJS Security Error: API access from non-browser environments is currently disabled. Please enable "Allow API requests from non-browser applications" in https://dashboard.emailjs.com/admin/account/security';
+      }
+      
+      return res.status(response.status).json({ success: false, error: errorMessage });
     }
   } catch (error) {
     console.error('API endpoint error:', error);

@@ -120,12 +120,16 @@ async function handleFormSubmit(e) {
   } catch (err) {
     console.error('Email sending failed:', err);
     
-    // Show inline error on the submit button area or form level (reusing the messageInput error as a global error)
+    // Show inline error on the submit button area or form level
     if (errorOverlay) {
+      const errorMsgElem = errorOverlay.querySelector('p');
+      if (errorMsgElem) {
+        errorMsgElem.textContent = err.message || 'Something went wrong. Please try again.';
+      }
       errorOverlay.classList.add('active');
       setTimeout(() => {
         if (errorOverlay) errorOverlay.classList.remove('active');
-      }, 5000);
+      }, 8000); // Longer timeout to allow reading technical instructions if needed
     } else {
       showError(messageInput, err.message || 'Unable to send your message right now. Please try again.');
     }
