@@ -65,7 +65,7 @@ module.exports = async function handler(req, res) {
     } else {
       const errorText = await response.text();
       console.error('EmailJS error:', errorText);
-      return res.status(response.status).json({ success: false, error: 'Unable to send your message right now. Please try again.' });
+      return res.status(response.status).json({ success: false, error: errorText || 'Unable to send your message right now. Please try again.' });
     }
   } catch (error) {
     console.error('API endpoint error:', error);

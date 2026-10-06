@@ -14,7 +14,7 @@ async function handleFormSubmit(e) {
   if (isSubmitting) return;
 
   const form = document.getElementById('portfolio-form');
-  const submitBtn = document.querySelector('.btn-submit');
+  const submitBtn = document.querySelector('.editorial-submit-btn');
   const successOverlay = document.getElementById('form-success');
   const errorOverlay = document.getElementById('form-error');
   
@@ -98,10 +98,17 @@ async function handleFormSubmit(e) {
         spawnSuccessParticles(submitBtn);
         form.reset();
         
-        // Auto-hide success overlay
+        // Show SENT on button
+        submitBtn.innerHTML = '<span class="btn-text">SENT!</span>';
+        submitBtn.classList.remove('loading');
+        
+        // Auto-hide success overlay and restore button
         setTimeout(() => {
           if (successOverlay) successOverlay.classList.remove('active');
-        }, 5000);
+          isSubmitting = false;
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }, 3000);
       } else {
         throw new Error(data.error || 'Unable to send your message right now. Please try again.');
       }
@@ -122,8 +129,8 @@ async function handleFormSubmit(e) {
     } else {
       showError(messageInput, err.message || 'Unable to send your message right now. Please try again.');
     }
-  } finally {
-    // Reset submission state
+    
+    // Reset submission state immediately on error
     isSubmitting = false;
     submitBtn.classList.remove('loading');
     submitBtn.disabled = false;
