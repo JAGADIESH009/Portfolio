@@ -89,11 +89,36 @@ class WorksWheel {
     this.stageEl.appendChild(this.wheelEl);
     this.container.appendChild(this.stageEl);
 
-    // active title
+    // Titles container
     this.titleEl = document.createElement('div');
     this.titleEl.className = 'works-wheel-active-title';
-    this.titleEl.style.opacity = "0";
+    this.titleEl.style.opacity = "0"; // Intro fade in
     
+    // Create individual title elements for cinematic transitions
+    this.titleRefs = [];
+    this.items.forEach((item, i) => {
+      const t = document.createElement('div');
+      t.className = 'works-wheel-title-item';
+      t.innerHTML = `
+        <div class="active-item-title">${item.title}</div>
+        <div class="active-item-meta">
+          <span class="active-type">${item.type}</span>
+          ${item.status ? `<span class="active-status ${item.statusClass || ''}">${item.status}</span>` : ''}
+        </div>
+      `;
+      t.style.position = 'absolute';
+      t.style.left = '0';
+      t.style.top = '0';
+      t.style.width = '100%';
+      t.style.display = 'flex';
+      t.style.flexDirection = 'column';
+      t.style.gap = '1.5vh';
+      t.style.opacity = '0';
+      t.style.willChange = 'transform, opacity';
+      this.titleEl.appendChild(t);
+      this.titleRefs.push(t);
+    });
+
     this.container.appendChild(this.titleEl);
 
     // index
@@ -122,9 +147,9 @@ class WorksWheel {
     const isTablet = w >= 768 && w < 1024;
     
     let cardW;
-    if (isMobile) cardW = clamp(w * 0.7, 260, 340);
-    else if (isTablet) cardW = clamp(w * 0.5, 300, 400);
-    else cardW = clamp(w * 0.35, 380, 500);
+    if (isMobile) cardW = clamp(w * 0.8, 280, 360);
+    else if (isTablet) cardW = clamp(w * 0.6, 420, 520);
+    else cardW = clamp(w * 0.45, 520, 650);
     
     const cardH = cardW / CARD_RATIO;
     const ringR = isMobile ? clamp(h * 0.25, 150, 180) : clamp(h * 0.3, 250, 300); // approx 500-600px diameter
@@ -174,56 +199,72 @@ class WorksWheel {
     for (let i = 0; i < this.count; i++) {
       const d = i - pos;
       
+      // Transform project cards
       const card = this.cardRefs[i];
       if (card) {
         let opacity = 0;
-        let translateX = 0;
         let translateY = 0;
         let scale = 1;
         let rotate = 0;
         
-        if (d > 1.2 || d < -1.2) {
+        if (d > 1.8 || d < -1.8) {
           opacity = 0;
           card.style.pointerEvents = 'none';
         } else {
           // Fade smoothly
-          opacity = 1 - Math.abs(d);
+          opacity = 1 - (Math.abs(d) * 0.55);
+          if (opacity < 0) opacity = 0;
           
-          // Curved Arc Math
-          const R = isMobile ? w * 1.5 : w * 0.6; // Radius of the invisible circle
-          const maxAngle = Math.PI / 4; // 45 degrees max swing
-          const angle = d * maxAngle;
+          // Vertical Cinematic Math
+          const cardH = this.metrics.cardH || (w * 0.5);
+          const gap = cardH * 0.85 + 40; // Next card sits below this gap
           
-          // Arc offset
-          const arcX = R * (1 - Math.cos(angle)); // Bulge out to the right
-          const arcY = R * Math.sin(angle);       // Move vertically
+          translateY = d * gap;
           
-          // Base shift for active project to make room for title on desktop
-          const shiftX = isMobile ? 0 : w * 0.12;
+          // Scale down smoothly as they move away from center
+          scale = 1 - Math.abs(d) * 0.12;
           
-          translateX = shiftX + arcX;
-          translateY = arcY;
-          
-          // Scale down smoothly as they move away
-          scale = 1 - Math.abs(d) * 0.15;
-          // Rotate slightly to match the curve
-          rotate = d * 18; 
+          // Slight perspective rotation
+          rotate = d * -5; 
 
           card.style.pointerEvents = Math.abs(d) < 0.1 ? 'auto' : 'none';
         }
 
-        card.style.transform = `translateX(${translateX}px) translateY(${translateY}px) scale(${scale}) rotateZ(${rotate}deg)`;
+        const shiftX = isMobile ? 0 : w * 0.12;
+        card.style.transform = `translateX(${shiftX}px) translateY(${translateY}px) scale(${scale}) rotateZ(${rotate}deg)`;
         card.style.opacity = String(opacity);
         card.style.zIndex = String(Math.round(100 - Math.abs(d) * 10));
       }
+
+      // Transform titles
+      const titleNode = this.titleRefs[i];
+      if (titleNode) {
+        if (d > 1 || d < -1) {
+          titleNode.style.opacity = '0';
+          titleNode.style.pointerEvents = 'none';
+        } else {
+          // Crossfade opacity
+          titleNode.style.opacity = String(1 - Math.abs(d));
+          // Move vertically slightly for parallax effect
+          titleNode.style.transform = `translateY(${d * 60}px) scale(${1 - Math.abs(d)*0.05})`;
+        }
+      }
     }
 
-    // Title opacity: fade in right after intro (together with first project)
-    let titleOpacity = 0;
+    // Title container and wheel opacity/entry: fade in right after intro
+    let entryProgress = 0;
     if (pos > -1) {
-      titleOpacity = Math.min((pos + 1), 1);
+      entryProgress = Math.min((pos + 1), 1);
     }
-    this.titleEl.style.opacity = String(titleOpacity);
+    
+    // Shift the entire wheel down when entering so it physically comes from below
+    // rather than fading in awkwardly.
+    const entryOffset = (1 - entryProgress) * (this.stage.h || 500);
+    this.wheelEl.style.transform = `translateY(${entryOffset}px)`;
+    this.wheelEl.style.opacity = String(entryProgress);
+    
+    this.titleEl.style.opacity = String(entryProgress);
+    this.titleEl.style.transform = `translateY(calc(-50% + ${entryOffset * 0.5}px))`; // preserve center alignment
     
     const near = clamp(Math.round(pos), 0, this.last);
     if (this.active !== near || this.firstRun) {
@@ -235,15 +276,7 @@ class WorksWheel {
 
   updateActiveItem() {
     const item = this.items[this.active];
-    if (item) {
-      this.titleEl.innerHTML = `
-        <div class="active-item-title">${item.title}</div>
-        <div class="active-item-meta">
-          <span class="active-type">${item.type}</span>
-          ${item.status ? `<span class="active-status ${item.statusClass || ''}">${item.status}</span>` : ''}
-        </div>
-      `;
-    }
+    if (!item) return;
     
     const btns = this.indexEl.querySelectorAll('button');
     btns.forEach((btn, i) => {
