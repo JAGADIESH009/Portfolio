@@ -12,15 +12,18 @@
 .motion-footer {
   position: relative;
   width: 100%;
+  height: 100svh;
   min-height: 100svh;
+  max-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   background-color: #0B0B0B;
   color: #F1EBDD;
-  padding-top: 8rem;
-  padding-bottom: 4rem;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  overflow: hidden;
 }
 
 /* Thin decorative editorial line */
@@ -105,7 +108,7 @@
   left: 0;
   width: 100%;
   overflow: hidden;
-  padding: 1.5rem 0;
+  padding: 0.75rem 0; /* Reduced to make ticker height ~40-50px */
   border-bottom: 1px solid rgba(241, 235, 221, 0.05);
   background: rgba(11, 11, 11, 0.5);
   backdrop-filter: blur(10px);
@@ -121,7 +124,7 @@
 
 .ticker-item {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.75rem; /* Reduced */
   font-weight: 600;
   letter-spacing: 0.2em;
   color: #CFC8BA;
@@ -162,11 +165,11 @@
 
 .contact-heading {
   font-family: 'Anton', sans-serif;
-  font-size: clamp(3.5rem, 6vw, 6rem);
+  font-size: clamp(3rem, 6vw, 6rem);
   line-height: 1;
   text-transform: uppercase;
   color: #F1EBDD;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.5rem 0; /* Reduced */
   /* Cinematic glow */
   background: linear-gradient(180deg, #F1EBDD 0%, rgba(241, 235, 221, 0.7) 100%);
   -webkit-background-clip: text;
@@ -176,28 +179,28 @@
 
 .contact-subheading {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  font-size: clamp(1rem, 1.2vw, 1.5rem); /* Reduced */
   font-weight: 600;
   letter-spacing: 0.1em;
   color: #CFC8BA;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem; /* Reduced */
   text-transform: uppercase;
 }
 
 .contact-copy {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem; /* Reduced */
   color: #77736B;
   max-width: 80%;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* Glass Card */
 .glass-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(241, 235, 221, 0.12);
-  border-radius: 24px;
-  padding: 2.5rem; /* Slightly reduced padding to save vertical space */
+  border-radius: 20px;
+  padding: 2rem; /* Reduced to ~32px */
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
@@ -211,7 +214,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   color: #F1EBDD;
-  margin-bottom: 1.5rem; /* Reduced from 2rem */
+  margin-bottom: 1.2rem; /* Reduced */
   text-transform: uppercase;
 }
 
@@ -219,7 +222,7 @@
 .custom-form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem; /* Reduced from 1.5rem to save vertical space */
+  gap: 0.8rem; /* Reduced to save vertical space */
 }
 
 .form-group {
@@ -230,14 +233,14 @@
 
 .form-group label {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.6rem; /* Slightly reduced */
   font-weight: 700;
   letter-spacing: 0.1em;
   color: #CFC8BA;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem; /* Reduced */
   text-transform: uppercase;
   display: flex;
-  flex-direction: column; /* Stack label and optional text */
+  flex-direction: column;
   align-items: flex-start;
 }
 
@@ -257,8 +260,8 @@
   border-bottom: 1px solid rgba(241, 235, 221, 0.15);
   color: #F1EBDD;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1rem;
-  padding: 0.5rem 0;
+  font-size: 0.9rem; /* Reduced */
+  padding: 0.4rem 0; /* Reduced */
   border-radius: 0;
   outline: none;
   transition: border-color 0.3s ease;
@@ -266,7 +269,7 @@
 
 .form-group textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 90px; /* Reduced */
 }
 
 .form-group input:focus,
@@ -319,74 +322,32 @@
   cursor: wait;
 }
 
-/* Info Footer */
-.contact-footer-info {
+/* Contact Icons (Replaces old footer info) */
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
   width: 100%;
-  margin-top: 6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-top: 1px solid rgba(241, 235, 221, 0.08);
-  padding-top: 2rem;
-  gap: 2rem;
-  will-change: transform, opacity;
 }
 
-.info-links {
-  display: flex;
-  gap: 3rem;
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.info-label {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+.contact-icon-link {
   color: #77736B;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.info-val {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
-  color: #CFC8BA;
-  text-decoration: none;
-  transition: color 0.3s ease;
+.contact-icon-link svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
 }
 
-.info-val:hover {
+.contact-icon-link:hover {
   color: #F1EBDD;
-}
-
-.info-why {
-  max-width: 300px;
-  text-align: right;
-}
-.info-why p {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.85rem;
-  color: #CFC8BA;
-  line-height: 1.5;
-  margin: 0.5rem 0 0 0;
-}
-
-.motion-footer-copy {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.75rem;
-  color: #77736B;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  z-index: 10;
+  transform: translateY(-2px) scale(1.05);
 }
 
 /* Overlays */
@@ -425,6 +386,11 @@
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
+  .motion-footer {
+    height: auto;
+    max-height: none;
+    min-height: 100svh;
+  }
   .contact-page-content {
     padding: 2rem 1.5rem 6rem;
   }
@@ -438,16 +404,7 @@
   .glass-card {
     padding: 2rem 1.5rem;
   }
-  .contact-footer-info {
-    flex-direction: column;
-    gap: 2rem;
-    margin-top: 4rem;
-  }
-  .info-links {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .info-why {
-    text-align: left;
+  .contact-icons {
+    margin-top: 2rem;
   }
 }

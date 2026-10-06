@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const wrapper = document.getElementById("motion-footer-wrapper");
   const leftContent = document.querySelector(".contact-left");
   const rightContent = document.querySelector(".contact-right");
-  const footerInfo = document.querySelector(".contact-footer-info");
+  const contactIcons = document.querySelector(".contact-icons");
 
   const contactContent = document.getElementById("contact-content");
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Staggered Content Reveal
   gsap.fromTo(
-    [leftContent, rightContent, footerInfo],
+    [leftContent, rightContent, contactIcons],
     { y: 60, opacity: 0 },
     {
       y: 0,
