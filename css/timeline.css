@@ -8,7 +8,6 @@
   background-color: var(--bg-primary, #0B0B0B);
   color: var(--text-primary, #F1EBDD);
   padding: 0 !important;
-  overflow-x: hidden;
 }
 
 /* ==========================================================================

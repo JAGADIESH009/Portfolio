@@ -7,9 +7,16 @@ function initTimeline() {
   const isMobile = window.innerWidth < 768;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const items = document.querySelectorAll('.journey-item');
-  const lineFill = document.getElementById('journey-line');
-  const slider = document.getElementById('journey-slider');
+  const items = section.querySelectorAll('.journey-item');
+  const lineFill = section.querySelector('#journey-line') || section.querySelector('.journey-line');
+  const slider = section.querySelector('#journey-slider') || section.querySelector('.journey-slider');
+
+  // Kill old triggers specific to journey before re-init to prevent duplication on resize/reload
+  ScrollTrigger.getAll().forEach(t => {
+    if (t.trigger && (t.trigger === section || section.contains(t.trigger))) {
+      t.kill();
+    }
+  });
 
   if (isMobile || reducedMotion) {
     // Mobile or Reduced Motion: Vertical scroll reveals
