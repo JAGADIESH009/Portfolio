@@ -52,27 +52,24 @@ document.addEventListener("DOMContentLoaded", () => {
     let progress = -rect.top / totalScroll;
     progress = Math.max(0, Math.min(progress, 1));
 
-    // Phase 1 (0 to 0.25): Intro fades out, ring forms (target 0 to 1)
-    if (progress <= 0.25) {
-      const p1 = progress / 0.25; // 0 to 1
-      if (intro) {
-        intro.style.opacity = 1 - p1;
-        intro.style.transform = `scale(${1 - p1 * 0.05}) translateY(${-p1 * 40}px)`;
-      }
-      wheelInstance.setTarget(p1); 
-    } else if (progress <= 0.45) {
-      if (intro) intro.style.opacity = 0;
-      
-      // Phase 2 (0.25 to 0.45): Ring transitions to Drum (target 1 to 2)
-      const p2 = (progress - 0.25) / 0.20; // 0 to 1
-      wheelInstance.setTarget(1 + p2);
-    } else {
-      if (intro) intro.style.opacity = 0;
-
-      // Phase 3 (0.45 to 1.0): Drum pos goes 0 to last (target 2 to 2 + last)
-      const p3 = (progress - 0.45) / 0.55;
-      wheelInstance.setTarget(2 + (p3 * wheelInstance.last));
+    // Phase 1 (0 to 0.15): Intro fades out and moves up, first project enters
+    const introProgress = Math.min(progress / 0.15, 1);
+    
+    if (intro) {
+      intro.style.opacity = 1 - introProgress;
+      intro.style.transform = `scale(${1 - introProgress * 0.06}) translateY(${-introProgress * 120}px)`;
     }
+
+    let targetPos;
+    if (progress <= 0.15) {
+      const p = progress / 0.15;
+      targetPos = -1 + p; // -1 to 0
+    } else {
+      const p = (progress - 0.15) / 0.85;
+      targetPos = p * wheelInstance.last;
+    }
+    
+    wheelInstance.setTarget(targetPos);
   };
 
   window.addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });

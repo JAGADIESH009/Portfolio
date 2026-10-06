@@ -165,73 +165,57 @@ class WorksWheel {
     if (Math.abs(gap) < 0.0005) this.turn = this.target;
     else this.turn += gap * (this.reduced ? 1 : EASE);
 
-    const t = this.turn;
-    
-    // Phase 1: Ring formation (0 to 1)
-    const ringFormation = clamp(t, 0, 1);
-    
-    // Phase 2: Ring to Drum (1 to 2)
-    const m = clamp(t - 1, 0, 1);
-    
-    // Phase 3: Drum rotation (2+)
-    const pos = Math.max(0, t - 2);
-    
-    const { ringR, drumR, cardW, cardH } = this.metrics;
+    const pos = this.turn;
     const { w } = this.stage;
     const isMobile = w < 768;
 
-    this.wheelEl.style.transform = `translateZ(${-m * drumR}px)`;
+    this.wheelEl.style.transform = `translateZ(0)`;
 
     for (let i = 0; i < this.count; i++) {
       const d = i - pos;
-      const drumDeg = d * STEP;
-      const ringDeg = -45 + (i * 90); // Diagonal circle positions: -45, 45, 135, 225
       
       const card = this.cardRefs[i];
       if (card) {
-        // As pos advances, ringDeg must shift to simulate scrolling on the Z plane if m<1
-        const currentRingDeg = ringDeg - (pos * 90); 
+        let opacity = 0;
+        let translateY = 0;
+        let scale = 1;
+        let rotate = 0;
         
-        // Scale transitions from ring to drum
-        const drumScale = 1 - Math.min(Math.abs(d), 1) * 0.45;
-        const ringScale = isMobile ? 0.65 : 0.55; 
-        const baseScale = ringScale * (1 - m) + drumScale * m;
-        
-        // During formation, scale starts at 0.5 and goes to baseScale
-        const currentScale = baseScale * (0.5 + 0.5 * ringFormation);
+        if (d > 1 || d < -1) {
+          opacity = 0;
+          card.style.pointerEvents = 'none';
+        } else {
+          opacity = 1 - Math.abs(d);
+          
+          if (d > 0) {
+            // Coming in from bottom
+            translateY = d * 150; 
+            scale = 0.92 + (1 - d) * 0.08; 
+            rotate = d * 2; 
+          } else {
+            // Going out to top
+            translateY = d * 120; // moving out also moves slightly
+            scale = 1 + (Math.abs(d) * 0.04); 
+            rotate = d * -1;
+          }
+          card.style.pointerEvents = Math.abs(d) < 0.1 ? 'auto' : 'none';
+        }
 
-        // Shift active project to the right/center on desktop
-        const shiftX = isMobile ? 0 : m * (w * 0.12);
-        
-        // During formation, they enter from further away
-        const enterDistance = isMobile ? 150 : 300;
-        const currentRingR = ringR + (1 - Math.pow(ringFormation, 1.5)) * enterDistance;
+        // Shift active project to the right/center on desktop to make room for left title
+        const shiftX = isMobile ? 0 : w * 0.12;
 
-        card.style.transform = (
-          `translateX(${shiftX}px) ` +
-          `rotateZ(${(1 - m) * currentRingDeg}deg) translateY(${-(1 - m) * currentRingR}px) ` +
-          `rotateX(${m * drumDeg}deg) translateZ(${m * drumR}px) ` +
-          `scale(${currentScale})`
-        );
-        
-        // Opacity transition
-        const drumOpacity = 1 - Math.min(Math.abs(d), 1) * 0.6;
-        const baseOpacity = 1 * (1 - m) + drumOpacity * m;
-        
-        // Fades in during ringFormation
-        const currentOpacity = baseOpacity * ringFormation;
-        card.style.opacity = String(currentOpacity);
-        
-        card.style.zIndex = String(Math.round(100 - Math.abs(d) * 2));
-        
-        // Only allow clicking when fully formed
-        card.style.pointerEvents = ringFormation > 0.9 ? 'auto' : 'none';
+        card.style.transform = `translateX(${shiftX}px) translateY(${translateY}px) scale(${scale}) rotateZ(${rotate}deg)`;
+        card.style.opacity = String(opacity);
+        card.style.zIndex = String(Math.round(100 - Math.abs(d) * 10));
       }
     }
 
-    // Optional: We can show an active title during drum rotation (Phase 3)
-    // The active title appears smoothly as m approaches 1
-    this.titleEl.style.opacity = String(m * (1 - Math.min(Math.abs(t - (2 + this.active)), 0.5)));
+    // Title opacity: fade in right after intro
+    let titleOpacity = 0;
+    if (pos > -0.5) {
+      titleOpacity = Math.min((pos + 0.5) * 2, 1);
+    }
+    this.titleEl.style.opacity = String(titleOpacity);
     
     const near = clamp(Math.round(pos), 0, this.last);
     if (this.active !== near || this.firstRun) {
