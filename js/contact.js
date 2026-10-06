@@ -92,26 +92,36 @@ async function handleFormSubmit(e) {
     });
     
     if (response.ok) {
-      if (successOverlay) successOverlay.classList.add('active');
-      spawnSuccessParticles(submitBtn);
-      form.reset();
-      
-      // Auto-hide success overlay
-      setTimeout(() => {
-        if (successOverlay) successOverlay.classList.remove('active');
-      }, 5000);
+      const data = await response.json().catch(() => ({ success: true }));
+      if (data.success !== false) {
+        if (successOverlay) successOverlay.classList.add('active');
+        spawnSuccessParticles(submitBtn);
+        form.reset();
+        
+        // Auto-hide success overlay
+        setTimeout(() => {
+          if (successOverlay) successOverlay.classList.remove('active');
+        }, 5000);
+      } else {
+        throw new Error(data.error || 'Unable to send your message right now. Please try again.');
+      }
     } else {
-      throw new Error('Server returned non-200 status');
+      const data = await response.json().catch(() => ({}));
+      throw new Error(data.error || 'Unable to send your message right now. Please try again.');
     }
     
   } catch (err) {
     console.error('Email sending failed:', err);
-    if (errorOverlay) errorOverlay.classList.add('active');
     
-    // Auto-hide error overlay
-    setTimeout(() => {
-      if (errorOverlay) errorOverlay.classList.remove('active');
-    }, 5000);
+    // Show inline error on the submit button area or form level (reusing the messageInput error as a global error)
+    if (errorOverlay) {
+      errorOverlay.classList.add('active');
+      setTimeout(() => {
+        if (errorOverlay) errorOverlay.classList.remove('active');
+      }, 5000);
+    } else {
+      showError(messageInput, err.message || 'Unable to send your message right now. Please try again.');
+    }
   } finally {
     // Reset submission state
     isSubmitting = false;

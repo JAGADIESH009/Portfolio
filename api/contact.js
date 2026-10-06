@@ -1,14 +1,14 @@
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+    return res.status(405).json({ success: false, error: 'Method Not Allowed' });
   }
 
   try {
     let { name, email, phone, subject, message, time } = req.body || {};
 
-    if (!name || typeof name !== 'string') return res.status(400).json({ message: 'Name is required' });
-    if (!email || typeof email !== 'string') return res.status(400).json({ message: 'Email is required' });
-    if (!message || typeof message !== 'string') return res.status(400).json({ message: 'Message is required' });
+    if (!name || typeof name !== 'string') return res.status(400).json({ success: false, error: 'Name is required' });
+    if (!email || typeof email !== 'string') return res.status(400).json({ success: false, error: 'Email is required' });
+    if (!message || typeof message !== 'string') return res.status(400).json({ success: false, error: 'Message is required' });
 
     name = name.trim();
     email = email.trim();
@@ -17,16 +17,16 @@ module.exports = async function handler(req, res) {
     message = message.trim();
 
     if (!name || !email || !message) {
-      return res.status(400).json({ message: 'Name, email, and message are required' });
+      return res.status(400).json({ success: false, error: 'Name, email, and message are required' });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: 'Invalid email format' });
+      return res.status(400).json({ success: false, error: 'Invalid email format' });
     }
 
     if (name.length > 100 || email.length > 150 || subject.length > 200 || message.length > 5000) {
-      return res.status(400).json({ message: 'Input excessively large' });
+      return res.status(400).json({ success: false, error: 'Input excessively large' });
     }
 
     const SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
 
     if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
       console.error('EmailJS credentials are not fully configured in environment variables.');
-      return res.status(500).json({ message: 'Server configuration error' });
+      return res.status(500).json({ success: false, error: 'Server configuration error' });
     }
 
     const payload = {
@@ -56,20 +56,19 @@ module.exports = async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Origin': 'https://jagadiesh.me'
       },
       body: JSON.stringify(payload),
     });
 
     if (response.ok) {
-      return res.status(200).json({ message: 'Email sent successfully' });
+      return res.status(200).json({ success: true });
     } else {
       const errorText = await response.text();
       console.error('EmailJS error:', errorText);
-      return res.status(response.status).json({ message: 'Failed to send email' });
+      return res.status(response.status).json({ success: false, error: 'Unable to send your message right now. Please try again.' });
     }
   } catch (error) {
     console.error('API endpoint error:', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 }
