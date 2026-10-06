@@ -323,7 +323,7 @@
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(241, 235, 221, 0.30);
+  color: rgba(241, 235, 221, 0.18);
 }
 
 .inline-error {
