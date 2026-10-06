@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const wrapper = document.getElementById("motion-footer-wrapper");
   const leftContent = document.querySelector(".contact-left");
   const rightContent = document.querySelector(".contact-right");
-  const contactIcons = document.querySelector(".contact-icons");
+  const actionButtons = document.querySelector(".action-buttons");
 
   const contactContent = document.getElementById("contact-content");
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Staggered Content Reveal
   gsap.fromTo(
-    [leftContent, rightContent, contactIcons],
+    [leftContent, rightContent, actionButtons],
     { y: 60, opacity: 0 },
     {
       y: 0,
@@ -81,6 +81,33 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "elastic.out(1, 0.3)",
         duration: 1.2,
       });
+    });
+  });
+
+  // Liquid Buttons Ripple Effect
+  const liquidBtns = document.querySelectorAll(".liquid-btn");
+  liquidBtns.forEach(btn => {
+    btn.addEventListener("mousedown", function(e) {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const ripple = document.createElement("span");
+      ripple.classList.add("liquid-ripple");
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = `${size}px`;
+      ripple.style.height = `${size}px`;
+      ripple.style.marginTop = `-${size/2}px`;
+      ripple.style.marginLeft = `-${size/2}px`;
+      
+      btn.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
     });
   });
 
