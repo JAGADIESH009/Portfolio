@@ -43,8 +43,16 @@
   <!-- ==========================================================================
        HERO SECTION - STRICT EDITORIAL POSTER
        ========================================================================== -->
-  <section class="hero-poster" id="hero">
+  <!-- Moved navbar out of hero section to avoid stacking context clipping -->
+  <nav class="hero-ui-top-right">
+    <a href="#about">ABOUT</a>
+    <a href="#works">WORK</a>
+    <a href="#websites">WEBSITES</a>
+    <a href="#journey">JOURNEY</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
 
+  <section class="hero-poster" id="hero">
 
     <!-- ================= LAYER 0: PORTFOLIO TYPOGRAPHY ================= -->
     <div id="hero-portfolio" style="position: absolute; inset: 0; z-index: 0; pointer-events: none;">
@@ -91,14 +99,7 @@
 
     <!-- ================= LAYER 4: UI & TEXT (ABSOLUTE) ================= -->
 
-    <!-- TOP RIGHT -->
-    <nav class="hero-ui-top-right">
-      <a href="#about">ABOUT</a>
-      <a href="#works">WORK</a>
-      <a href="#websites">WEBSITES</a>
-      <a href="#journey">JOURNEY</a>
-      <a href="#contact">CONTACT</a>
-    </nav>
+    <!-- Moved TOP RIGHT to before hero-poster -->
 
 
   </section>
