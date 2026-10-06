@@ -4,20 +4,20 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    let { name, email, subject, message, time } = req.body || {};
+    let { name, email, phone, subject, message, time } = req.body || {};
 
     if (!name || typeof name !== 'string') return res.status(400).json({ message: 'Name is required' });
     if (!email || typeof email !== 'string') return res.status(400).json({ message: 'Email is required' });
-    if (!subject || typeof subject !== 'string') return res.status(400).json({ message: 'Subject is required' });
     if (!message || typeof message !== 'string') return res.status(400).json({ message: 'Message is required' });
 
     name = name.trim();
     email = email.trim();
-    subject = subject.trim();
+    phone = typeof phone === 'string' ? phone.trim() : '';
+    subject = typeof subject === 'string' ? subject.trim() : 'New Inquiry';
     message = message.trim();
 
-    if (!name || !email || !subject || !message) {
-      return res.status(400).json({ message: 'All fields are required' });
+    if (!name || !email || !message) {
+      return res.status(400).json({ message: 'Name, email, and message are required' });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,6 +45,7 @@ module.exports = async function handler(req, res) {
       template_params: {
         name,
         email,
+        phone,
         subject,
         message,
         time: time || new Date().toLocaleString()

@@ -4,6 +4,7 @@
 @media (min-width: 2560px) {
   .container { max-width: 85%; }
   .section { padding: 15rem 0; }
+  .about-editorial.section { height: 100svh; min-height: 100svh; padding: 8vw 0 0 0; box-sizing: border-box; }
   .section-title { font-size: 4.5rem; }
   .hero-title { font-size: 7rem; }
   .hero-subtitle { font-size: 3rem; margin-bottom: 3rem; }
@@ -19,6 +20,7 @@
 @media (min-width: 1920px) and (max-width: 2559px) {
   .container { max-width: 90%; }
   .section { padding: 12rem 0; }
+  .about-editorial.section { height: 100svh; min-height: 100svh; padding: 8vw 0 0 0; box-sizing: border-box; }
   .section-title { font-size: 3.5rem; }
   .hero-title { font-size: 5.5rem; }
   .hero-subtitle { font-size: 2.25rem; margin-bottom: 2.5rem; }
@@ -42,6 +44,7 @@
 
 @media (max-width: 992px) {
   .section { padding: 7rem 0; }
+  .about-editorial.section { height: 100svh; min-height: 100svh; padding: 10vw 0 0 0; box-sizing: border-box; }
   .section-title { font-size: 2.2rem; }
   
   .hero-grid { grid-template-columns: 1fr; gap: 4rem; text-align: center; }
@@ -63,6 +66,7 @@
   .header { box-sizing: border-box; width: 100%; left: 0 !important; margin: 0 !important; }
   
   .section { padding: 6rem 0; }
+  .about-editorial.section { height: 100svh; min-height: 100svh; padding: 14vw 0 0 0; box-sizing: border-box; }
   .section-title { font-size: 2rem; }
   
   /* Hero Section: Single Column, Stacked, Centered */
@@ -164,6 +168,7 @@
 
 @media (max-width: 480px) {
   .section { padding: 4.5rem 0; }
+  .about-editorial.section { height: 100svh; min-height: 100svh; padding: 16vw 0 0 0; box-sizing: border-box; }
   .hero-title { font-size: clamp(1.8rem, 8vw, 2.2rem); padding: 0 0.1em; word-wrap: break-word; text-align: center !important; }
   .hero-subtitle { font-size: clamp(0.9rem, 4vw, 1.1rem); text-align: center !important; white-space: normal !important; word-wrap: break-word; }
   .hero-desc { font-size: 0.95rem; text-align: center !important; }

@@ -10,6 +10,13 @@ function initCursor() {
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    
+    // Check light context for hero section
+    if (e.target && typeof e.target.closest === 'function' && e.target.closest('.hero')) {
+      document.body.classList.add('cursor-light-context');
+    } else {
+      document.body.classList.remove('cursor-light-context');
+    }
   });
 
   function updateCursor() {
@@ -28,9 +35,35 @@ function initCursor() {
   requestAnimationFrame(updateCursor);
 
   // Hover scale selectors
-  const hoverElements = document.querySelectorAll('a, button, input, textarea, .glass-card, .skills-tab-btn, .btn');
-  hoverElements.forEach(elem => {
-    elem.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    elem.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  const interactiveElements = document.querySelectorAll('a, button, select, input, textarea, .btn, .nav-link, .project-card, .skill-card, .hero-portrait-container, [data-cursor]');
+  
+  interactiveElements.forEach(elem => {
+    elem.addEventListener('mouseenter', () => {
+      const type = elem.getAttribute('data-cursor');
+      if (type === 'portrait') {
+        document.body.classList.add('cursor-hover-portrait');
+        cursorDot.textContent = 'EXPLORE';
+      } else if (type === 'project' || elem.closest('.project-card')) {
+        document.body.classList.add('cursor-hover-project');
+        cursorDot.textContent = 'VIEW →';
+      } else if (type === 'link') {
+        document.body.classList.add('cursor-hover-link');
+        cursorDot.textContent = 'OPEN ↗';
+      } else if (type === 'contact') {
+        document.body.classList.add('cursor-hover-contact');
+        cursorDot.textContent = "LET'S TALK";
+      } else if (type === 'nav') {
+        document.body.classList.add('cursor-hover-nav');
+      } else if (elem.classList.contains('btn') || elem.classList.contains('magnetic-btn') || type === 'button') {
+        document.body.classList.add('cursor-hover-button');
+      } else {
+        document.body.classList.add('cursor-hover');
+      }
+    });
+    
+    elem.addEventListener('mouseleave', () => {
+      document.body.className = document.body.className.replace(/\bcursor-hover[^\s]*\b/g, '').trim();
+      cursorDot.textContent = '';
+    });
   });
 }

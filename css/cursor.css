@@ -1,40 +1,120 @@
-/* Custom Cursor */
+/* Custom Cursor - Editorial */
 .custom-cursor-dot {
   width: 6px; height: 6px; background-color: var(--text-primary);
   position: fixed; top: 0; left: 0; border-radius: 50%;
   pointer-events: none; z-index: 999999;
   transform: translate(-50%, -50%);
   transition: width 0.2s, height 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 0;
+  color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-align: center;
 }
 .custom-cursor-glow {
   width: 36px; height: 36px;
-  border: 1px solid rgba(139, 92, 246, 0.35);
-  background-color: rgba(139, 92, 246, 0.02);
+  border: 1px solid rgba(242, 238, 232, 0.4);
   position: fixed; top: 0; left: 0; border-radius: 50%;
   pointer-events: none; z-index: 999998;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.05);
-  transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+  transition: width 0.3s, height 0.3s, border-color 0.3s, opacity 0.3s, background-color 0.3s;
 }
-body.cursor-hover .custom-cursor-dot { width: 8px; height: 8px; background-color: var(--accent-cyan); }
+
+/* Light Context (Hero) Override */
+body.cursor-light-context .custom-cursor-dot {
+  background-color: #111111;
+}
+body.cursor-light-context .custom-cursor-glow {
+  border-color: rgba(17, 17, 17, 0.4);
+}
+
+/* Base Hover */
 body.cursor-hover .custom-cursor-glow {
-  width: 55px; height: 55px;
-  border-color: rgba(6, 182, 212, 0.5);
-  background-color: rgba(6, 182, 212, 0.04);
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+  width: 50px; height: 50px;
+  border-color: rgba(242, 238, 232, 0.2);
+}
+
+/* Navigation Hover */
+body.cursor-hover-nav .custom-cursor-glow {
+  width: 45px; height: 45px;
+  border-color: var(--text-primary);
+  background-color: rgba(242, 238, 232, 0.05);
+}
+
+/* Portrait Hover */
+body.cursor-hover-portrait .custom-cursor-dot {
+  width: 70px; height: 70px;
+  background-color: var(--accent-burgundy);
+  font-size: 0.65rem;
+  color: #fff;
+}
+body.cursor-hover-portrait .custom-cursor-glow {
+  opacity: 0;
+}
+
+/* Hide legacy circular cursor in Hero Section since it conflicts with the fluid interaction */
+.hero-poster:hover ~ .custom-cursor-glow,
+.hero-poster:hover ~ .custom-cursor-dot,
+#hero:hover ~ #cursor-glow,
+#hero:hover ~ #cursor-dot {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Project Hover */
+body.cursor-hover-project .custom-cursor-dot {
+  width: 80px; height: 80px;
+  background-color: var(--accent-champagne);
+  font-size: 0.75rem;
+  color: #000;
+}
+body.cursor-hover-project .custom-cursor-glow {
+  opacity: 0;
+}
+
+/* External Link Hover */
+body.cursor-hover-link .custom-cursor-dot {
+  width: 80px; height: 80px;
+  background-color: #ffffff;
+  font-size: 0.75rem;
+  color: #000;
+}
+body.cursor-hover-link .custom-cursor-glow {
+  opacity: 0;
+}
+
+/* Contact Hover */
+body.cursor-hover-contact .custom-cursor-dot {
+  width: 90px; height: 90px;
+  background-color: var(--accent-burgundy);
+  font-size: 0.65rem;
+  color: #ffffff;
+}
+body.cursor-hover-contact .custom-cursor-glow {
+  opacity: 0;
+}
+
+/* Button Hover (Magnetic) */
+body.cursor-hover-button .custom-cursor-dot {
+  width: 8px; height: 8px;
+  background-color: var(--text-primary);
+}
+body.cursor-hover-button .custom-cursor-glow {
+  width: 0; height: 0;
+  opacity: 0;
 }
 
 @media (hover: hover) and (pointer: fine) {
   body { cursor: none; }
-  a, button, select, input, textarea, .btn, .nav-link, .project-card, .skill-card { cursor: none; }
+  a, button, select, input, textarea, .btn, .nav-link, .project-card, .skill-card, .hero-portrait-container, [data-cursor] { cursor: none; }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (max-width: 1024px) {
   .custom-cursor-dot, .custom-cursor-glow { display: none !important; }
-  body, a, button, select, input, textarea, .btn, .nav-link, .project-card, .skill-card { cursor: auto !important; }
-}
-
-@media (max-width: 1024px) {
-  .custom-cursor-dot, .custom-cursor-glow { display: none !important; }
-  body, a, button, select, input, textarea, .btn, .nav-link, .project-card, .skill-card { cursor: auto !important; }
+  body, a, button, select, input, textarea, .btn, .nav-link, .project-card, .skill-card, .hero-portrait-container { cursor: auto !important; }
 }

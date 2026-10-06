@@ -1,0 +1,254 @@
+/* ==========================================================================
+   WHAT I BUILT SECTION (WORKS WHEEL)
+   ========================================================================== */
+
+.works-editorial {
+  position: relative;
+  width: 100%;
+  height: 400vh; /* Scroll length for the entire experience */
+  background-color: #0A0909; 
+  z-index: 20; /* Ensure it is above the motion footer */
+  padding: 0 !important;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0px 40px 80px rgba(0, 0, 0, 0.9);
+}
+
+.works-sticky-container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #0A0909;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+/* ==========================================================================
+   INTRO: MADE BY ME
+   ========================================================================== */
+.works-intro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.works-intro-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(4rem, 10vw, 10rem);
+  color: #F1EBDD;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  line-height: 0.9;
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+/* ==========================================================================
+   WHAT I BUILT TITLE
+   ========================================================================== */
+.works-main-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==========================================================================
+   WORKS WHEEL WRAPPER
+   ========================================================================== */
+.works-wheels-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.works-wheel-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+.works-wheel-stage {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  touch-action: pan-x;
+  outline: none;
+}
+.works-wheel-stage:active {
+  cursor: grabbing;
+}
+
+.works-wheel-drum {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+}
+
+.works-wheel-card {
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.works-wheel-card-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 4px; /* Slight rounding for editorial feel */
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8);
+  will-change: transform;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #111;
+}
+
+.works-wheel-active-title {
+  position: absolute;
+  pointer-events: none;
+  font-family: 'Anton', sans-serif;
+  color: #EAE4D9;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.works-wheel-active-title {
+  top: 50%;
+  left: 15vw; /* Tightened composition: moved in from 8vw */
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  max-width: 25vw; /* Ensure it wraps if it gets too close to the image */
+}
+
+.active-item-title {
+  font-size: 1em; /* inherits from metrics */
+}
+
+.active-item-meta {
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+  letter-spacing: 0.2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.active-type {
+  color: var(--text-secondary);
+}
+
+.active-status {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--text-muted);
+  border-radius: 30px;
+  color: var(--text-muted);
+}
+.active-status.in-progress {
+  color: #C4A66A;
+  border-color: rgba(196, 166, 106, 0.5);
+  background: rgba(196, 166, 106, 0.05);
+}
+
+.works-wheel-index {
+  position: absolute;
+  top: 10%;
+  right: 5vw;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  line-height: 1.8;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  color: var(--text-muted);
+}
+
+.works-wheel-index button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.works-wheel-index button:hover,
+.works-wheel-index button.active {
+  color: #EAE4D9;
+  font-weight: 500;
+}
+
+.index-num {
+  font-size: 0.8em;
+  margin-right: 0.5em;
+  opacity: 0.5;
+}
+
+/* Image overrides for hover state */
+.works-wheel-card:hover .works-wheel-card-inner {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Make sure active title overlaps gracefully on mobile */
+@media (max-width: 767px) {
+  .works-wheel-active-title {
+    left: 5vw;
+    right: 5vw;
+    max-width: none;
+    text-align: left;
+    top: 8vh;
+    bottom: auto;
+    transform: none;
+    gap: 1vh;
+  }
+  
+  .active-item-meta {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .works-wheel-index {
+    top: auto;
+    bottom: 2vh;
+    right: 5vw;
+    left: 5vw;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .works-wheel-index li {
+    display: inline-block;
+  }
+  .index-num {
+    display: inline-block; /* Show index num on mobile for tap target clarity */
+  }
+}

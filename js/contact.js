@@ -30,12 +30,14 @@ async function handleFormSubmit(e) {
   // Get field values
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
   const subjectInput = document.getElementById('subject');
   const messageInput = document.getElementById('message');
 
   const name = nameInput.value.trim();
   const email = emailInput.value.trim();
-  const subject = subjectInput.value.trim();
+  const phone = phoneInput ? phoneInput.value.trim() : '';
+  const subject = subjectInput ? subjectInput.value.trim() : '';
   const message = messageInput.value.trim();
 
   let hasError = false;
@@ -55,11 +57,8 @@ async function handleFormSubmit(e) {
     hasError = true;
   }
 
-  if (!subject) {
-    showError(subjectInput, 'Subject is required');
-    hasError = true;
-  }
-
+  // Subject is optional, Phone is optional
+  
   if (!message) {
     showError(messageInput, 'Message cannot be empty');
     hasError = true;
@@ -72,6 +71,8 @@ async function handleFormSubmit(e) {
   isSubmitting = true;
   submitBtn.classList.add('loading');
   submitBtn.disabled = true;
+  const originalBtnText = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<span class="btn-text">SENDING...</span>';
 
   try {
     // Call secure serverless function
@@ -83,7 +84,8 @@ async function handleFormSubmit(e) {
       body: JSON.stringify({
         name: name,
         email: email,
-        subject: subject,
+        phone: phone,
+        subject: subject || 'New Inquiry',
         message: message,
         time: new Date().toLocaleString()
       })
@@ -115,6 +117,7 @@ async function handleFormSubmit(e) {
     isSubmitting = false;
     submitBtn.classList.remove('loading');
     submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
   }
 }
 

@@ -1,0 +1,313 @@
+/* ==========================================================================
+   HOW I GOT HERE - TIMELINE
+   ========================================================================== */
+
+.journey-editorial {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-primary, #0B0B0B);
+  color: var(--text-primary, #F1EBDD);
+  padding: 0 !important;
+}
+
+/* ==========================================================================
+   DESKTOP (HORIZONTAL PINNED SCROLL)
+   ========================================================================== */
+@media (min-width: 768px) {
+  .journey-editorial {
+    height: 300vw; 
+    padding-top: 6vw !important; /* Space above heading in normal flow */
+  }
+
+  /* ZONE 1: HEADING (Normal Flow) */
+  .journey-title-container {
+    padding-left: 8vw; /* safe editorial inset */
+    margin-bottom: 6vh; /* Breathing space before timeline hits top */
+  }
+
+  .journey-main-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(4rem, 9vw, 9.5rem); 
+    line-height: 1;
+    color: #EAE4D9;
+    margin: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  /* ZONE 2: TIMELINE (Sticky Viewport) */
+  .journey-sticky-container {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* No padding-top, let axis center perfectly in 100vh */
+  }
+
+  .journey-slider {
+    display: flex;
+    align-items: center; /* Center the axis vertically in the 100vh space */
+
+    width: max-content;
+    flex-grow: 1; 
+    position: relative;
+    padding-left: 8vw; /* Matches the heading inset! */
+    padding-right: 20vw; /* Breathing room at the end */
+    will-change: transform;
+  }
+
+  /* 3. HORIZONTAL TIMELINE AXIS */
+  .timeline-axis {
+    position: relative;
+    width: max-content; 
+    height: 1px;
+    background-color: rgba(234, 228, 217, 0.15); 
+    display: flex;
+    align-items: center;
+  }
+  
+  .journey-line-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #EAE4D9;
+    transform-origin: left center;
+    transform: scaleX(0);
+    will-change: transform;
+  }
+
+  /* Milestones */
+  .journey-milestones {
+    display: flex;
+    gap: 12vw;
+    align-items: center;
+  }
+
+  /* Each item is positioned relative to the axis (which is vertically centered) */
+  .journey-item {
+    position: relative;
+    width: 25vw;
+    flex-shrink: 0;
+    height: 0; /* Purely structural coordinate system */
+  }
+
+  /* The Dot sits exactly on the axis */
+  .journey-dot {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: #EAE4D9;
+    z-index: 2;
+    transform: translateY(-50%) scale(0);
+    will-change: transform, background-color, box-shadow;
+  }
+
+  /* STEM AND CONTENT */
+  .journey-stem {
+    position: absolute;
+    left: 5px; /* Aligned with center of 11px dot */
+    width: 1px;
+    background-color: rgba(234, 228, 217, 0.4);
+    will-change: transform;
+    height: 2.5rem; /* Fixed stem height */
+  }
+
+  .journey-content {
+    position: absolute;
+    left: 20px; /* offset from stem */
+    width: 100%;
+    opacity: 0;
+    will-change: transform, opacity;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top Item Geometry */
+  .journey-item-top .journey-stem {
+    bottom: 50%; /* Starts at axis, goes up */
+    transform-origin: bottom center;
+  }
+
+  .journey-item-top .journey-content {
+    bottom: 2.5rem; /* Starts exactly where stem ends */
+    transform: translateY(20px); /* initial animation offset */
+    justify-content: flex-end; /* Text aligns to bottom of this container */
+  }
+
+  /* Bottom Item Geometry */
+  .journey-item-bottom .journey-stem {
+    top: 50%; /* Starts at axis, goes down */
+    transform-origin: top center;
+  }
+
+  .journey-item-bottom .journey-content {
+    top: 2.5rem; /* Starts exactly where stem ends */
+    transform: translateY(-20px); /* initial animation offset */
+    justify-content: flex-start;
+  }
+
+  /* Text Styles */
+  .journey-year-title {
+    font-family: var(--font-display, 'Anton', sans-serif);
+    font-size: 3vw;
+    font-weight: 400;
+    color: #F1EBDD;
+    margin: 0 0 0.25rem 0;
+    line-height: 1;
+  }
+
+  .journey-subtitle {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(234, 228, 217, 0.7);
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+  }
+
+  .journey-desc {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 1.05rem;
+    color: #CFC8BA;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 90%;
+  }
+}
+
+/* ==========================================================================
+   MOBILE (VERTICAL LIST)
+   ========================================================================== */
+@media (max-width: 767px) {
+  .journey-editorial {
+    padding: 6rem 2.5rem !important;
+  }
+
+  .journey-sticky-container {
+    width: 100%;
+  }
+
+  .journey-slider {
+    display: block;
+  }
+  
+  .timeline-axis {
+    position: relative;
+    display: block;
+  }
+
+  .journey-line-fill {
+    width: 1px;
+    height: 100%; 
+    background-color: #EAE4D9;
+    transform-origin: top center;
+    transform: scaleY(0);
+    will-change: transform;
+    position: absolute;
+    left: 2.5rem;
+    top: 0;
+    z-index: 1;
+  }
+
+  /* Fake vertical track background for mobile */
+  .timeline-axis::before {
+    content: '';
+    position: absolute;
+    left: 2.5rem; /* align to left side */
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(234, 228, 217, 0.15);
+    z-index: 0;
+  }
+
+  .journey-title-container {
+    margin-bottom: 4rem;
+  }
+
+  .journey-main-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(3rem, 12vw, 5rem);
+    line-height: 1;
+    color: #EAE4D9;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .journey-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    position: relative;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .journey-item {
+    position: relative;
+    padding-left: 4.5rem; /* Space for dot and padding */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .journey-stem {
+    display: none;
+  }
+
+  .journey-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: #EAE4D9;
+    position: absolute;
+    left: 2.5rem; 
+    top: 6px;
+    transform: translateX(-5px) scale(0);
+    will-change: transform;
+    z-index: 2;
+  }
+
+  .journey-content {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: transform, opacity;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .journey-year-title {
+    font-family: var(--font-display, 'Anton', sans-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #F1EBDD;
+    margin: 0 0 0.25rem 0;
+    line-height: 1;
+  }
+
+  .journey-subtitle {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(234, 228, 217, 0.7);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .journey-desc {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 1rem;
+    color: #CFC8BA;
+    margin: 0;
+    line-height: 1.5;
+  }
+}

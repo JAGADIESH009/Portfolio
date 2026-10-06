@@ -2,11 +2,11 @@
 @import 'globals.css';
 @import 'navbar.css';
 @import 'hero.css';
-@import 'about.css';
-@import 'skills.css';
-@import 'projects.css';
-@import 'contact.css';
-@import 'footer.css';
+@import 'about.css?v=7';
+@import 'skills.css?v=2';
+@import 'works-wheel.css';
+@import 'motion-footer.css';
 @import 'animations.css';
+@import 'timeline.css';
 @import 'cursor.css';
 @import 'responsive.css';

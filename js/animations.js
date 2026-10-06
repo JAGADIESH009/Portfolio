@@ -1,37 +1,4 @@
-// Dynamic typing state machine
-function initTypingAnimation() {
-  const typedTextSpan = document.getElementById('typed-text');
-  if (!typedTextSpan) return;
-  const textArray = TYPING_TEXTS || [];
-  const typingSpeed = CONFIG.typingSpeed || 100;
-  const erasingSpeed = CONFIG.erasingSpeed || 60;
-  const newTextDelay = CONFIG.newTextDelay || 2000;
-  let textArrayIndex = 0;
-  let charIndex = 0;
-
-  function type() {
-    if (charIndex < textArray[textArrayIndex].length) {
-      typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-      charIndex++;
-      setTimeout(type, typingSpeed);
-    } else {
-      setTimeout(erase, newTextDelay);
-    }
-  }
-  function erase() {
-    if (charIndex > 0) {
-      typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-      charIndex--;
-      setTimeout(erase, erasingSpeed);
-    } else {
-      textArrayIndex++;
-      if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-      setTimeout(type, typingSpeed + 500);
-    }
-  }
-  setTimeout(type, 1000);
-}
-
+// Typing animation removed for editorial redesign
 // Ease out expo for smooth animation
 function easeOutExpo(x) {
   return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
@@ -117,7 +84,7 @@ function initTimelineScrollTracker() {
 
 // Intersection Observer reveal triggers
 function initScrollReveals() {
-  const revealElements = document.querySelectorAll('.reveal');
+  const revealElements = document.querySelectorAll('.reveal, .reveal-up, .reveal-fade, .reveal-mask, .reveal-line');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -135,8 +102,28 @@ function initScrollReveals() {
   revealElements.forEach(elem => observer.observe(elem));
 }
 
+function initScrollParallax() {
+  const parallaxElements = document.querySelectorAll('.project-img-inner, .parallax-el');
+  window.addEventListener('scroll', () => {
+    parallaxElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      // Only parallax if in view
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        // Calculate distance from center of screen
+        const center = window.innerHeight / 2;
+        const elementCenter = rect.top + rect.height / 2;
+        const distance = elementCenter - center;
+        
+        // Move element slightly in opposite direction of scroll (10% speed)
+        const yPos = distance * 0.1;
+        el.style.transform = `scale(1.05) translateY(${yPos}px)`;
+      }
+    });
+  });
+}
+
 function triggerAnimationsOnLoad() {
-  const revealElements = document.querySelectorAll('.reveal');
+  const revealElements = document.querySelectorAll('.reveal, .reveal-up, .reveal-fade, .reveal-mask, .reveal-line');
   revealElements.forEach(elem => {
     const rect = elem.getBoundingClientRect();
     if (rect.top < window.innerHeight) {
@@ -145,4 +132,7 @@ function triggerAnimationsOnLoad() {
       if (elem.closest('#about') && elem.classList.contains('about-details')) loadStatCounters();
     }
   });
+  
+  // Initialize new behaviors
+  if (typeof initScrollParallax === 'function') initScrollParallax();
 }

@@ -20,19 +20,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&display=swap"
     rel="stylesheet">
 
 
 
-  <!-- Vercel Web Analytics -->
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-
   <!-- Master Stylesheet Compilation -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 
 <body>
@@ -40,1128 +34,390 @@
   <!-- Fullscreen noise grain overlay -->
   <div class="noise-overlay"></div>
 
-  <!-- Animated Preloader -->
-  <div class="preloader" id="preloader">
-    <div class="preloader-logo">JAGADIESH R<span class="logo-dot"></span></div>
-    <div class="preloader-loader">
-      <div class="preloader-bar" id="preloader-bar"></div>
-    </div>
-    <div class="preloader-text" id="preloader-text">Initializing Portfolio 0%</div>
-  </div>
+
 
   <!-- Custom Cursor elements -->
   <div class="custom-cursor-dot" id="cursor-dot"></div>
   <div class="custom-cursor-glow" id="cursor-glow"></div>
 
-  <!-- Background Decorative Glowing Blobs -->
-  <div class="glow-blob glow-blob-1"></div>
-  <div class="glow-blob glow-blob-2"></div>
+  <!-- Removed background glowing blobs and aurora bg for minimal editorial look -->
 
-  <!-- Background Faint Aurora Gradient loops -->
-  <div class="aurora-bg">
-    <div class="aurora-circle aurora-1"></div>
-    <div class="aurora-circle aurora-2"></div>
-    <div class="aurora-circle aurora-3"></div>
+
+  <!-- ==========================================================================
+       HERO SECTION - STRICT EDITORIAL POSTER
+       ========================================================================== -->
+  <section class="hero-poster" id="hero">
+
+
+    <!-- ================= LAYER 0: PORTFOLIO TYPOGRAPHY ================= -->
+    <div id="hero-portfolio" style="position: absolute; inset: 0; z-index: 0; pointer-events: none;">
+      <div class="hero-poster-layer-typo" id="parallax-typo">
+        <h1 class="hero-poster-giant" id="portfolio-text">
+          <span>P</span><span>O</span><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span><span>I</span><span>O</span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- ================= LAYER 1: ALIGNED VIDEO CANVAS ================= -->
+    <!-- The actual video element is hidden but playing for 2D canvas slicing -->
+    <video id="hero-video-element" src="assets/videos/Jagadiesh_3D.mp4" autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; z-index: -100; object-fit: cover;"></video>
+    
+    <!-- The 2D Canvas that warps and aligns the video characters to the DOM -->
+    <canvas id="alignment-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; -webkit-mask: url(#reveal-mask); mask: url(#reveal-mask);"></canvas>
+
+    <!-- ================= LAYER 2: PARTICLE SVG MASK ================= -->
+    <!-- The technical SVG layer used to generate the cursor reveal mask for the video -->
+    <svg id="particle-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="position: absolute; inset: 0; pointer-events: none; z-index: 2;">
+      <defs>
+        <filter id="gooey">
+          <!-- Create smoother, lower-frequency noise to avoid flickering/jagged edges -->
+          <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
+          <!-- Lower distortion scale for a smooth organic shape rather than a torn one -->
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="50" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+          <!-- Gooey effect on the distorted shape -->
+          <feGaussianBlur in="displaced" stdDeviation="15" result="blur" />
+          <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -12" result="goo" />
+        </filter>
+        <mask id="reveal-mask">
+          <g id="particle-mask-group" filter="url(#gooey)"></g>
+        </mask>
+      </defs>
+    </svg>
+
+    <!-- ================= LAYER 3: PORTRAIT (FRONT) ================= -->
+    <!-- This portrait layer is completely outside the mask and above the video, ensuring it ALWAYS wins visually. -->
+    <div id="hero-portrait" style="position: absolute; inset: 0; z-index: 10; pointer-events: none;">
+      <div class="hero-poster-layer-image" id="parallax-image">
+        <img src="assets/images/portrait.png" alt="Jagadiesh R" class="hero-poster-portrait" style="transform: translateX(25.4vw) translateY(-8vh);">
+      </div>
+    </div>
+
+    <!-- ================= LAYER 4: UI & TEXT (ABSOLUTE) ================= -->
+
+    <!-- TOP RIGHT -->
+    <nav class="hero-ui-top-right">
+      <a href="#about">ABOUT</a>
+      <a href="#works">WHAT I BUILT</a>
+      <a href="#journey">JOURNEY</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+
+
+  </section>
+
+
+
+  <!-- ==========================================================================
+       ABOUT SECTION
+       ========================================================================== -->
+  <section class="about-editorial section" id="about">
+    <!-- Giant editorial identity mark — background typography -->
+    <div class="about-bg-monogram" aria-hidden="true">JR</div>
+
+    <div class="container about-composition">
+      <div class="about-text-content">
+        <h2 class="about-giant-typo reveal-up">WHO AM I</h2>
+        <div class="about-bio reveal-up reveal-delay-2">
+          <p>I build websites and apps, turning ideas into digital experiences through design and code.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Lanyard physics canvas zone covers the entire section -->
+    <div id="lanyard-zone" class="lanyard-zone"></div>
+  </section>
+
+  <!-- ==========================================================================
+       HOW I GOT HERE SECTION
+       ========================================================================== -->
+  <section class="journey-editorial section" id="journey">
+    <!-- ZONE 1: HEADING (Normal Document Flow) -->
+    <div class="journey-title-container">
+      <h2 class="journey-main-title">HOW I GOT HERE</h2>
+    </div>
+
+    <!-- ZONE 2: TIMELINE TRACK (Sticky Viewport) -->
+    <div class="journey-sticky-container">
+      <div class="journey-slider" id="journey-slider">
+        <div class="timeline-axis" id="timeline-axis">
+          <div class="journey-line-fill" id="journey-line"></div>
+          
+          <div class="journey-milestones">
+            <!-- 2023 -->
+            <div class="journey-item journey-item-top" id="ji-2023">
+              <div class="journey-dot"></div>
+              <div class="journey-stem"></div>
+              <div class="journey-content">
+                <h4 class="journey-year-title">2023</h4>
+                <h5 class="journey-subtitle">STARTED BUILDING</h5>
+                <p class="journey-desc">Started seriously exploring web development and building projects through code.</p>
+              </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="journey-item journey-item-bottom" id="ji-2024">
+              <div class="journey-dot"></div>
+              <div class="journey-stem"></div>
+              <div class="journey-content">
+                <h4 class="journey-year-title">2024</h4>
+                <h5 class="journey-subtitle">BUILDING WITH PURPOSE</h5>
+                <p class="journey-desc">Moved from basic frontend work into full-stack development and real project building.</p>
+              </div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="journey-item journey-item-top" id="ji-2025">
+              <div class="journey-dot"></div>
+              <div class="journey-stem"></div>
+              <div class="journey-content">
+                <h4 class="journey-year-title">2025</h4>
+                <h5 class="journey-subtitle">FULL-STACK EXPANSION</h5>
+                <p class="journey-desc">Worked across frontend, backend, databases and deployment while building increasingly complete applications.</p>
+              </div>
+            </div>
+
+            <!-- 2026 -->
+            <div class="journey-item journey-item-bottom" id="ji-2026">
+              <div class="journey-dot"></div>
+              <div class="journey-stem"></div>
+              <div class="journey-content">
+                <h4 class="journey-year-title">2026</h4>
+                <h5 class="journey-subtitle">SHIPPING REAL WORK</h5>
+                <p class="journey-desc">Building polished websites, applications and portfolio-quality digital experiences.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       WHAT I KNOW SECTION (KINETIC TECHNOLOGY INDEX)
+       ========================================================================== -->
+  <section class="magnetic-editorial section" id="skills">
+    <div class="skills-index-container">
+      
+      <!-- TOP ANCHOR -->
+      <div class="skills-index-header reveal-up">
+        <h2 class="skills-title">WHAT I KNOW</h2>
+        <span class="skills-subtitle">TECHNOLOGY / STACK</span>
+      </div>
+
+      <!-- INDEX ROWS -->
+      <div class="skills-index-list">
+        
+        <!-- ROW 01: FRONTEND -->
+        <div class="skills-row reveal-mask" data-row="1">
+          <div class="row-meta">
+            <span class="row-num">01</span>
+            <span class="row-label">FRONTEND</span>
+          </div>
+          <div class="row-techs">
+            <span class="tech-word tech-huge tint-dominant" data-magnetic>JAVASCRIPT</span>
+            <span class="tech-word tech-large tint-medium" data-magnetic>TYPESCRIPT</span>
+            <span class="tech-word tech-italic tint-light" data-magnetic>HTML</span>
+            <span class="tech-word tech-italic tint-strong" data-magnetic>CSS</span>
+            <span class="tech-word tech-medium tint-strong" data-magnetic>ANGULAR</span>
+          </div>
+        </div>
+
+        <!-- ROW 02: BACKEND -->
+        <div class="skills-row reveal-mask" data-row="2">
+          <div class="row-meta">
+            <span class="row-num">02</span>
+            <span class="row-label">BACKEND</span>
+          </div>
+          <div class="row-techs">
+            <span class="tech-word tech-huge tint-dominant" data-magnetic>PYTHON</span>
+            <span class="tech-word tech-large tint-strong" data-magnetic>NODE.JS</span>
+            <span class="tech-word tech-medium tint-medium" data-magnetic>DJANGO</span>
+            <span class="tech-word tech-italic tint-light" data-magnetic>EXPRESS</span>
+          </div>
+        </div>
+
+        <!-- ROW 03: DATABASE -->
+        <div class="skills-row reveal-mask" data-row="3">
+          <div class="row-meta">
+            <span class="row-num">03</span>
+            <span class="row-label">DATABASE</span>
+          </div>
+          <div class="row-techs">
+            <span class="tech-word tech-huge tint-dominant" data-magnetic>POSTGRESQL</span>
+            <span class="tech-word tech-large tint-medium" data-magnetic>MONGODB</span>
+            <span class="tech-word tech-medium tint-strong" data-magnetic>SUPABASE</span>
+            <span class="tech-word tech-italic tint-light" data-magnetic>SQLITE</span>
+            <span class="tech-word tech-small tint-medium" data-magnetic>REDIS</span>
+          </div>
+        </div>
+
+        <!-- ROW 04: TOOLS -->
+        <div class="skills-row reveal-mask" data-row="4">
+          <div class="row-meta">
+            <span class="row-num">04</span>
+            <span class="row-label">TOOLS</span>
+          </div>
+          <div class="row-techs">
+            <span class="tech-word tech-huge tint-dominant" data-magnetic>GITHUB</span>
+            <span class="tech-word tech-medium tint-medium" data-magnetic>GIT</span>
+            <span class="tech-word tech-large tint-strong" data-magnetic>TAILWIND CSS</span>
+            <span class="tech-word tech-small tint-light" data-magnetic>VERCEL</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       WHAT I BUILT SECTION (WORKS WHEELS)
+       ========================================================================== -->
+  <section class="works-editorial section" id="works">
+    <div class="works-sticky-container">
+      
+      <!-- Intro State -->
+      <div class="works-intro" id="works-intro">
+        <h2 class="works-intro-title">MADE<br>BY ME</h2>
+      </div>
+
+      <!-- Persistent Section Title -->
+      <div class="works-main-title" id="works-main-title">WHAT I BUILT</div>
+
+      <div class="works-wheels-wrapper" id="works-wheels-wrapper">
+        <div id="wheel-all-works"></div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FINAL CONTACT SCENE (CINEMATIC MOTION FOOTER)
+       ========================================================================== -->
+  <div class="motion-footer-wrapper" id="motion-footer-wrapper">
+    <footer class="motion-footer" id="motion-footer">
+      <div class="motion-footer-glow"></div>
+      <div class="motion-footer-texture"></div>
+
+      <!-- HUGE FADED BACKGROUND TYPOGRAPHY -->
+      <div class="huge-background-text">JAGADIESH</div>
+
+      <!-- CONTINUOUS TOP TICKER -->
+      <div class="editorial-ticker">
+        <div class="ticker-track">
+          <span class="ticker-item">WEBSITES <span class="star">✦</span> DIGITAL EXPERIENCES <span class="star">✦</span> DESIGN + CODE <span class="star">✦</span> FULL-STACK DEVELOPMENT <span class="star">✦</span> SELECTED WORK <span class="star">✦</span></span>
+          <span class="ticker-item">WEBSITES <span class="star">✦</span> DIGITAL EXPERIENCES <span class="star">✦</span> DESIGN + CODE <span class="star">✦</span> FULL-STACK DEVELOPMENT <span class="star">✦</span> SELECTED WORK <span class="star">✦</span></span>
+          <span class="ticker-item">WEBSITES <span class="star">✦</span> DIGITAL EXPERIENCES <span class="star">✦</span> DESIGN + CODE <span class="star">✦</span> FULL-STACK DEVELOPMENT <span class="star">✦</span> SELECTED WORK <span class="star">✦</span></span>
+        </div>
+      </div>
+
+      <div class="contact-page-content" id="contact-content">
+        <div class="contact-grid">
+          <div class="contact-left">
+            <h2 class="contact-heading">SO, YOU KNOW<br>ME NOW.</h2>
+            <h3 class="contact-subheading">LET'S BUILD SOMETHING.</h3>
+            <p class="contact-copy">I'd love to hear what you're working on and what you have in mind.</p>
+          </div>
+          <div class="contact-right">
+            <div class="glass-card">
+              <div class="glass-card-header">CONTACT</div>
+              <form id="portfolio-form" class="custom-form">
+                <div class="form-group">
+                  <label for="name">NAME *</label>
+                  <input type="text" id="name" name="name" required />
+                  <span class="inline-error" id="name-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="email">EMAIL *</label>
+                  <input type="email" id="email" name="email" required />
+                  <span class="inline-error" id="email-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="phone">PHONE NUMBER <span class="optional-text">Optional</span></label>
+                  <input type="tel" id="phone" name="phone" />
+                </div>
+                <div class="form-group">
+                  <label for="subject">SUBJECT <span class="optional-text">Optional</span></label>
+                  <input type="text" id="subject" name="subject" />
+                </div>
+                <div class="form-group message-group">
+                  <label for="message">MESSAGE *</label>
+                  <textarea id="message" name="message" placeholder="Tell me a little about what you're building..." required></textarea>
+                  <span class="inline-error" id="message-error"></span>
+                </div>
+                <button type="submit" class="btn-submit magnetic-btn" data-cursor="contact">
+                  <span class="btn-text">SEND MESSAGE &rarr;</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-footer-info">
+          <div class="info-links">
+            <div class="info-item">
+              <span class="info-label">EMAIL</span>
+              <a href="mailto:work.jagadiesh@gmail.com" class="info-val">work.jagadiesh@gmail.com</a>
+            </div>
+            <div class="info-item">
+              <span class="info-label">GITHUB</span>
+              <a href="https://github.com/JAGADIESH009" target="_blank" rel="noopener" class="info-val">github.com/JAGADIESH009</a>
+            </div>
+            <div class="info-item">
+              <span class="info-label">LINKEDIN</span>
+              <a href="https://www.linkedin.com/in/jagadieshr" target="_blank" rel="noopener" class="info-val">linkedin.com/in/jagadieshr</a>
+            </div>
+          </div>
+          <div class="info-why">
+            <span class="info-label">WHY CONTACT ME</span>
+            <p>For websites, apps, or digital ideas that need thoughtful design and solid development.</p>
+          </div>
+        </div>
+        
+        <div class="motion-footer-copy">
+          &copy; <span id="current-year-footer">2026</span> JAGADIESH R.
+        </div>
+        
+        <div id="form-success" class="form-overlay">
+          <div class="overlay-content">
+            <h3>MESSAGE SENT</h3>
+            <p>I'll get back to you soon.</p>
+          </div>
+        </div>
+        <div id="form-error" class="form-overlay">
+          <div class="overlay-content">
+            <h3>COULDN'T SEND</h3>
+            <p>Something went wrong. Please try again.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 
-  <!-- Spatial Dock Navigation -->
-  <header class="header" id="header">
-    <div class="container">
-      <nav class="header-nav">
-        <a href="#hero" class="logo">
-          JAGADIESH R <span class="brand-orb"><span class="brand-orb-inner"></span></span>
-        </a>
-        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-        </button>
-        <ul class="nav-list spatial-dock" id="nav-list">
-          <div class="nav-active-indicator" id="nav-active-indicator"></div>
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#skills" class="nav-link">Skills</a></li>
-          <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#timeline" class="nav-link">Journey</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Background particles canvas element -->
-  <div
-    style="position: absolute; top:0; left:0; width:100%; height:100%; overflow:hidden; pointer-events:none; z-index:0;">
-    <canvas id="bg-canvas"></canvas>
-  </div>
-
   <!-- ==========================================================================
-       HERO SECTION
-       ========================================================================== -->
-  <section class="hero section" id="hero">
-    <!-- Mouse tracking glow behind hero content -->
-    <div id="hero-mouse-glow"></div>
-
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div class="hero-badge reveal">
-            <span class="hero-badge-dot"></span> Available for Internships & Projects
-          </div>
-          <h1 class="hero-title reveal reveal-delay-1">
-            Hi, I'm <span>Jagadiesh R</span>
-          </h1>
-          <h2 class="hero-subtitle reveal reveal-delay-2">
-            <span id="typed-text"></span><span class="typing-cursor">&nbsp;</span>
-          </h2>
-          <p class="hero-desc reveal reveal-delay-3">
-            A B.Tech Computer Science student at VIT-AP University. I build full stack applications, program in Java and
-            Python, and create software that solves real-world challenges.
-          </p>
-          <div class="hero-ctas reveal reveal-delay-4">
-            <a href="#contact" class="btn btn-primary magnetic-btn btn-ripple">Let's Connect</a>
-            <a href="#projects" class="btn btn-secondary magnetic-btn btn-ripple">View My Work</a>
-          </div>
-        </div>
-
-        <div class="hero-visual reveal">
-          <div class="premium-vector-container borderless-cinematic" id="vector-parallax-container">
-            
-            <!-- Layer 1: Dark purple gradient -->
-            <div class="cinematic-layer layer-1-base-gradient"></div>
-
-            <!-- Layer 2: Large purple nebula -->
-            <div class="cinematic-layer layer-2-nebula">
-              <div class="c-nebula-blob cb-1"></div>
-              <div class="c-nebula-blob cb-2"></div>
-            </div>
-
-
-
-            <!-- Layer 5: Purple bloom -->
-            <div class="cinematic-layer layer-5-purple-bloom">
-              <div class="c-purple-bloom"></div>
-            </div>
-
-            <!-- Layer 6: Volumetric light rays -->
-            <div class="cinematic-layer layer-6-volumetric">
-              <div class="c-light-rays"></div>
-            </div>
-
-            <!-- Layer 7: Floating stars -->
-            <div class="cinematic-layer layer-7-stars">
-              <div class="c-star cs-1"></div>
-              <div class="c-star cs-2"></div>
-              <div class="c-star cs-3"></div>
-              <div class="c-star cs-4"></div>
-              <div class="c-star cs-5"></div>
-              <div class="c-star cs-6"></div>
-            </div>
-
-            <!-- Layer 8: Animated particles -->
-            <div class="cinematic-layer layer-8-particles" id="c-particles">
-              <div class="c-particle cp-1"></div>
-              <div class="c-particle cp-2"></div>
-              <div class="c-particle cp-3"></div>
-              <div class="c-particle cp-4"></div>
-            </div>
-
-            <!-- Layer 9: Tiny glowing dust -->
-            <div class="cinematic-layer layer-9-dust">
-              <div class="c-dust cd-1"></div>
-              <div class="c-dust cd-2"></div>
-              <div class="c-dust cd-3"></div>
-            </div>
-
-
-
-            <!-- Layer 11: Glowing Platform -->
-            <div class="cinematic-layer layer-11-orbit">
-              <div class="c-ground-platform"></div>
-            </div>
-
-
-
-            <!-- Floating UI Glass Cards -->
-            <div class="cinematic-layer c-ui-layer" id="c-ui-elements">
-              <div class="c-glass-chip ui-1">&lt; /&gt;</div>
-              <div class="c-glass-chip ui-2">{ }</div>
-              <div class="c-glass-chip ui-3">React</div>
-              <div class="c-glass-chip ui-4">Node</div>
-              <div class="c-glass-chip ui-5">Python</div>
-              <div class="c-glass-chip ui-6">AI</div>
-              <div class="c-glass-chip ui-7">Cloud</div>
-              <div class="c-glass-chip ui-8">API</div>
-              <div class="c-glass-chip ui-9">Git</div>
-              <div class="c-glass-chip ui-10">Docker</div>
-              <div class="c-glass-chip ui-11">Database</div>
-            </div>
-
-            <!-- The Portrait Layer (Layer 13 logically) -->
-            <div class="cinematic-layer layer-13-portrait">
-              <div class="c-character-wrapper" id="c-character">
-                <img src="assets/images/profile.png" alt="Jagadiesh R - Developer" class="c-hero-img">
-              </div>
-            </div>
-
-
-
-            <!-- Magnetic Hover Glow -->
-            <div class="c-magnetic-glow" id="c-magnetic-glow"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       ABOUT ME SECTION
-       ========================================================================== -->
-  <section class="about section" id="about">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">About Me</span>
-        <h2 class="section-title">My Background & Interests</h2>
-      </div>
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <p>
-            I'm a B.Tech Computer Science student at VIT-AP University who enjoys building practical software projects
-            and continuously learning modern development technologies. My interests include Full Stack Development,
-            Java, Python, web development, beginner trading, and creating useful applications that solve real-world
-            problems.
-          </p>
-          <p>
-            I'm currently expanding my knowledge through personal projects and enjoy experimenting with new ideas while
-            improving my programming skills.
-          </p>
-
-          <div class="edu-card glass-card">
-            <div class="edu-icon-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                <path d="M6 12.5V16c0 1 1 2 6 2s6-1 6-2v-3.5" />
-              </svg>
-            </div>
-            <div>
-              <h4>B.Tech in Computer Science</h4>
-              <div class="edu-institution">VIT-AP University</div>
-              <div class="edu-meta">Andhra Pradesh, India • Graduating Student</div>
-            </div>
-          </div>
-        </div>
-        <div class="about-details reveal reveal-delay-2">
-          <div class="about-stats">
-            <div class="stat-card glass-card">
-              <div class="stat-number count-target" data-target="5" data-suffix="+">5+</div>
-              <div class="stat-label">Projects Built</div>
-            </div>
-            <div class="stat-card glass-card">
-              <div class="stat-number count-target" data-target="5" data-suffix="">5</div>
-              <div class="stat-label">Languages</div>
-            </div>
-            <div class="stat-card glass-card">
-              <div class="stat-number count-target" data-target="120" data-suffix="+">120+</div>
-              <div class="stat-label">Git Commits</div>
-            </div>
-            <div class="stat-card glass-card">
-              <div class="stat-number count-target" data-target="500" data-suffix="+">500+</div>
-              <div class="stat-label">Coding Hours</div>
-            </div>
-          </div>
-
-          <div class="contact-cards-grid" style="margin-top: 1.5rem;">
-            <div class="about-info-item reveal">
-              <div class="about-info-icon">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-              </div>
-              <div class="about-info-text">
-                <span class="about-info-label">Location</span>
-                <span class="about-info-val">Andhra Pradesh, India</span>
-              </div>
-            </div>
-            <div class="about-info-item reveal reveal-delay-1">
-              <div class="about-info-icon">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                  </path>
-                </svg>
-              </div>
-              <div class="about-info-text">
-                <span class="about-info-label">Email</span>
-                <span class="about-info-val"><a
-                    href="mailto:work.jagadiesh@gmail.com" class="about-contact-link">work.jagadiesh@gmail.com</a></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       SKILLS SECTION
-       ========================================================================== -->
-  <section class="skills section" id="skills">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Skills</span>
-        <h2 class="section-title">My Tech Stack & Tools</h2>
-      </div>
-
-      <!-- Category Filter Tabs -->
-      <div class="skills-tabs reveal">
-        <button class="skills-tab-btn active" data-filter="all">All Skills</button>
-        <button class="skills-tab-btn" data-filter="programming">Programming</button>
-        <button class="skills-tab-btn" data-filter="web">Web Dev</button>
-        <button class="skills-tab-btn" data-filter="tools">Tools & Others</button>
-      </div>
-
-      <!-- Skills Cards Grid -->
-      <div class="skills-grid reveal reveal-delay-1">
-
-        <!-- Java (Programming) -->
-        <div class="skill-card glass-card" data-category="programming">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2C8 2 6 5 6 8C6 12 10 14 10 16C10 18 8 19 8 20" stroke-linecap="round" />
-              <path d="M15 5C13 5 11 7 11 9C11 11 13 12 13 14C13 16 11 17 11 18" stroke-linecap="round" />
-              <path d="M5 21C5 21 8 22 12 22C16 22 19 21 19 21" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h4>Java</h4>
-          <span class="skill-level">Advanced / Academic</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="85%"></div>
-          </div>
-        </div>
-
-        <!-- Python (Programming) -->
-        <div class="skill-card glass-card" data-category="programming">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path
-                d="M12 2H9C6.24 2 4 4.24 4 7V10C4 11.66 5.34 13 7 13H12V15C12 16.66 10.66 18 9 18H8C5.24 18 3 20.24 3 23"
-                stroke-linecap="round" />
-              <path
-                d="M12 22H15C17.76 22 20 19.76 20 17V14C20 12.34 18.66 11 17 11H12V9C12 7.34 13.66 6 15 6H16C18.76 6 21 3.76 21 1"
-                stroke-linecap="round" />
-            </svg>
-          </div>
-          <h4>Python</h4>
-          <span class="skill-level">Intermediate / Scripts</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="80%"></div>
-          </div>
-        </div>
-
-        <!-- JavaScript (Programming / Web) -->
-        <div class="skill-card glass-card" data-category="programming web">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="M13 17V15C13 14 14 13 15 13H16C17 13 17 14 17 15V17" stroke-linecap="round" />
-              <path d="M10 13C10 12 11 11 12 11C13 11 13 12 13 13V15C13 16 12 17 10 17" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h4>JavaScript</h4>
-          <span class="skill-level">Intermediate / ES6+</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="75%"></div>
-          </div>
-        </div>
-
-        <!-- HTML5 (Web) -->
-        <div class="skill-card glass-card" data-category="web">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M4 3L5.5 19L12 21L18.5 19L20 3H4Z" />
-              <path d="M12 7H8.5L8.8 11H12M12 14H9L9.2 16.5L12 17.2" />
-              <path d="M12 7H15.5L15.1 11.5M12 14H15L14.7 16.5L12 17.2" />
-            </svg>
-          </div>
-          <h4>HTML5</h4>
-          <span class="skill-level">Advanced</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="90%"></div>
-          </div>
-        </div>
-
-        <!-- CSS3 (Web) -->
-        <div class="skill-card glass-card" data-category="web">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M4 3L5.5 19L12 21L18.5 19L20 3H4Z" />
-              <path d="M8.5 7H15.5L15 12H9L9.2 14.5L12 15.2L14.8 14.5M8.5 7L8.8 10.5" />
-            </svg>
-          </div>
-          <h4>CSS3</h4>
-          <span class="skill-level">Advanced / Flex / Grid</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="85%"></div>
-          </div>
-        </div>
-
-        <!-- Full Stack Dev (Web) -->
-        <div class="skill-card glass-card" data-category="web">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="2" y="4" width="20" height="11" rx="2" />
-              <path d="M6 19H18M10 15L10 19M14 15L14 19" stroke-linecap="round" />
-              <circle cx="6" cy="9" r="1.5" />
-              <circle cx="10" cy="9" r="1.5" />
-            </svg>
-          </div>
-          <h4>Full Stack Dev</h4>
-          <span class="skill-level">Basic Foundations</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="65%"></div>
-          </div>
-        </div>
-
-        <!-- Git & GitHub (Tools) -->
-        <div class="skill-card glass-card" data-category="tools">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="18" cy="18" r="3" />
-              <circle cx="6" cy="6" r="3" />
-              <circle cx="6" cy="18" r="3" />
-              <path d="M6 9V15M18 15V13C18 10.79 16.21 9 14 9H9" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h4>Git & GitHub</h4>
-          <span class="skill-level">Version Control</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="80%"></div>
-          </div>
-        </div>
-
-        <!-- Video Editing (Tools) -->
-        <div class="skill-card glass-card" data-category="tools">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="2" y="5" width="20" height="14" rx="2" />
-              <path d="M7 5V19M17 5V19M2 9.5H7M17 9.5H22M2 14.5H7M17 14.5H22" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h4>Video Editing</h4>
-          <span class="skill-level">Basic Production</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="70%"></div>
-          </div>
-        </div>
-
-        <!-- Trading (Tools) -->
-        <div class="skill-card glass-card" data-category="tools">
-          <div class="skill-icon-wrap">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M3 3V21H21" stroke-linecap="round" />
-              <path d="M18.5 9L13.5 14L10.5 11L5.5 16" stroke-linecap="round" stroke-linejoin="round" />
-              <circle cx="18.5" cy="9" r="1.5" fill="currentColor" />
-            </svg>
-          </div>
-          <h4>Beginner Trading</h4>
-          <span class="skill-level">Analysis / Strategy</span>
-          <div class="skill-bar">
-            <div class="skill-progress" data-width="50%"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       PROJECTS SECTION
-       ========================================================================== -->
-  <section class="projects section" id="projects">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Portfolio</span>
-        <h2 class="section-title">Featured Applications</h2>
-      </div>
-
-      <!-- Project Category Filters -->
-      <div class="projects-filter reveal">
-        <button class="skills-tab-btn active" data-proj-filter="all">All Projects</button>
-        <button class="skills-tab-btn" data-proj-filter="dev">Development</button>
-        <button class="skills-tab-btn" data-proj-filter="websites">Websites</button>
-      </div>
-
-      <div class="projects-grid">
-
-        <!-- Smart Campus -->
-        <div class="project-card glass-card tilt-card reveal" data-proj-cat="academic">
-          <div class="project-card-image">
-            <div class="project-visual-overlay"></div>
-
-            <!-- Premium Grid Mockup -->
-            <div class="prem-project-cover">
-              <div class="prem-cover-campus">
-                <!-- Background particles -->
-                <div class="campus-particle campus-particle-1"></div>
-                <div class="campus-particle campus-particle-2"></div>
-
-                <!-- Scanning light indicator -->
-                <div class="campus-scanner"></div>
-
-                <div class="campus-mock-header">
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                </div>
-                <div class="campus-mock-body">
-                  <div class="campus-mock-left">
-                    <div class="campus-mock-card campus-card-float-1">
-                      <div class="campus-glass-highlight"></div>
-                    </div>
-                    <div class="campus-mock-card campus-card-float-2">
-                      <div class="campus-glass-highlight"></div>
-                    </div>
-                  </div>
-                  <!-- Connection line in between -->
-                  <div class="campus-conn-line"></div>
-                  <div class="campus-mock-right campus-card-float-3">
-                    <!-- Icon with breathing animation inside -->
-                    <div class="campus-mock-icon"></div>
-                    <div class="campus-glass-highlight"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">HTML</span>
-              <span class="project-tag">CSS</span>
-              <span class="project-tag">Web Portal</span>
-            </div>
-            <h3 class="project-title">Smart Campus</h3>
-            <p class="project-desc">
-              A prototype campus management platform designed to elevate student experience, offering smooth access to
-              courses and central schedules.
-            </p>
-            <div class="project-links">
-              <div class="project-status-completed">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20 6L9 17l-5-5"></path>
-                </svg>
-                Completed
-              </div>
-              <a href="https://smartcampusportal.vercel.app/" target="_blank" rel="noopener" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-                </svg>
-                Live Demo
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Student Helper App -->
-        <div class="project-card glass-card tilt-card reveal reveal-delay-1" data-proj-cat="dev">
-          <div class="project-card-image">
-            <div class="project-visual-overlay"></div>
-
-            <!-- Premium Mobile Viewport -->
-            <div class="prem-project-cover">
-              <div class="prem-cover-phone">
-                <!-- Shimmer highlight line -->
-                <div class="phone-shimmer"></div>
-                <!-- Glowing particles around the phone -->
-                <div class="phone-glow-particle phone-particle-1"></div>
-                <div class="phone-glow-particle phone-particle-2"></div>
-
-                <div class="phone-speaker"></div>
-                <div class="phone-screen-content">
-                  <!-- AI Chat Bubbles -->
-                  <div class="phone-chat-bubble phone-chat-left"></div>
-                  <div class="phone-chat-bubble phone-chat-right"></div>
-
-                  <div class="phone-grid-badges">
-                    <!-- Book Icon -->
-                    <div class="phone-badge-item phone-badge-book">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                      </svg>
-                    </div>
-                    <!-- Calendar Icon -->
-                    <div class="phone-badge-item phone-badge-cal">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                      </svg>
-                    </div>
-                    <!-- Cloud Sync (rotating) -->
-                    <div class="phone-badge-item phone-badge-cloud">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path
-                          d="M22.54 13.52A7 7 0 0 0 19 6h-1a7.5 7.5 0 0 0-14.59 2.52 7 7 0 0 0-.25 10.48A7 7 0 0 0 12 22a7 7 0 0 0 6.88-5.48c.12-.04.24-.04.36-.04a7 7 0 0 0 3.3-8.96z">
-                        </path>
-                      </svg>
-                    </div>
-                    <!-- Notification Badge (pulsing) -->
-                    <div class="phone-badge-item phone-badge-bell">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                      </svg>
-                      <div class="phone-notif-dot"></div>
-                    </div>
-                  </div>
-                  <!-- Search bar (loading shimmer) -->
-                  <div class="phone-search-bar">
-                    <div class="phone-search-shimmer"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">Development</span>
-              <span class="project-tag">Mobile Layout</span>
-              <span class="project-tag">Resources</span>
-            </div>
-            <h3 class="project-title">Student Helper App</h3>
-            <p class="project-desc">
-              A student-focused platform layout designed to organize notes, schedule notifications, and ease
-              collaboration on college resources.
-            </p>
-            <div class="project-links">
-              <div class="project-status-current">
-                <span class="status-dot"></span>
-                Currently Working On
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI Resume Analyzer -->
-        <div class="project-card glass-card tilt-card reveal reveal-delay-2" data-proj-cat="dev">
-          <div class="project-card-image">
-            <div class="project-visual-overlay"></div>
-
-            <!-- Premium Scanner Cover Mockup -->
-            <div class="prem-project-cover">
-              <div class="prem-cover-scanner">
-                <div class="scanner-line"></div>
-                <div class="scanner-doc-grid">
-                  <div class="scanner-doc-line"></div>
-                  <div class="scanner-doc-line"></div>
-                  <div class="scanner-doc-line"></div>
-                  <div class="scanner-doc-line"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">HTML</span>
-              <span class="project-tag">CSS</span>
-              <span class="project-tag">JS</span>
-              <span class="project-tag">Python</span>
-            </div>
-            <h3 class="project-title">AI Resume Analyzer</h3>
-            <p class="project-desc">
-              An intelligent web application that analyzes resumes, matching qualifications against job descriptions and
-              providing actionable feedback for improving applications.
-            </p>
-            <div class="project-links">
-              <div class="project-status-subtle">
-                <span class="status-title">Coming Soon</span>
-                <span class="status-desc">Planning & development in progress</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Personal Finance Tracker -->
-        <div class="project-card glass-card tilt-card reveal" data-proj-cat="dev">
-          <div class="project-card-image">
-            <div class="project-visual-overlay"></div>
-
-            <!-- Premium Financial Graph -->
-            <div class="prem-project-cover">
-              <div class="prem-cover-graph">
-                <svg viewBox="0 0 150 90" class="finance-svg">
-                  <defs>
-                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="var(--accent-cyan)" />
-                      <stop offset="100%" stop-color="var(--accent-purple)" />
-                    </linearGradient>
-                  </defs>
-                  <line x1="10" y1="18" x2="140" y2="18" class="finance-grid-line" />
-                  <line x1="10" y1="45" x2="140" y2="45" class="finance-grid-line" />
-                  <line x1="10" y1="72" x2="140" y2="72" class="finance-grid-line" />
-                  <rect x="25" y="35" width="10" height="37" rx="2" class="finance-bar" />
-                  <rect x="68" y="22" width="10" height="50" rx="2" class="finance-bar" />
-                  <rect x="110" y="28" width="10" height="44" rx="2" class="finance-bar" />
-                  <path d="M10,58 L28,45 L73,28 L115,32 L140,18" class="finance-trend-line" />
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">HTML</span>
-              <span class="project-tag">CSS</span>
-              <span class="project-tag">JS</span>
-              <span class="project-tag">Charts</span>
-            </div>
-            <h3 class="project-title">Personal Finance Tracker</h3>
-            <p class="project-desc">
-              A dashboard tracking monthly incomes and expenses. Visualizes data reports, savings targets, and financial
-              summaries through highly interactive analytical graphs.
-            </p>
-            <div class="project-links">
-              <div class="project-status-subtle">
-                <span class="status-title">Coming Soon</span>
-                <span class="status-desc">Planning & development in progress</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- YAAM Realtors & Consultants -->
-        <div class="project-card glass-card tilt-card reveal" data-proj-cat="websites">
-          <div class="project-card-image">
-            <div class="project-visual-overlay"></div>
-
-            <!-- Premium Browser Mockup -->
-            <div class="prem-project-cover">
-              <div class="prem-cover-campus">
-                <div class="campus-particle campus-particle-1"></div>
-                <div class="campus-particle campus-particle-2"></div>
-
-                <div class="campus-mock-header">
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                </div>
-                <div class="campus-mock-body" style="display: flex; gap: 8px; justify-content: center; align-items: flex-end; padding: 0 10px;">
-                  <div class="campus-mock-card campus-card-float-1" style="width: 25px; height: 60px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3);">
-                    <div class="campus-glass-highlight"></div>
-                  </div>
-                  <div class="campus-mock-card campus-card-float-2" style="width: 30px; height: 80px; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3);">
-                    <div class="campus-glass-highlight"></div>
-                  </div>
-                  <div class="campus-mock-card campus-card-float-3" style="width: 25px; height: 50px; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3);">
-                    <div class="campus-glass-highlight"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">Website</span>
-              <span class="project-tag">Real Estate</span>
-            </div>
-            <h3 class="project-title">Real Estate</h3>
-            <p class="project-desc">
-              A modern real-estate website featuring a polished property and services experience.
-            </p>
-            <div class="project-links">
-              <a href="https://demorealestateweb.vercel.app/" target="_blank" rel="noopener" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-                </svg>
-                Live Website
-              </a>
-              <a href="https://github.com/JAGADIESH009/Yam-Real-Estate" target="_blank" rel="noopener" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                </svg>
-                GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sri Dental Clinic -->
-        <div class="project-card glass-card tilt-card reveal reveal-delay-1" data-proj-cat="websites">
-          <div class="project-card-image">
-            <div class="project-visual-overlay"></div>
-
-            <!-- Premium Browser Mockup -->
-            <div class="prem-project-cover">
-              <div class="prem-cover-campus">
-                <div class="campus-particle campus-particle-1"></div>
-                <div class="campus-particle campus-particle-2"></div>
-
-                <div class="campus-mock-header">
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                </div>
-                <div class="campus-mock-body">
-                  <div class="campus-mock-left" style="flex: 1; align-items: center; justify-content: center;">
-                    <div class="campus-mock-card campus-card-float-2" style="width: 80%; height: 60%;">
-                      <div class="campus-glass-highlight"></div>
-                    </div>
-                  </div>
-                  <div class="campus-mock-right campus-card-float-1">
-                    <div class="campus-mock-card" style="width: 60px; height: 60px; border-radius: 50%;"></div>
-                    <div class="campus-glass-highlight"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">Website</span>
-              <span class="project-tag">Medical</span>
-            </div>
-            <h3 class="project-title">Dental Clinic</h3>
-            <p class="project-desc">
-              A modern dental clinic website featuring a clean, professional, patient-focused experience with <span class="project-tag" style="display: inline-block; padding: 0.15rem 0.5rem; margin: 0 0.2rem; border-color: rgba(139, 92, 246, 0.3); box-shadow: 0 0 10px rgba(139, 92, 246, 0.1);">WhatsApp automation</span> for appointment booking.
-            </p>
-            <div class="project-links">
-              <a href="https://demodentalclinicweb.vercel.app/" target="_blank" rel="noopener" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-                </svg>
-                Live Website
-              </a>
-              <a href="https://github.com/JAGADIESH009/Sri-Dental-Clinic" target="_blank" rel="noopener" class="project-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                </svg>
-                GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Vanya Farmer Assistant -->
-        <div class="project-card glass-card tilt-card reveal reveal-delay-2" data-proj-cat="websites">
-          <div class="project-card-image">
-            <div class="project-visual-overlay"></div>
-
-            <!-- Premium Browser Mockup -->
-            <div class="prem-project-cover">
-              <div class="prem-cover-campus">
-                <div class="campus-particle campus-particle-1"></div>
-                <div class="campus-particle campus-particle-2"></div>
-
-                <div class="campus-mock-header">
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                  <div class="campus-mock-circle"></div>
-                </div>
-                <div class="campus-mock-body" style="grid-template-columns: 1fr; gap: 8px;">
-                  <div class="campus-mock-card campus-card-float-1" style="height: 35px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: flex-end; padding: 4px; gap: 4px;">
-                    <div style="flex: 1; height: 40%; background: rgba(16, 185, 129, 0.4); border-radius: 2px;"></div>
-                    <div style="flex: 1; height: 70%; background: rgba(16, 185, 129, 0.4); border-radius: 2px;"></div>
-                    <div style="flex: 1; height: 100%; background: rgba(16, 185, 129, 0.4); border-radius: 2px;"></div>
-                    <div class="campus-glass-highlight"></div>
-                  </div>
-                  <div style="display: flex; gap: 8px; height: 30px;">
-                    <div class="campus-mock-card campus-card-float-2" style="flex: 1; border-radius: 6px; background: rgba(16, 185, 129, 0.08); border: 1px dashed rgba(16, 185, 129, 0.3);">
-                      <div class="campus-glass-highlight"></div>
-                    </div>
-                    <div class="campus-mock-card campus-card-float-3" style="flex: 1; border-radius: 6px; background: rgba(16, 185, 129, 0.08); border: 1px dashed rgba(16, 185, 129, 0.3);">
-                      <div class="campus-glass-highlight"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-body">
-            <div class="project-tags">
-              <span class="project-tag">Website</span>
-              <span class="project-tag">Agriculture</span>
-            </div>
-            <h3 class="project-title">Vanya Farmer Assistant</h3>
-            <p class="project-desc">
-              Helping farmers by providing all necessary farming resources in one place. Currently in active development phase.
-            </p>
-            <div class="project-links">
-              <div class="project-status-subtle">
-                <span class="status-title">Developing</span>
-              </div>
-              <a href="https://vanya-farm-ai.vercel.app/" target="_blank" rel="noopener" class="project-link" style="margin-left: auto;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-                </svg>
-                Live Preview
-              </a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       LEARNING JOURNEY TIMELINE
-       ========================================================================== -->
-  <section class="section" id="timeline">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Path</span>
-        <h2 class="section-title">My Learning Journey</h2>
-      </div>
-
-      <div class="timeline-container">
-        <div class="timeline-line"></div>
-
-        <!-- Glowing progression filler line -->
-        <div class="timeline-fill-line" id="timeline-fill-line"></div>
-
-        <!-- VIT-AP University -->
-        <div class="timeline-item reveal" data-index="0">
-          <div class="timeline-dot">
-            <div class="timeline-dot-inner"></div>
-          </div>
-          <div class="timeline-card glass-card">
-            <span class="timeline-date">June 2023 - Present</span>
-            <h3 class="timeline-title">B.Tech in Computer Science</h3>
-            <div class="timeline-subtitle">VIT-AP University, Andhra Pradesh</div>
-            <div class="timeline-content">
-              Building academic core knowledge in Data Structures, Algorithms, OOP, Databases, and operating systems.
-              Began developing projects in Java and Python.
-            </div>
-          </div>
-        </div>
-
-        <!-- Self-Learning Full Stack Development -->
-        <div class="timeline-item reveal" data-index="1">
-          <div class="timeline-dot">
-            <div class="timeline-dot-inner"></div>
-          </div>
-          <div class="timeline-card glass-card">
-            <span class="timeline-date">Early 2024 - Present</span>
-            <h3 class="timeline-title">Self-Learning Full Stack Development</h3>
-            <div class="timeline-subtitle">Online resources & Practical builds</div>
-            <div class="timeline-content">
-              Dived deep into HTML5, CSS3, ES6 JavaScript, and responsive design systems. Started exploring back-end
-              technologies and database connections to build dynamic applications.
-            </div>
-          </div>
-        </div>
-
-        <!-- Personal Finance Tracker & AI Resume Analyzer -->
-        <div class="timeline-item reveal" data-index="2">
-          <div class="timeline-dot">
-            <div class="timeline-dot-inner"></div>
-          </div>
-          <div class="timeline-card glass-card">
-            <span class="timeline-date">Late 2024</span>
-            <h3 class="timeline-title">Hands-On Projects Execution</h3>
-            <div class="timeline-subtitle">Putting skills into practice</div>
-            <div class="timeline-content">
-              Developed the AI Resume Analyzer integrating basic parsing concepts, and designed the Personal Finance
-              Tracker using modular vanilla JS components and charts for real-world visualization.
-            </div>
-          </div>
-        </div>
-
-        <!-- Exploring Cloud & Modern Tools -->
-        <div class="timeline-item reveal" data-index="3">
-          <div class="timeline-dot">
-            <div class="timeline-dot-inner"></div>
-          </div>
-          <div class="timeline-card glass-card">
-            <span class="timeline-date">Present Day</span>
-            <h3 class="timeline-title">Cloud Deployments & Git Workflows</h3>
-            <div class="timeline-subtitle">Scaling application scope</div>
-            <div class="timeline-content">
-              Acquiring cloud fundamentals and deploying campus web concepts. Consistently utilizing Git/GitHub for
-              version control, tracking changes, and hosting prototypes.
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       CONTACT SECTION
-       ========================================================================== -->
-  <section class="contact section" id="contact">
-    <div class="container">
-      <div class="contact-grid">
-        <div class="contact-left-column">
-          <div class="section-header reveal">
-            <span class="section-tag">Get in Touch</span>
-            <h2 class="section-title">Let's Build Together</h2>
-            <p class="contact-desc" style="max-width: 600px;">
-              I'm currently seeking software development internships, academic collaborations, and full stack
-              opportunities. If you'd like to work together, please feel free to drop a message!
-            </p>
-          </div>
-
-          <div class="contact-cards-grid reveal">
-            <a href="mailto:work.jagadiesh@gmail.com" class="contact-link-card glass-card email-card reveal-delay-1">
-              <div class="card-glow-bg"></div>
-              <div class="card-glass-shine"></div>
-              <div class="contact-link-icon">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                  </path>
-                </svg>
-              </div>
-              <div class="contact-link-details">
-                <h5>Email</h5>
-              </div>
-              <div class="contact-link-arrow">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
-            </a>
-
-          <a href="https://www.linkedin.com/in/jagadieshr" target="_blank" rel="noopener"
-            class="contact-link-card glass-card linkedin-card reveal-delay-2">
-            <div class="card-glow-bg"></div>
-            <div class="card-glass-shine"></div>
-            <div class="contact-link-icon">
-              <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-              </svg>
-            </div>
-            <div class="contact-link-details">
-              <h5>LinkedIn</h5>
-            </div>
-            <div class="contact-link-arrow">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </div>
-          </a>
-
-          <a href="https://github.com/JAGADIESH009" target="_blank" rel="noopener"
-            class="contact-link-card glass-card github-card reveal-delay-3">
-            <div class="card-glow-bg"></div>
-            <div class="card-glass-shine"></div>
-            <div class="contact-link-icon">
-              <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-            </div>
-            <div class="contact-link-details">
-              <h5>GitHub</h5>
-            </div>
-            <div class="contact-link-arrow">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <div class="contact-form glass-card reveal reveal-delay-2">
-          <!-- Success Overlay -->
-          <div class="form-success-overlay" id="form-success">
-            <div class="success-icon-wrap">
-              <svg viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-            <h4>Message Sent!</h4>
-            <p>Thank you! Your message has been sent successfully.</p>
-          </div>
-
-          <!-- Error Overlay -->
-          <div class="form-error-overlay" id="form-error">
-            <div class="error-icon-wrap">
-              <svg viewBox="0 0 24 24">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </div>
-            <h4>Error</h4>
-            <p>Failed to send message. Please try again later.</p>
-          </div>
-
-          <h3 class="form-title">Send a Message</h3>
-          <form id="portfolio-form" action="#" novalidate>
-            <div class="form-group">
-              <input type="text" id="name" class="form-input" placeholder=" ">
-              <label for="name" class="form-label">Your Name</label>
-              <span class="inline-error" id="name-error"></span>
-            </div>
-            <div class="form-group">
-              <input type="email" id="email" class="form-input" placeholder=" ">
-              <label for="email" class="form-label">Email Address</label>
-              <span class="inline-error" id="email-error"></span>
-            </div>
-            <div class="form-group">
-              <input type="text" id="subject" class="form-input" placeholder=" ">
-              <label for="subject" class="form-label">Subject</label>
-              <span class="inline-error" id="subject-error"></span>
-            </div>
-            <div class="form-group">
-              <textarea id="message" class="form-input form-textarea" placeholder=" "></textarea>
-              <label for="message" class="form-label">Your Message</label>
-              <span class="inline-error" id="message-error"></span>
-            </div>
-            <button type="submit" class="btn btn-primary btn-submit magnetic-btn btn-ripple">
-              <span class="btn-text">Send Message</span>
-              <span class="spinner" id="submit-spinner"></span>
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       FOOTER
-       ========================================================================== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-copy">
-          &copy; <span id="current-year"></span> Jagadiesh R. All rights reserved.
-        </div>
-        <div class="footer-badge-list">
-          <span class="footer-badge">HTML5</span>
-          <span class="footer-badge">CSS3</span>
-          <span class="footer-badge">Vanilla JS</span>
-        </div>
-        <a href="#hero" class="back-to-top" aria-label="Scroll back to top">
-          <svg viewBox="0 0 24 24">
-            <polyline points="18 15 12 9 6 15"></polyline>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==========================================================================
-       13. SCRIPTS SEQUENTIAL LOADS (No modules to allow CORS-free file:// double-click verification)
+       13. SCRIPTS SEQUENTIAL LOADS
        ========================================================================== -->
   <script src="data/constants.js"></script>
   <script src="data/skills.js"></script>
-  <script src="data/projects.js"></script>
+  <script src="js/works-wheel.js"></script>
+  <script src="js/works-init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Custom Scripts -->
+  <script src="js/utils.js?v=4"></script>
+  <script src="js/cursor.js?v=4"></script>
+  <script src="js/particles.js?v=4"></script>
+  <script src="js/navbar.js?v=4"></script>
+  <script src="js/animations.js?v=6"></script>
+  <script src="js/motion-footer.js?v=1"></script>
+  <script src="js/lanyard.js?v=6"></script>
+  <script src="js/magnetic-type.js?v=2"></script>
 
-  <script src="js/utils.js"></script>
-  <script src="js/cursor.js"></script>
-  <script src="js/particles.js"></script>
-  <script src="js/navbar.js"></script>
-  <script src="js/projects.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/contact.js"></script>
-
-  <!-- Main entrypoint initialization -->
-  <script src="js/main.js"></script>
+  <!-- Main Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="js/particle-animation.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/contact.js?v=2"></script>
+  <script src="js/main.js?v=4"></script>
 
 </body>
 

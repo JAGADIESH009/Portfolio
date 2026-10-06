@@ -33,11 +33,13 @@ function initNavbar() {
   }
 
   window.addEventListener('scroll', () => {
-    // Header glass switch
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+    // Header glass switch - appear after scrolling past hero
+    if (header) {
+      if (window.scrollY > window.innerHeight * 0.9) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
     }
 
     // Active link highlighting indicator

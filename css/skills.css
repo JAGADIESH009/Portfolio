@@ -1,43 +1,339 @@
-/* Skills Section */
-.skills-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3.5rem; flex-wrap: wrap; }
-.skills-tab-btn {
-  background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
-  color: var(--text-secondary); padding: 0.65rem 1.6rem; border-radius: 100px;
-  font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all var(--transition-fast);
-  font-family: var(--font-display);
-}
-.skills-tab-btn:hover, .skills-tab-btn.active {
-  background: rgba(139, 92, 246, 0.08); border-color: rgba(139, 92, 246, 0.3); color: var(--text-primary);
-}
-
-.skills-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-  column-gap: 2rem; 
-  row-gap: 3.5rem; 
-}
-.skill-card { padding: 2.25rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; min-height: 260px; }
-
-.skill-icon-wrap {
-  width: 60px; height: 60px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px; display: flex; justify-content: center; align-items: center;
-  margin-bottom: 1.5rem; transition: all var(--transition-normal); color: var(--text-secondary);
-}
-.skill-card:hover .skill-icon-wrap {
-  background: rgba(139, 92, 246, 0.08); border-color: rgba(139, 92, 246, 0.3);
-  color: var(--accent-purple); transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+/* ==========================================================================
+   WHAT I KNOW SECTION (KINETIC TECHNOLOGY INDEX)
+   ========================================================================== */
+.magnetic-editorial {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  background-color: #0B0B0B; /* Master Background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 4vw 4vw;
+  overflow: hidden;
+  z-index: 10;
+  
+  /* Master Palette Variables */
+  --cream-primary: #F1EBDD;
+  --cream-secondary: #CFC8BA;
+  --text-muted: #77736B;
 }
 
-.skill-card h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
-.skill-level { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
-.skill-bar { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.05); border-radius: 2px; overflow: hidden; margin-top: auto; }
-.skill-progress { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue)); border-radius: 2px; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
-
-.skill-card:hover .skill-progress {
-  box-shadow: 0 0 8px var(--accent-purple);
-  animation: pulse-progress-glow 1.5s infinite;
+.skills-index-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
 }
-@keyframes pulse-progress-glow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.3); } }
 
-.skill-card.hidden { display: none; }
+/* ── TOP HEADER ── */
+.skills-index-header {
+  display: flex;
+  align-items: baseline;
+  gap: 3vw;
+  margin-top: 4vh;
+}
+
+.skills-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  color: #EAE4D9;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.skills-subtitle {
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  font-weight: 500;
+  color: rgba(234, 228, 217, 0.4);
+}
+
+/* ── TYPOGRAPHIC BANDS (INDEX) ── */
+.skills-index-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 4vh;
+}
+
+.skills-row {
+  display: flex;
+  align-items: center;
+  padding: 3vh 0;
+  border-top: 1px solid var(--row-accent-faint);
+  position: relative;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+.skills-row:last-child {
+  border-bottom: 1px solid var(--row-accent-faint);
+}
+
+.row-meta {
+  width: 15%;
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+}
+
+.row-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.1rem;
+  color: var(--row-accent);
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
+
+.row-label {
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--row-accent);
+  opacity: 0.6;
+  font-weight: 600;
+  transition: opacity 0.4s ease;
+}
+
+.row-techs {
+  width: 85%;
+  display: flex;
+  align-items: center;
+  gap: 3vw;
+  flex-wrap: wrap;
+}
+
+/* Typography classes */
+.tech-word {
+  display: inline-block;
+  will-change: transform;
+  transition: opacity 0.4s ease, color 0.4s ease;
+  cursor: default;
+  user-select: none;
+  /* Default base color variable for hover calculations */
+  --base-color: var(--text-muted);
+  color: var(--base-color);
+}
+
+/* Tint Hierarchy Classes */
+.tint-dominant { --base-color: var(--cream-primary); }
+.tint-light { --base-color: color-mix(in srgb, var(--cream-secondary) 90%, var(--row-accent) 10%); }
+.tint-medium { --base-color: color-mix(in srgb, var(--cream-secondary) 75%, var(--row-accent) 25%); }
+.tint-strong { --base-color: color-mix(in srgb, var(--cream-secondary) 50%, var(--row-accent) 50%); }
+
+/* Scale typography */
+.tech-huge {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3rem, 5.5vw, 6.5rem);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tech-large {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 4.5rem);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tech-medium {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(1.5rem, 2.5vw, 2.8rem);
+  text-transform: uppercase;
+}
+
+.tech-italic {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2.2vw, 2.4rem);
+  text-transform: uppercase;
+}
+
+.tech-small {
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+  letter-spacing: 0.15em;
+  font-weight: 500;
+}
+
+/* ── ASYMMETRIC ALIGNMENTS & COLORS ── */
+.skills-row[data-row="1"] {
+  --row-accent: #5367D8; /* Electric Cobalt */
+  --row-accent-faint: rgba(83, 103, 216, 0.1);
+  --row-accent-wash: rgba(83, 103, 216, 0.05);
+}
+.skills-row[data-row="1"] .row-techs {
+  justify-content: flex-start;
+}
+
+.skills-row[data-row="2"] {
+  --row-accent: #C66A52; /* Burnt Coral */
+  --row-accent-faint: rgba(198, 106, 82, 0.1);
+  --row-accent-wash: rgba(198, 106, 82, 0.05);
+}
+.skills-row[data-row="2"] .row-techs {
+  justify-content: flex-start;
+  padding-left: 8vw;
+}
+
+.skills-row[data-row="3"] {
+  --row-accent: #71866F; /* Muted Sage */
+  --row-accent-faint: rgba(113, 134, 111, 0.1);
+  --row-accent-wash: rgba(113, 134, 111, 0.05);
+}
+.skills-row[data-row="3"] .row-techs {
+  justify-content: space-between;
+}
+
+.skills-row[data-row="4"] {
+  --row-accent: #8B78A5; /* Dusty Violet */
+  --row-accent-faint: rgba(139, 120, 165, 0.1);
+  --row-accent-wash: rgba(139, 120, 165, 0.05);
+}
+.skills-row[data-row="4"] .row-techs {
+  justify-content: flex-start;
+  padding-left: 15vw; /* Further offset right */
+}
+
+/* ── COLOR BAR ACCENT ── */
+.row-label {
+  display: flex;
+  align-items: center;
+}
+.row-label::after {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 15px; /* Default small line */
+  background-color: var(--row-accent);
+  opacity: 0.3;
+  margin-left: 1.5vw;
+  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+}
+
+/* ── HOVER INTERACTIONS ── */
+/* Base inactive state for rows when another row is hovered */
+.skills-index-list:hover .skills-row {
+  opacity: 0.4;
+}
+
+/* Active Row Hover */
+.skills-index-list:hover .skills-row:hover {
+  opacity: 1;
+  background-color: var(--row-accent-wash);
+  border-top-color: color-mix(in srgb, var(--row-accent) 30%, transparent);
+}
+
+.skills-row:hover .row-num {
+  opacity: 0.7;
+}
+
+.skills-row:hover .row-label {
+  opacity: 0.9;
+}
+
+.skills-row:hover .row-label::after {
+  opacity: 0.9;
+  /* Width is now updated by JS using a CSS variable, with a fallback */
+  width: calc(25px + var(--stretch-amount, 0px));
+}
+
+/* Enhance saturation/contrast of row tech words slightly */
+.skills-row:hover .tint-light { --base-color: color-mix(in srgb, var(--cream-secondary) 75%, var(--row-accent) 25%); }
+.skills-row:hover .tint-medium { --base-color: color-mix(in srgb, var(--cream-secondary) 60%, var(--row-accent) 40%); }
+.skills-row:hover .tint-strong { --base-color: color-mix(in srgb, var(--row-accent) 60%, var(--cream-secondary) 40%); }
+
+/* Let JS handle the translate displacement, but add CSS transitions for opacity/scale */
+.skills-row:hover .tech-word {
+  opacity: 1;
+}
+
+/* Individual Technology Hover */
+.tech-word:hover {
+  /* Shift color subtly towards category accent */
+  color: color-mix(in srgb, var(--base-color) 85%, var(--row-accent) 15%);
+}
+
+/* Editorial Annotation on Word Hover */
+.tech-word::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: var(--row-accent);
+  opacity: 0;
+  transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+}
+.tech-word:hover::after {
+  width: 20px;
+  opacity: 0.8;
+}
+
+@media (max-width: 1023px) {
+  .magnetic-editorial {
+    padding: 10svh 6vw;
+    height: auto; 
+    min-height: 100svh;
+  }
+  .skills-index-container {
+    max-width: 100vw;
+  }
+  .skills-index-header {
+    flex-direction: column; 
+    gap: 1vh; 
+    margin-top: 2vh;
+    margin-bottom: 4vh;
+  }
+  .skills-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 4vh 0;
+  }
+  .row-meta {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 2vh;
+  }
+  .row-label::after {
+    display: none;
+  }
+  .row-techs {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 1.5vh 3vw;
+    padding-left: 0 !important;
+  }
+  
+  .skills-row[data-row="1"] .tech-word:nth-child(1), .skills-row[data-row="1"] .tech-word:nth-child(2) { flex-basis: 100%; }
+  .skills-row[data-row="2"] .tech-word:nth-child(1), .skills-row[data-row="2"] .tech-word:nth-child(2) { flex-basis: 100%; }
+  .skills-row[data-row="3"] .tech-word:nth-child(1), .skills-row[data-row="3"] .tech-word:nth-child(2), .skills-row[data-row="3"] .tech-word:nth-child(3) { flex-basis: 100%; }
+  .skills-row[data-row="4"] .tech-word:nth-child(1), .skills-row[data-row="4"] .tech-word:nth-child(2), .skills-row[data-row="4"] .tech-word:nth-child(3) { flex-basis: 100%; }
+  
+  .tech-huge { font-size: 11vw; }
+  .tech-large { font-size: 9vw; }
+  .tech-medium { font-size: 7vw; }
+  .tech-italic { font-size: 6vw; }
+  .tech-small { font-size: 5vw; }
+}
+
+@media (max-width: 767px) {
+  .tech-huge { font-size: 13vw; }
+  .tech-large { font-size: 11vw; }
+  .tech-medium { font-size: 9vw; }
+  .tech-italic { font-size: 7.5vw; }
+  .tech-small { font-size: 6.5vw; }
+}
