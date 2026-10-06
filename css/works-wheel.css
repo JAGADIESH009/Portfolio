@@ -119,9 +119,11 @@
   overflow: hidden;
   border-radius: 4px; /* Slight rounding for editorial feel */
   box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8);
-  will-change: transform;
+  will-change: transform, filter;
   border: 1px solid rgba(255, 255, 255, 0.05);
   background: #111;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
+  filter: brightness(1);
 }
 
 .works-wheel-active-title {
@@ -214,6 +216,8 @@
 
 /* Image overrides for hover state */
 .works-wheel-card:hover .works-wheel-card-inner {
+  transform: scale(1.02);
+  filter: brightness(1.08);
   border-color: rgba(255, 255, 255, 0.15);
 }
 

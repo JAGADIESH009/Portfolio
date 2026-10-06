@@ -73,6 +73,7 @@ class WorksWheel {
       if (item.href) {
         card.href = item.href;
         card.target = "_blank";
+        card.rel = "noopener noreferrer";
         card.setAttribute('data-cursor', 'project');
       }
       card.id = `works-wheel-${i}`;
@@ -217,7 +218,7 @@ class WorksWheel {
           
           // Vertical Cinematic Math
           const cardH = this.metrics.cardH || (w * 0.5);
-          const gap = cardH * 0.85 + 40; // Next card sits below this gap
+          const gap = cardH * 1.15 + 120; // Next card sits clearly below
           
           translateY = d * gap;
           
@@ -227,7 +228,7 @@ class WorksWheel {
           // Slight perspective rotation
           rotate = d * -5; 
 
-          card.style.pointerEvents = Math.abs(d) < 0.1 ? 'auto' : 'none';
+          card.style.pointerEvents = 'auto';
         }
 
         const shiftX = isMobile ? 0 : w * 0.12;
