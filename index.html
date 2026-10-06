@@ -338,33 +338,40 @@
           </div>
           <div class="contact-right">
             <div class="glass-card">
-              <div class="glass-card-header">CONTACT</div>
+              <div class="glass-card-header">
+                CONTACT
+                <span class="glass-card-sub">START A CONVERSATION.</span>
+              </div>
               <form id="portfolio-form" class="custom-form">
-                <div class="form-group">
-                  <label for="name">NAME *</label>
-                  <input type="text" id="name" name="name" required />
-                  <span class="inline-error" id="name-error"></span>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="name">NAME *</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required />
+                    <span class="inline-error" id="name-error"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">EMAIL *</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required />
+                    <span class="inline-error" id="email-error"></span>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="email">EMAIL *</label>
-                  <input type="email" id="email" name="email" required />
-                  <span class="inline-error" id="email-error"></span>
-                </div>
-                <div class="form-group">
-                  <label for="phone">PHONE NUMBER <span class="optional-text">Optional</span></label>
-                  <input type="tel" id="phone" name="phone" />
-                </div>
-                <div class="form-group">
-                  <label for="subject">SUBJECT <span class="optional-text">Optional</span></label>
-                  <input type="text" id="subject" name="subject" />
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="phone">PHONE NUMBER <span class="optional-text">Optional</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="Your phone number" />
+                  </div>
+                  <div class="form-group">
+                    <label for="subject">SUBJECT <span class="optional-text">Optional</span></label>
+                    <input type="text" id="subject" name="subject" placeholder="What can I help with?" />
+                  </div>
                 </div>
                 <div class="form-group message-group">
                   <label for="message">MESSAGE *</label>
                   <textarea id="message" name="message" placeholder="Tell me a little about what you're building..." required></textarea>
                   <span class="inline-error" id="message-error"></span>
                 </div>
-                <button type="submit" class="btn-submit magnetic-btn" data-cursor="contact">
-                  <span class="btn-text">SEND MESSAGE &rarr;</span>
+                <button type="submit" class="editorial-submit-btn">
+                  SEND MESSAGE <span class="arrow">&rarr;</span>
                 </button>
               </form>
             </div>
