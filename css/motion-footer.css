@@ -149,9 +149,11 @@
 .ticker-item {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.14em;
-  color: rgba(207, 200, 186, 0.85); /* Subtle muted cream/gray */
+  color: #CFC8BA;
+  opacity: 0.9;
+  text-shadow: 0 0 10px rgba(241, 235, 221, 0.12);
   text-transform: uppercase;
   white-space: nowrap;
   padding-right: 2rem;
@@ -161,7 +163,8 @@
 }
 
 .ticker-item .star {
-  color: #77736B;
+  color: #F1EBDD;
+  opacity: 0.9;
   font-size: 0.7em;
 }
 
