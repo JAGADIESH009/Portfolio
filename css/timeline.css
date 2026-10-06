@@ -86,14 +86,16 @@
   .journey-milestones {
     position: relative;
     display: flex;
+    align-items: center;
+    height: 1px;
     gap: 16vw; /* Space out the items */
   }
 
-  /* Each item acts as a zero-height anchor point on the axis */
+  /* Each item acts as an anchor point on the axis */
   .journey-item {
     position: relative;
     width: 20vw;
-    height: 0;
+    height: 100%;
     flex-shrink: 0;
   }
 
@@ -101,7 +103,7 @@
   .journey-dot {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 50%;
     width: 14px;
     height: 14px;
     border-radius: 50%;
@@ -134,24 +136,24 @@
 
   /* Top Item Geometry (Content goes UP) */
   .journey-item-top .journey-stem {
-    bottom: 0; /* Starts at the exact axis line */
+    bottom: 50%; /* Starts at the exact axis line */
     transform-origin: bottom center;
   }
 
   .journey-item-top .journey-content {
-    bottom: 4.5rem; /* Sits directly on top of the stem */
+    bottom: calc(50% + 4.5rem); /* Sits directly on top of the stem */
     transform: translateY(20px); 
     justify-content: flex-end;
   }
 
   /* Bottom Item Geometry (Content goes DOWN) */
   .journey-item-bottom .journey-stem {
-    top: 0; /* Starts at the exact axis line */
+    top: 50%; /* Starts at the exact axis line */
     transform-origin: top center;
   }
 
   .journey-item-bottom .journey-content {
-    top: 4.5rem; /* Hangs directly beneath the stem */
+    top: calc(50% + 4.5rem); /* Hangs directly beneath the stem */
     transform: translateY(-20px); 
     justify-content: flex-start;
   }
@@ -248,6 +250,8 @@
   .journey-milestones {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    height: auto;
     gap: 3.5rem;
     position: relative;
     padding-top: 1rem;
@@ -259,6 +263,8 @@
     padding-left: 4.5rem; /* Space for dot and padding */
     display: flex;
     flex-direction: column;
+    height: auto;
+    width: 100%;
   }
 
   .journey-stem {
