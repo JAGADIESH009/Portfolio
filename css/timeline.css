@@ -8,6 +8,7 @@
   background-color: var(--bg-primary, #0B0B0B);
   color: var(--text-primary, #F1EBDD);
   padding: 0 !important;
+  overflow-x: hidden;
 }
 
 /* ==========================================================================
@@ -84,46 +85,47 @@
 
   /* Milestones */
   .journey-milestones {
+    position: relative;
     display: flex;
-    gap: 12vw;
-    align-items: center;
+    gap: 16vw; /* Space out the items */
   }
 
-  /* Each item is positioned relative to the axis (which is vertically centered) */
+  /* Each item acts as a zero-height anchor point on the axis */
   .journey-item {
     position: relative;
-    width: 25vw;
+    width: 20vw;
+    height: 0;
     flex-shrink: 0;
-    height: 0; /* Purely structural coordinate system */
   }
 
-  /* The Dot sits exactly on the axis */
+  /* The Dot sits EXACTLY on the axis */
   .journey-dot {
     position: absolute;
     left: 0;
-    top: 50%;
-    width: 11px;
-    height: 11px;
+    top: 0;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background-color: #EAE4D9;
     z-index: 2;
-    transform: translateY(-50%) scale(0);
+    transform: translate(-50%, -50%) scale(0);
     will-change: transform, background-color, box-shadow;
   }
 
   /* STEM AND CONTENT */
   .journey-stem {
     position: absolute;
-    left: 5px; /* Aligned with center of 11px dot */
+    left: 0;
     width: 1px;
     background-color: rgba(234, 228, 217, 0.4);
+    height: 4.5rem; /* Stem height */
+    transform: translateX(-50%);
     will-change: transform;
-    height: 2.5rem; /* Fixed stem height */
   }
 
   .journey-content {
     position: absolute;
-    left: 20px; /* offset from stem */
+    left: 1.5rem; /* Margin to the right of stem */
     width: 100%;
     opacity: 0;
     will-change: transform, opacity;
@@ -131,27 +133,27 @@
     flex-direction: column;
   }
 
-  /* Top Item Geometry */
+  /* Top Item Geometry (Content goes UP) */
   .journey-item-top .journey-stem {
-    bottom: 50%; /* Starts at axis, goes up */
+    bottom: 0; /* Starts at the exact axis line */
     transform-origin: bottom center;
   }
 
   .journey-item-top .journey-content {
-    bottom: 2.5rem; /* Starts exactly where stem ends */
-    transform: translateY(20px); /* initial animation offset */
-    justify-content: flex-end; /* Text aligns to bottom of this container */
+    bottom: 4.5rem; /* Sits directly on top of the stem */
+    transform: translateY(20px); 
+    justify-content: flex-end;
   }
 
-  /* Bottom Item Geometry */
+  /* Bottom Item Geometry (Content goes DOWN) */
   .journey-item-bottom .journey-stem {
-    top: 50%; /* Starts at axis, goes down */
+    top: 0; /* Starts at the exact axis line */
     transform-origin: top center;
   }
 
   .journey-item-bottom .journey-content {
-    top: 2.5rem; /* Starts exactly where stem ends */
-    transform: translateY(-20px); /* initial animation offset */
+    top: 4.5rem; /* Hangs directly beneath the stem */
+    transform: translateY(-20px); 
     justify-content: flex-start;
   }
 

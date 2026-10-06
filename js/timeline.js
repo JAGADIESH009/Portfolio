@@ -111,8 +111,8 @@ function initTimeline() {
       const text = item.querySelector('.journey-content');
       const isTop = item.classList.contains('journey-item-top');
 
-      // Reset states. Crucially, we use yPercent: -50 on the dot to preserve its exact centerline vertical position!
-      gsap.set(dot, { scale: 0, backgroundColor: 'rgba(234, 228, 217, 0.4)', yPercent: -50 });
+      // Reset states.
+      gsap.set(dot, { scale: 0, backgroundColor: 'rgba(234, 228, 217, 0.4)', xPercent: -50, yPercent: -50 });
       gsap.set(stem, { scaleY: 0, transformOrigin: isTop ? "50% 100%" : "50% 0%" });
       gsap.set(text, { opacity: 0, y: isTop ? 20 : -20 });
 

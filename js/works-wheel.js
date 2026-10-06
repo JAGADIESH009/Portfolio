@@ -177,34 +177,42 @@ class WorksWheel {
       const card = this.cardRefs[i];
       if (card) {
         let opacity = 0;
+        let translateX = 0;
         let translateY = 0;
         let scale = 1;
         let rotate = 0;
         
-        if (d > 1 || d < -1) {
+        if (d > 1.2 || d < -1.2) {
           opacity = 0;
           card.style.pointerEvents = 'none';
         } else {
+          // Fade smoothly
           opacity = 1 - Math.abs(d);
           
-          if (d > 0) {
-            // Coming in from bottom
-            translateY = d * 150; 
-            scale = 0.92 + (1 - d) * 0.08; 
-            rotate = d * 2; 
-          } else {
-            // Going out to top
-            translateY = d * 120; // moving out also moves slightly
-            scale = 1 + (Math.abs(d) * 0.04); 
-            rotate = d * -1;
-          }
+          // Curved Arc Math
+          const R = isMobile ? w * 1.5 : w * 0.6; // Radius of the invisible circle
+          const maxAngle = Math.PI / 4; // 45 degrees max swing
+          const angle = d * maxAngle;
+          
+          // Arc offset
+          const arcX = R * (1 - Math.cos(angle)); // Bulge out to the right
+          const arcY = R * Math.sin(angle);       // Move vertically
+          
+          // Base shift for active project to make room for title on desktop
+          const shiftX = isMobile ? 0 : w * 0.12;
+          
+          translateX = shiftX + arcX;
+          translateY = arcY;
+          
+          // Scale down smoothly as they move away
+          scale = 1 - Math.abs(d) * 0.15;
+          // Rotate slightly to match the curve
+          rotate = d * 18; 
+
           card.style.pointerEvents = Math.abs(d) < 0.1 ? 'auto' : 'none';
         }
 
-        // Shift active project to the right/center on desktop to make room for left title
-        const shiftX = isMobile ? 0 : w * 0.12;
-
-        card.style.transform = `translateX(${shiftX}px) translateY(${translateY}px) scale(${scale}) rotateZ(${rotate}deg)`;
+        card.style.transform = `translateX(${translateX}px) translateY(${translateY}px) scale(${scale}) rotateZ(${rotate}deg)`;
         card.style.opacity = String(opacity);
         card.style.zIndex = String(Math.round(100 - Math.abs(d) * 10));
       }
