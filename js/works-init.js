@@ -52,21 +52,23 @@ document.addEventListener("DOMContentLoaded", () => {
     let progress = -rect.top / totalScroll;
     progress = Math.max(0, Math.min(progress, 1));
 
-    // Phase 1 (0 to 0.15): Intro fades out and moves up, first project enters
-    const introProgress = Math.min(progress / 0.15, 1);
+    // Phase 1 (0 to 0.12): Intro fades out and moves up
+    const introProgress = Math.min(progress / 0.12, 1);
     
     if (intro) {
       intro.style.opacity = 1 - introProgress;
       intro.style.transform = `scale(${1 - introProgress * 0.06}) translateY(${-introProgress * 120}px)`;
+      intro.style.pointerEvents = introProgress > 0.5 ? 'none' : 'auto';
     }
 
     let targetPos;
     if (progress <= 0.15) {
-      const p = progress / 0.15;
-      targetPos = -1 + p; // -1 to 0
+      // Intro exits, gap, first project is strictly hidden
+      targetPos = -1;
     } else {
+      // Phase 2 (0.15 to 1.0): Wheel sequence from -1 (first project enters) to last project
       const p = (progress - 0.15) / 0.85;
-      targetPos = p * wheelInstance.last;
+      targetPos = -1 + p * (wheelInstance.last + 1);
     }
     
     wheelInstance.setTarget(targetPos);

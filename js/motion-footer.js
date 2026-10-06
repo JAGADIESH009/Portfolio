@@ -84,33 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Liquid Buttons Ripple Effect
-  const liquidBtns = document.querySelectorAll(".liquid-btn");
-  liquidBtns.forEach(btn => {
-    btn.addEventListener("mousedown", function(e) {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const ripple = document.createElement("span");
-      ripple.classList.add("liquid-ripple");
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-      
-      const size = Math.max(rect.width, rect.height);
-      ripple.style.width = `${size}px`;
-      ripple.style.height = `${size}px`;
-      ripple.style.marginTop = `-${size/2}px`;
-      ripple.style.marginLeft = `-${size/2}px`;
-      
-      btn.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
-  });
-
   // Set current year
   const yearSpan = document.getElementById("current-year-footer");
   if (yearSpan) {

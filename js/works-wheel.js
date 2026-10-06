@@ -31,8 +31,8 @@ class WorksWheel {
     this.items = options.items || [];
     this.label = options.label !== undefined ? options.label : "WORKS";
     
-    this.turn = 0;
-    this.target = 0;
+    this.turn = -1;
+    this.target = -1;
     this.active = -1;
     this.stage = { w: 0, h: 0 };
     this.metrics = {};
@@ -150,7 +150,7 @@ class WorksWheel {
   }
 
   setTarget(val) {
-    this.target = clamp(val, 0, 2 + this.last); // target goes up to 2 + count
+    this.target = clamp(val, -1, this.last);
   }
 
   bindEvents() {
@@ -210,10 +210,10 @@ class WorksWheel {
       }
     }
 
-    // Title opacity: fade in right after intro
+    // Title opacity: fade in right after intro (together with first project)
     let titleOpacity = 0;
-    if (pos > -0.5) {
-      titleOpacity = Math.min((pos + 0.5) * 2, 1);
+    if (pos > -1) {
+      titleOpacity = Math.min((pos + 1), 1);
     }
     this.titleEl.style.opacity = String(titleOpacity);
     
