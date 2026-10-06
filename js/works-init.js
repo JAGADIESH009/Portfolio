@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       status: "IN DEVELOPMENT",
       statusClass: "in-progress",
       href: "https://vanya-farm-ai.vercel.app/",
-      html: `<img src="assets/images/vanya-farm.jpg" alt="Vanya Farm AI" style="width: 100%; height: 100%; object-fit: cover; display: block;" />`
+      html: `<img src="assets/images/vanya-farm.png" alt="Vanya Farm AI" style="width: 100%; height: 100%; object-fit: cover; display: block;" />`
     }
   ];
 
