@@ -182,7 +182,7 @@
   position: absolute;
   top: var(--poster-inset-y);
   right: var(--poster-inset-x);
-  z-index: 30;
+  z-index: 9999999;
   display: flex;
   flex-wrap: nowrap;
   gap: 2.25rem;
