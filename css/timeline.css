@@ -103,7 +103,7 @@
   .journey-dot {
     position: absolute;
     left: 0;
-    top: 50%;
+    top: 1px;
     width: 14px;
     height: 14px;
     border-radius: 50%;
