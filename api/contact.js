@@ -109,6 +109,6 @@ module.exports = async function handler(req, res) {
     });
   } catch (error) {
     console.error('Contact API error:', error && error.message ? error.message : error);
-    return res.status(500).json({ success: false, error: 'Internal Server Error' });
+    return res.status(500).json({ success: false, error: `Debug Error: ${error ? error.stack || error.message : 'Unknown'}` });
   }
 };
