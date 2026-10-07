@@ -1,9 +1,4 @@
-// Server-side EmailJS integration (Vercel Serverless Function).
-// Uses the official EmailJS REST API with the Private Key sent as `accessToken`,
-// which is required when "Use Private Key" (strict mode) is enabled in the
-// EmailJS dashboard. No browser SDK is used here, and secrets never leave the server.
-
-const EMAILJS_SEND_URL = 'https://api.emailjs.com/api/v1.0/email/send';
+const emailjs = require('@emailjs/nodejs');
 
 function parseBody(req) {
   const body = req.body;
@@ -74,41 +69,29 @@ module.exports = async function handler(req, res) {
       return res.status(500).json({ success: false, error: `Server configuration error: missing ${missing.join(', ')}` });
     }
 
-    const payload = {
-      service_id: SERVICE_ID,
-      template_id: TEMPLATE_ID,
-      user_id: PUBLIC_KEY,      // EmailJS Public Key
-      accessToken: PRIVATE_KEY, // EmailJS Private Key (server-side authorization)
-      template_params: {
-        name,
-        email,
-        phone,
-        subject,
-        message,
-        time: typeof time === 'string' && time.trim() ? time.trim() : new Date().toLocaleString(),
-      },
+    const templateParams = {
+      name,
+      email,
+      phone,
+      subject,
+      message,
+      time: typeof time === 'string' && time.trim() ? time.trim() : new Date().toLocaleString(),
     };
 
-    const response = await fetch(EMAILJS_SEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    const options = {
+      publicKey: PUBLIC_KEY,
+      privateKey: PRIVATE_KEY,
+    };
 
-    const resultText = (await response.text()).trim();
+    // Use the official Node SDK as requested
+    await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, options);
 
-    if (response.ok) {
-      return res.status(200).json({ success: true });
-    }
+    return res.status(200).json({ success: true });
 
-    // EmailJS error bodies are plain-text descriptions and contain no secrets.
-    console.error(`EmailJS send failed (HTTP ${response.status}): ${resultText}`);
-    return res.status(500).json({
-      success: false,
-      error: `Unable to send your message right now. (${resultText || `EmailJS HTTP ${response.status}`})`,
-    });
   } catch (error) {
-    console.error('Contact API error:', error && error.message ? error.message : error);
-    return res.status(500).json({ success: false, error: `Debug Error: ${error ? error.stack || error.message : 'Unknown'}` });
+    // Note: EmailJSResponseStatus errors have .text property, JS errors have .message
+    const errorDetails = error && error.text ? error.text : (error && error.message ? error.message : String(error));
+    console.error('Contact API error:', errorDetails);
+    return res.status(500).json({ success: false, error: errorDetails });
   }
 };
