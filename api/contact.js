@@ -71,7 +71,7 @@ module.exports = async function handler(req, res) {
 
     if (missing.length) {
       console.error('EmailJS configuration missing env vars:', missing.join(', '));
-      return res.status(500).json({ success: false, error: 'Server configuration error: email service is not fully configured.' });
+      return res.status(500).json({ success: false, error: `Server configuration error: missing ${missing.join(', ')}` });
     }
 
     const payload = {
