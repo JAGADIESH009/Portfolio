@@ -90,6 +90,6 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     const errorDetails = error && error.text ? error.text : (error && error.message ? error.message : String(error));
     console.error('Contact API error:', errorDetails);
-    return res.status(500).json({ success: false, error: 'Internal Server Error' });
+    return res.status(500).json({ success: false, error: errorDetails });
   }
 };
