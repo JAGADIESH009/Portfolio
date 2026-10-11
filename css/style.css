@@ -6,7 +6,7 @@
 @import 'skills.css?v=2';
 @import 'works-wheel.css';
 @import 'motion-footer.css';
-@import 'animations.css';
-@import 'timeline.css';
+@import 'animations.css?v=8';
+@import 'timeline.css?v=8';
 @import 'cursor.css';
 @import 'responsive.css';
