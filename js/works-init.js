@@ -58,12 +58,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let targetPos;
-    if (progress <= 0.15) {
+    if (progress <= 0.14) {
       // Intro exits, gap, first project is strictly hidden
       targetPos = -1;
     } else {
-      // Phase 2 (0.15 to 1.0): Wheel sequence from -1 (first project enters) to last project
-      const p = (progress - 0.15) / 0.85;
+      // Phase 2 (0.14 to 0.80): Balanced wheel sequence through all 4 projects
+      // Project 1 (Sri Dental Clinic) active around progress = 0.305
+      // Project 2 (Yam Real Estate) active around progress = 0.470
+      // Project 3 (Smart Campus) active around progress = 0.635
+      // Project 4 (Vanya Farm AI) active around progress = 0.800
+      // Progress 0.80 to 1.00: Vanya Farm AI rests with complete stability and bottom separation buffer
+      const p = Math.min((progress - 0.14) / 0.66, 1);
       targetPos = -1 + p * (wheelInstance.last + 1);
     }
     

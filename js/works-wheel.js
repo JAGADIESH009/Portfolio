@@ -148,11 +148,20 @@ class WorksWheel {
     const isTablet = w >= 768 && w < 1024;
     
     let cardW;
-    if (isMobile) cardW = clamp(w * 0.8, 280, 360);
-    else if (isTablet) cardW = clamp(w * 0.6, 420, 520);
-    else cardW = clamp(w * 0.45, 520, 650);
+    if (isMobile) {
+      cardW = clamp(w * 0.8, 280, 360);
+    } else if (isTablet) {
+      cardW = clamp(w * 0.6, 420, 520);
+    } else {
+      // Desktop / Laptop (>= 1024px)
+      // Constrained by height so images never clip top or bottom, and balanced beside the title
+      const maxWByHeight = (h * 0.54) * CARD_RATIO;
+      const targetW = clamp(w * 0.40, 480, 640);
+      cardW = Math.min(targetW, maxWByHeight);
+    }
     
     const cardH = cardW / CARD_RATIO;
+    
     const ringR = isMobile ? clamp(h * 0.25, 150, 180) : clamp(h * 0.3, 250, 300); // approx 500-600px diameter
     const drumR = cardH * 1.3; 
 
@@ -255,17 +264,14 @@ class WorksWheel {
     // Title container and wheel opacity/entry: fade in right after intro
     let entryProgress = 0;
     if (pos > -1) {
-      entryProgress = Math.min((pos + 1), 1);
+      entryProgress = clamp(pos + 1, 0, 1);
     }
     
-    // Shift the entire wheel down when entering so it physically comes from below
-    // rather than fading in awkwardly.
-    const entryOffset = (1 - entryProgress) * (this.stage.h || 500);
-    this.wheelEl.style.transform = `translateY(${entryOffset}px)`;
+    this.wheelEl.style.transform = `translateZ(0)`;
     this.wheelEl.style.opacity = String(entryProgress);
     
     this.titleEl.style.opacity = String(entryProgress);
-    this.titleEl.style.transform = `translateY(calc(-50% + ${entryOffset * 0.5}px))`; // preserve center alignment
+    this.titleEl.style.transform = `translateY(-50%)`;
     
     const near = clamp(Math.round(pos), 0, this.last);
     if (this.active !== near || this.firstRun) {

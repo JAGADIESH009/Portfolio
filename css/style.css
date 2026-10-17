@@ -1,10 +1,10 @@
 @import 'variables.css';
 @import 'globals.css';
 @import 'navbar.css';
-@import 'hero.css?v=16';
-@import 'about.css?v=9';
+@import 'hero.css?v=18';
+@import 'about.css?v=10';
 @import 'skills.css?v=3';
-@import 'works-wheel.css?v=2';
+@import 'works-wheel.css?v=5';
 @import 'motion-footer.css?v=2';
 @import 'animations.css?v=9';
 @import 'timeline.css?v=9';

@@ -317,12 +317,12 @@ class LanyardBadge {
       // Mobile layout: centered text and centered hanging card beneath
       cx = this.W / 2;
       sw = Math.max(12, Math.round(this.cw * 0.082));
-      spread = Math.round(this.cw * 0.26);
-      lowLen = Math.round(sw * 1.8);
+      spread = Math.round(this.cw * 0.22);
+      lowLen = Math.round(sw * 2.0);
       arm = this.ringR * 2 + this.clipH + this.ch * 0.55;
-      N = 10;
+      N = 14;
 
-      // Find bottom of biography text area to anchor lanyard right below it
+      // Find bottom of biography text area to anchor lanyard below it
       let textBottom = Math.round(this.H * 0.24);
       const parent = this.root.parentElement || document.getElementById('about');
       if (parent) {
@@ -333,8 +333,10 @@ class LanyardBadge {
         }
       }
 
-      this.lanyardTop = textBottom + Math.max(34, Math.round(this.H * 0.045));
-      bY = this.lanyardTop + Math.max(52, Math.round(this.H * 0.075));
+      // Visibly extended lanyard thread hanging downward and lowering the card
+      this.lanyardTop = textBottom + Math.max(14, Math.round(this.H * 0.018));
+      const strapDrop = Math.max(112, Math.round(this.H * 0.145));
+      bY = this.lanyardTop + strapDrop;
     }
 
     const aL = this.add(cx - spread, this.lanyardTop, 0);

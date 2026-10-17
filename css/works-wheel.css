@@ -18,12 +18,14 @@
   position: sticky;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   height: 100vh;
   overflow: hidden;
   background-color: #0A0909;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
@@ -71,15 +73,19 @@
    ========================================================================== */
 .works-wheels-wrapper {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: clamp(64px, 8.5vh, 96px); /* 64-96px bottom breathing room for visual separation from ticker */
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .works-wheel-section {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   user-select: none;
 }
@@ -109,6 +115,7 @@
   will-change: transform, opacity;
   transform-style: preserve-3d;
   cursor: pointer;
+  border-radius: 14px;
 }
 
 .works-wheel-card-inner {
@@ -117,13 +124,23 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 4px; /* Slight rounding for editorial feel */
-  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.8);
+  border-radius: 14px; /* Subtle 14px rounded rectangle */
+  -webkit-mask-image: -webkit-radial-gradient(white, black); /* Clip corners cleanly in 3D WebKit contexts */
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08);
   will-change: transform, filter;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: #111;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
   filter: brightness(1);
+}
+
+.works-wheel-card-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+  transform: translateZ(0);
 }
 
 .works-wheel-active-title {
@@ -134,16 +151,14 @@
   text-transform: uppercase;
   line-height: 1;
   letter-spacing: 0.02em;
-}
-
-.works-wheel-active-title {
   top: 50%;
-  left: 15vw; /* Tightened composition: moved in from 8vw */
+  left: clamp(3.5rem, 10vw, 13vw); /* Responsive left margin */
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 1.5vh;
-  max-width: 25vw; /* Ensure it wraps if it gets too close to the image */
+  max-width: clamp(250px, 25vw, 360px);
+  z-index: 25;
 }
 
 .active-item-title {
@@ -178,40 +193,63 @@
 
 .works-wheel-index {
   position: absolute;
-  top: 10%;
-  right: 5vw;
+  top: clamp(2.5rem, 6vh, 4.25rem);
+  right: clamp(3rem, 6.5vw, 6.25rem); /* Inward consistent right margin to prevent clipping */
   list-style: none;
   margin: 0;
   padding: 0;
-  text-align: right;
-  line-height: 1.8;
-  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
-  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.65rem;
+  z-index: 35;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+.works-wheel-index li {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  white-space: nowrap;
 }
 
 .works-wheel-index button {
   background: none;
   border: none;
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
+  color: rgba(241, 235, 221, 0.45);
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: clamp(0.72rem, 0.85vw, 0.88rem);
+  font-weight: 500;
   cursor: pointer;
-  transition: color 0.3s ease;
-  padding: 0;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  padding: 0.2rem 0;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .works-wheel-index button:hover,
 .works-wheel-index button.active {
   color: #EAE4D9;
-  font-weight: 500;
+  font-weight: 600;
+  opacity: 1;
 }
 
-.index-num {
-  font-size: 0.8em;
-  margin-right: 0.5em;
-  opacity: 0.5;
+.works-wheel-index .index-num {
+  font-size: 0.82em;
+  opacity: 0.55;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.works-wheel-index button.active .index-num {
+  color: #C4A66A;
+  opacity: 1;
 }
 
 /* Image overrides for hover state */

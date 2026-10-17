@@ -145,11 +145,11 @@ function initScrollReveals() {
       }
     }
 
-    // Scroll-driven subtle hero retreat when scrolling down towards WHO AM I
+    // Mobile-only subtle hero retreat; desktop & laptop hero scroll naturally without any fade-out or upward shift
     const heroSection = document.getElementById("hero");
-    if (heroSection) {
+    if (heroSection && isMobile) {
       gsap.to(["#parallax-typo", "#parallax-image"], {
-        yPercent: isMobile ? -6 : -12,
+        yPercent: -6,
         opacity: 0.35,
         ease: "none",
         scrollTrigger: {
@@ -159,6 +159,11 @@ function initScrollReveals() {
           end: "bottom top",
           scrub: 1
         }
+      });
+    } else if (heroSection && isDesktop) {
+      // Ensure desktop & laptop hero elements remain 100% visible and unshifted in natural document flow
+      gsap.set(["#parallax-typo", "#parallax-image"], {
+        clearProps: "yPercent,y,opacity"
       });
     }
 
