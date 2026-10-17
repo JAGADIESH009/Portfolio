@@ -66,38 +66,62 @@ class LanyardBadge {
     this.root.appendChild(this.card);
 
     // Badge Clip
-    const clip = document.createElement('div');
-    clip.setAttribute('aria-hidden', 'true');
-    clip.style.position = 'absolute';
-    clip.style.left = '50%';
-    clip.style.top = '0';
-    clip.style.width = (this.cw * 0.075) + 'px';
-    clip.style.height = (this.clipH + this.cw * 0.05) + 'px';
-    clip.style.transform = 'translateX(-50%)';
-    clip.style.borderRadius = (this.cw * 0.02) + 'px';
-    clip.style.background = 'linear-gradient(90deg, #f4efe4, #a8a090 50%, #ece6da)';
-    clip.style.boxShadow = '0 1px 3px rgba(0,0,0,0.35)';
-    clip.style.zIndex = '2';
-    this.card.appendChild(clip);
+    this.clip = document.createElement('div');
+    this.clip.setAttribute('aria-hidden', 'true');
+    this.clip.style.position = 'absolute';
+    this.clip.style.left = '50%';
+    this.clip.style.top = '0';
+    this.clip.style.transform = 'translateX(-50%)';
+    this.clip.style.background = 'linear-gradient(90deg, #f4efe4, #a8a090 50%, #ece6da)';
+    this.clip.style.boxShadow = '0 1px 3px rgba(0,0,0,0.35)';
+    this.clip.style.zIndex = '2';
+    this.card.appendChild(this.clip);
 
     // Inner 3D Container
     this.inner = document.createElement('div');
     this.inner.style.position = 'absolute';
     this.inner.style.left = '0';
     this.inner.style.right = '0';
-    this.inner.style.top = (this.ringR + this.clipH * 0.6) + 'px';
-    this.inner.style.height = this.ch + 'px';
     this.inner.style.transformStyle = 'preserve-3d';
     this.card.appendChild(this.inner);
 
     // Card Faces
+    this.front = document.createElement('div');
+    this.back = document.createElement('div');
+    this.inner.appendChild(this.front);
+    this.inner.appendChild(this.back);
+
+    this.updateCardDOM();
+  }
+
+  updateCardDOM() {
+    const cw = this.cw;
+    const ch = this.ch;
+    const ringR = this.ringR;
+    const clipH = this.clipH;
+
+    // Card Container
+    this.card.style.width = cw + 'px';
+    this.card.style.height = (ch + ringR + clipH) + 'px';
+
+    // Badge Clip
+    if (this.clip) {
+      this.clip.style.width = Math.round(cw * 0.075) + 'px';
+      this.clip.style.height = Math.round(clipH + cw * 0.05) + 'px';
+      this.clip.style.borderRadius = Math.round(cw * 0.02) + 'px';
+    }
+
+    // Inner 3D Container
+    this.inner.style.top = (ringR + clipH * 0.6) + 'px';
+    this.inner.style.height = ch + 'px';
+
     const faceStyle = `
       position: absolute; inset: 0; 
-      border-radius: ${this.cw * 0.06}px; 
+      border-radius: ${Math.round(cw * 0.06)}px; 
       overflow: hidden; 
       backface-visibility: hidden; 
       -webkit-backface-visibility: hidden; 
-      box-shadow: 0 18px 40px -12px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 ${Math.round(cw * 0.07)}px ${Math.round(cw * 0.16)}px -${Math.round(cw * 0.045)}px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.2);
     `;
 
     const shadeStyle = `
@@ -106,42 +130,50 @@ class LanyardBadge {
     `;
 
     const slotStyle = `
-      position: absolute; top: ${this.cw * 0.05}px; left: 50%;
-      width: ${this.cw * 0.2}px; height: ${this.cw * 0.035}px;
+      position: absolute; top: ${Math.round(cw * 0.045)}px; left: 50%;
+      width: ${Math.round(cw * 0.19)}px; height: ${Math.round(cw * 0.032)}px;
       transform: translateX(-50%); border-radius: 999px;
       background: rgba(0,0,0,0.28); box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
     `;
 
-    // FRONT
-    const front = document.createElement('div');
-    front.style.cssText = faceStyle + `background: ${this.options.cardColor}; color: ${this.options.strapColor};`;
-    front.innerHTML = `
-      <div style="position: absolute; inset: 0; padding: 30px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-        <div style="font-family: 'Anton', sans-serif; font-size: 2.2rem; line-height: 1; letter-spacing: 0.05em; text-transform: uppercase;">JAGADIESH R</div>
-        <div style="margin-top: 15px; width: 40px; height: 2px; background-color: ${this.options.strapColor};"></div>
-        <div style="margin-top: 15px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7;">CREATIVE DEVELOPER</div>
-      </div>
-      <div aria-hidden="true" style="${slotStyle}"></div>
-      <div aria-hidden="true" style="${shadeStyle}"></div>
-    `;
+    const padY = Math.round(cw * 0.1) + 'px';
+    const padX = Math.round(cw * 0.08) + 'px';
+    const titleSize = (cw * 0.125).toFixed(1) + 'px';
+    const lineMargin = Math.round(cw * 0.05) + 'px';
+    const lineWidth = Math.round(cw * 0.16) + 'px';
+    const subSize = Math.max(9, Math.round(cw * 0.052)) + 'px';
 
-    // BACK
-    const back = document.createElement('div');
-    back.style.cssText = faceStyle + `background: ${this.options.cardColor}; transform: rotateY(180deg); color: ${this.options.strapColor};`;
-    back.innerHTML = `
-      <div style="position: absolute; inset: 0; padding: 30px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 1px solid rgba(0,0,0,0.1); border-radius: ${this.cw * 0.06}px;">
-        <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 0.8rem; letter-spacing: 0.05em; opacity: 0.8;">B.Tech Computer Science</div>
-        <div style="margin-top: 15px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5;">ID: 2026-JR-DEV</div>
-      </div>
-      <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 35%; background: ${this.options.strapColor}; color: ${this.options.cardColor}; display: flex; align-items: center; justify-content: center; border-top-left-radius: 40px;">
-        <div style="font-family: 'Anton', sans-serif; font-size: 1.5rem; letter-spacing: 0.1em;">PORTFOLIO</div>
-      </div>
-      <div aria-hidden="true" style="${slotStyle}"></div>
-      <div aria-hidden="true" style="${shadeStyle}"></div>
-    `;
+    if (this.front) {
+      this.front.style.cssText = faceStyle + `background: ${this.options.cardColor}; color: ${this.options.strapColor};`;
+      this.front.innerHTML = `
+        <div style="position: absolute; inset: 0; padding: ${padY} ${padX}; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-sizing: border-box;">
+          <div style="font-family: 'Anton', sans-serif; font-size: ${titleSize}; line-height: 1; letter-spacing: 0.05em; text-transform: uppercase;">JAGADIESH R</div>
+          <div style="margin-top: ${lineMargin}; margin-bottom: ${lineMargin}; width: ${lineWidth}; height: 2px; background-color: ${this.options.strapColor};"></div>
+          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: ${subSize}; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7;">CREATIVE DEVELOPER</div>
+        </div>
+        <div aria-hidden="true" style="${slotStyle}"></div>
+        <div aria-hidden="true" style="${shadeStyle}"></div>
+      `;
+    }
 
-    this.inner.appendChild(front);
-    this.inner.appendChild(back);
+    if (this.back) {
+      const bTechSize = Math.max(9, Math.round(cw * 0.052)) + 'px';
+      const idSize = Math.max(8, Math.round(cw * 0.044)) + 'px';
+      const portSize = Math.round(cw * 0.095) + 'px';
+
+      this.back.style.cssText = faceStyle + `background: ${this.options.cardColor}; transform: rotateY(180deg); color: ${this.options.strapColor};`;
+      this.back.innerHTML = `
+        <div style="position: absolute; inset: 0; padding: ${padY} ${padX}; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 1px solid rgba(0,0,0,0.1); border-radius: ${Math.round(cw * 0.06)}px; box-sizing: border-box;">
+          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: ${bTechSize}; letter-spacing: 0.05em; opacity: 0.8;">B.Tech Computer Science</div>
+          <div style="margin-top: ${lineMargin}; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: ${idSize}; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5;">ID: 2026-JR-DEV</div>
+        </div>
+        <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 35%; background: ${this.options.strapColor}; color: ${this.options.cardColor}; display: flex; align-items: center; justify-content: center; border-top-left-radius: ${Math.round(cw * 0.15)}px;">
+          <div style="font-family: 'Anton', sans-serif; font-size: ${portSize}; letter-spacing: 0.1em;">PORTFOLIO</div>
+        </div>
+        <div aria-hidden="true" style="${slotStyle}"></div>
+        <div aria-hidden="true" style="${shadeStyle}"></div>
+      `;
+    }
   }
 
   initPhysics() {
@@ -237,40 +269,73 @@ class LanyardBadge {
     this.links = []; // CRITICAL FIX: Clear links on rebuild
     this.isDesktop = this.W > 1024;
     
-    // Position lanyard on the right for desktop and tablet, center for mobile
-    let cx = this.W / 2;
-    if (this.W > 1024) cx = Math.max(this.W * 0.5, this.W - 350);
-    else if (this.W >= 768) cx = this.W - 220; // Tablet: right side
-    
-    const spread = Math.min(this.W * 0.16, this.cw * 0.55);
-    const sw = Math.max(14, Math.round(this.cw * 0.1));
-    this.lanyardTop = -sw * 2;
-    const lowLen = sw * 2.2;
-    const arm = this.ringR * 2 + this.clipH + this.ch * 0.55;
-    const N = 14;
-
-    let bY = Math.max(this.H * 0.16, Math.min(this.H * 0.42, this.H - (lowLen + this.ringR * 2 + this.clipH + this.ch) - 28));
-    
-    if (!this.isDesktop) {
-      this.cw = Math.min(this.W * 0.72, 320);
+    // 1. Calculate screen-specific card dimensions first
+    if (this.isDesktop) {
+      this.cw = this.options.cardWidth;
       this.ch = Math.round(this.cw * 1.5);
-      
-      if (this.W < 768) {
-        // Mobile layout: centered text, place lanyard below it
-        this.lanyardTop = this.H * 0.32;
-        bY = this.H * 0.40; 
-      } else {
-        // Tablet layout: text takes up left side, lanyard on right
-        this.lanyardTop = -sw * 2;
-        bY = Math.max(this.H * 0.16, this.H * 0.28);
-      }
+      this.ringR = Math.max(7, Math.round(this.cw * 0.036));
+      this.clipH = Math.round(this.cw * 0.1);
+    } else if (this.W >= 768) {
+      this.cw = 220;
+      this.ch = Math.round(this.cw * 1.5);
+      this.ringR = Math.max(7, Math.round(this.cw * 0.036));
+      this.clipH = Math.round(this.cw * 0.1);
+    } else {
+      // Mobile (W < 768): scale proportionally to viewport width
+      this.cw = Math.min(Math.round(this.W * 0.48), 185);
+      this.ch = Math.round(this.cw * 1.48);
+      this.ringR = Math.max(6, Math.round(this.cw * 0.034));
+      this.clipH = Math.round(this.cw * 0.095);
     }
 
-    // Crucial: Update DOM if cw/ch changed
-    this.card.style.width = this.cw + 'px';
-    this.card.style.height = (this.ch + this.ringR + this.clipH) + 'px';
-    this.inner.style.top = (this.ringR + this.clipH * 0.6) + 'px';
-    this.inner.style.height = this.ch + 'px';
+    // 2. Synchronize DOM elements and typography with calculated cw/ch
+    this.updateCardDOM();
+
+    // 3. Layout and physics anchor parameters
+    let cx = this.W / 2;
+    let spread, sw, lowLen, arm, N, bY;
+
+    if (this.isDesktop) {
+      cx = Math.max(this.W * 0.5, this.W - 350);
+      spread = Math.min(this.W * 0.16, this.cw * 0.55);
+      sw = Math.max(14, Math.round(this.cw * 0.1));
+      this.lanyardTop = -sw * 2;
+      lowLen = sw * 2.2;
+      arm = this.ringR * 2 + this.clipH + this.ch * 0.55;
+      N = 14;
+      bY = Math.max(this.H * 0.16, Math.min(this.H * 0.42, this.H - (lowLen + this.ringR * 2 + this.clipH + this.ch) - 28));
+    } else if (this.W >= 768) {
+      cx = this.W - 220; // Tablet: right side
+      spread = Math.min(this.W * 0.16, this.cw * 0.55);
+      sw = Math.max(14, Math.round(this.cw * 0.1));
+      this.lanyardTop = -sw * 2;
+      lowLen = sw * 2.2;
+      arm = this.ringR * 2 + this.clipH + this.ch * 0.55;
+      N = 14;
+      bY = Math.max(this.H * 0.16, this.H * 0.28);
+    } else {
+      // Mobile layout: centered text and centered hanging card beneath
+      cx = this.W / 2;
+      sw = Math.max(12, Math.round(this.cw * 0.082));
+      spread = Math.round(this.cw * 0.26);
+      lowLen = Math.round(sw * 1.8);
+      arm = this.ringR * 2 + this.clipH + this.ch * 0.55;
+      N = 10;
+
+      // Find bottom of biography text area to anchor lanyard right below it
+      let textBottom = Math.round(this.H * 0.24);
+      const parent = this.root.parentElement || document.getElementById('about');
+      if (parent) {
+        const comp = parent.querySelector('.about-composition');
+        const text = parent.querySelector('.about-text-content');
+        if (comp && text) {
+          textBottom = comp.offsetTop + text.offsetTop + text.offsetHeight;
+        }
+      }
+
+      this.lanyardTop = textBottom + Math.max(34, Math.round(this.H * 0.045));
+      bY = this.lanyardTop + Math.max(52, Math.round(this.H * 0.075));
+    }
 
     const aL = this.add(cx - spread, this.lanyardTop, 0);
     this.iB = this.add(cx, bY, 1.4);
@@ -299,9 +364,9 @@ class LanyardBadge {
         this.solve();
       }
     } else {
-      this.pts[this.iC].x += this.cw * 0.55;
+      this.pts[this.iC].x += (this.isDesktop ? this.cw * 0.55 : this.cw * 0.25);
       this.pts[this.iC].px = this.pts[this.iC].x - 2;
-      this.spin.v = 5;
+      this.spin.v = this.isDesktop ? 5 : 3;
     }
   }
 
@@ -514,9 +579,9 @@ class LanyardBadge {
         
         // Ensure card stays within viewport boundaries, especially on mobile to prevent scrolling
         if (!this.isDesktop) {
-          targetX = Math.max(this.cw/2, Math.min(this.W - this.cw/2, targetX));
+          targetX = Math.max(this.cw / 2, Math.min(this.W - this.cw / 2, targetX));
           // Do not allow dragging above the lanyard top to protect text!
-          targetY = Math.max(this.lanyardTop + 20, Math.min(this.H - this.clipH, targetY));
+          targetY = Math.max(this.lanyardTop + 10, Math.min(this.H - this.ch * 0.4, targetY));
         }
         
         T.x += (targetX - T.x) * 0.35;

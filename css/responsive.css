@@ -65,8 +65,8 @@
   .container { padding: 0 1.25rem; box-sizing: border-box; width: 100%; max-width: 100%; overflow: visible; margin: 0 auto; }
   .header { box-sizing: border-box; width: 100%; left: 0 !important; margin: 0 !important; }
   
-  .section { padding: 6rem 0; }
-  .about-editorial.section { height: 100svh; min-height: 100svh; padding: 14vw 0 0 0; box-sizing: border-box; }
+  .section { padding: 6rem 0; scroll-margin-top: 0 !important; }
+  .about-editorial.section { height: 100svh; min-height: 100svh; padding: 14vw 0 0 0; box-sizing: border-box; scroll-margin-top: 0 !important; }
   .section-title { font-size: 2rem; }
   
   /* Hero Section: Single Column, Stacked, Centered */

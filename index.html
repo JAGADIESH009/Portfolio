@@ -23,7 +23,7 @@
 
 
   <!-- Master Stylesheet Compilation -->
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=24">
 </head>
 
 <body>
@@ -44,12 +44,21 @@
        HERO SECTION - STRICT EDITORIAL POSTER
        ========================================================================== -->
   <!-- Moved navbar out of hero section to avoid stacking context clipping -->
-  <nav class="hero-ui-top-right">
-    <a href="#about">ABOUT</a>
-    <a href="#journey">JOURNEY</a>
-    <a href="#skills">SKILLS</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="#contact">CONTACT</a>
+  <nav class="hero-ui-top-right" id="hero-nav">
+    <button class="hero-nav-toggle" id="hero-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav-toggle-icon">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </span>
+      <span class="nav-toggle-text">MENU</span>
+    </button>
+    <div class="hero-nav-menu" id="hero-nav-menu">
+      <a href="#about">ABOUT</a>
+      <a href="#journey">JOURNEY</a>
+      <a href="#skills">SKILLS</a>
+      <a href="#projects">PROJECTS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
   </nav>
 
   <section class="hero-poster" id="hero">
@@ -273,6 +282,7 @@
        ========================================================================== -->
   <div id="projects"></div>
   <section class="works-editorial section" id="works">
+    <!-- DESKTOP WORKS CONTAINER (UNTOUCHED) -->
     <div class="works-sticky-container">
       
       <!-- Intro State -->
@@ -287,6 +297,112 @@
         <div id="wheel-all-works"></div>
       </div>
       
+    </div>
+
+    <!-- DEDICATED MOBILE WORKS SHOWCASE -->
+    <div class="works-mobile-showcase" id="works-mobile-showcase">
+      <!-- Mobile Intro Header -->
+      <header class="works-mobile-intro">
+        <span class="works-mobile-subtitle">SELECTED WORK</span>
+        <h2 class="works-mobile-title">MADE<br>BY ME</h2>
+        <span class="works-mobile-tagline">WHAT I BUILT</span>
+      </header>
+
+      <!-- Vertically Stacked Project Showcase -->
+      <div class="works-mobile-list">
+        <!-- 01: SRI DENTAL CLINIC -->
+        <article class="works-mobile-card" data-project="1">
+          <div class="works-mobile-meta">
+            <span class="works-mobile-num">01</span>
+            <span class="works-mobile-sep">/</span>
+            <span class="works-mobile-type">WEBSITE</span>
+          </div>
+          <h3 class="works-mobile-name">
+            <a href="https://demodentalclinicweb.vercel.app/" target="_blank" rel="noopener noreferrer">SRI DENTAL CLINIC</a>
+          </h3>
+          <a href="https://demodentalclinicweb.vercel.app/" target="_blank" rel="noopener noreferrer" class="works-mobile-media" aria-label="Visit Sri Dental Clinic Website">
+            <div class="works-mobile-media-inner">
+              <img src="assets/images/sri-dental.jpg" alt="Sri Dental Clinic" loading="lazy">
+              <div class="works-mobile-media-overlay">
+                <span class="works-mobile-link-badge">
+                  <span>VISIT WEBSITE</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <!-- 02: YAM REAL ESTATE -->
+        <article class="works-mobile-card" data-project="2">
+          <div class="works-mobile-meta">
+            <span class="works-mobile-num">02</span>
+            <span class="works-mobile-sep">/</span>
+            <span class="works-mobile-type">WEBSITE</span>
+          </div>
+          <h3 class="works-mobile-name">
+            <a href="https://demorealestateweb.vercel.app/" target="_blank" rel="noopener noreferrer">YAM REAL ESTATE</a>
+          </h3>
+          <a href="https://demorealestateweb.vercel.app/" target="_blank" rel="noopener noreferrer" class="works-mobile-media" aria-label="Visit Yam Real Estate Website">
+            <div class="works-mobile-media-inner">
+              <img src="assets/images/yam-real-estate.jpg" alt="Yam Real Estate" loading="lazy">
+              <div class="works-mobile-media-overlay">
+                <span class="works-mobile-link-badge">
+                  <span>VISIT WEBSITE</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <!-- 03: SMART CAMPUS -->
+        <article class="works-mobile-card" data-project="3">
+          <div class="works-mobile-meta">
+            <span class="works-mobile-num">03</span>
+            <span class="works-mobile-sep">/</span>
+            <span class="works-mobile-type">PROJECT</span>
+          </div>
+          <h3 class="works-mobile-name">
+            <a href="https://smartcampusportal.vercel.app/" target="_blank" rel="noopener noreferrer">SMART CAMPUS</a>
+          </h3>
+          <a href="https://smartcampusportal.vercel.app/" target="_blank" rel="noopener noreferrer" class="works-mobile-media" aria-label="Visit Smart Campus Portal">
+            <div class="works-mobile-media-inner">
+              <img src="assets/images/smart-campus.jpg" alt="Smart Campus" loading="lazy">
+              <div class="works-mobile-media-overlay">
+                <span class="works-mobile-link-badge">
+                  <span>VISIT PROJECT</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <!-- 04: VANYA FARM AI -->
+        <article class="works-mobile-card" data-project="4">
+          <div class="works-mobile-meta">
+            <span class="works-mobile-num">04</span>
+            <span class="works-mobile-sep">/</span>
+            <span class="works-mobile-type">PROJECT</span>
+            <span class="works-mobile-status in-progress">IN DEVELOPMENT</span>
+          </div>
+          <h3 class="works-mobile-name">
+            <a href="https://vanya-farm-ai.vercel.app/" target="_blank" rel="noopener noreferrer">VANYA FARM AI</a>
+          </h3>
+          <a href="https://vanya-farm-ai.vercel.app/" target="_blank" rel="noopener noreferrer" class="works-mobile-media" aria-label="Visit Vanya Farm AI Project">
+            <div class="works-mobile-media-inner">
+              <img src="assets/images/vanya-farm.png" alt="Vanya Farm AI" loading="lazy">
+              <div class="works-mobile-media-overlay">
+                <span class="works-mobile-link-badge">
+                  <span>VISIT PROJECT</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -402,21 +518,20 @@
   <script src="data/constants.js"></script>
   <script src="data/skills.js"></script>
   <script src="js/works-wheel.js"></script>
-  <script src="js/works-init.js"></script>
+  <script src="js/works-init.js?v=2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <!-- Custom Scripts -->
   <script src="js/utils.js?v=4"></script>
   <script src="js/cursor.js?v=4"></script>
   <script src="js/particles.js?v=4"></script>
-  <script src="js/navbar.js?v=4"></script>
-  <script src="js/animations.js?v=6"></script>
-  <script src="js/motion-footer.js?v=1"></script>
-  <script src="js/lanyard.js?v=6"></script>
+  <script src="js/navbar.js?v=7"></script>
+  <script src="js/animations.js?v=8"></script>
+  <script src="js/motion-footer.js?v=2"></script>
+  <script src="js/lanyard.js?v=9"></script>
   <script src="js/magnetic-type.js?v=2"></script>
 
   <!-- Main Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="js/particle-animation.js"></script>
   <script src="js/timeline.js"></script>
   <script src="js/contact.js?v=2"></script>

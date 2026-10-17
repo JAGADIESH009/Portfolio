@@ -13,41 +13,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!wrapper || !leftContent || !contactContent) return;
 
-  // Cinematic Parallax Reveal applied ONLY to the content, not the footer wrapper.
-  // This ensures the CSS ticker animation in the parent does not freeze during scroll scrub.
-  gsap.fromTo(
-    contactContent,
-    { yPercent: -30, scale: 0.95 },
-    {
-      yPercent: 0,
-      scale: 1,
-      ease: "none",
-      scrollTrigger: {
-        trigger: wrapper,
-        start: "top bottom", // Starts when top of wrapper enters bottom of viewport
-        end: "top top",      // Ends when top of wrapper reaches top of viewport
-        scrub: true,
-      },
-    }
-  );
+  // Desktop-only cinematic parallax scroll (>= 768px)
+  const mm = gsap.matchMedia();
 
-  // Staggered Content Reveal
-  gsap.fromTo(
-    [leftContent, rightContent, actionButtons],
-    { y: 60, opacity: 0 },
-    {
-      y: 0,
-      opacity: 1,
-      stagger: 0.15,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: wrapper,
-        start: "top 60%",
-        end: "top top",
-        scrub: 1,
-      },
-    }
-  );
+  mm.add("(min-width: 768px)", () => {
+    // Cinematic Parallax Reveal applied ONLY to the content, not the footer wrapper.
+    // This ensures the CSS ticker animation in the parent does not freeze during scroll scrub.
+    gsap.fromTo(
+      contactContent,
+      { yPercent: -30, scale: 0.95 },
+      {
+        yPercent: 0,
+        scale: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "top bottom", // Starts when top of wrapper enters bottom of viewport
+          end: "top top",      // Ends when top of wrapper reaches top of viewport
+          scrub: true,
+        },
+      }
+    );
+  });
 
   // Magnetic Buttons primitive
   const magneticBtns = document.querySelectorAll(".magnetic-btn");

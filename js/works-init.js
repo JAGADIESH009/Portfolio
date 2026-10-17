@@ -33,19 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const worksEl = document.getElementById("wheel-all-works");
 
   let wheelInstance = null;
-  if (worksEl) {
-    wheelInstance = new WorksWheel(worksEl, {
-      label: "", 
-      items: allWorksData
-    });
-  }
+  let scrollListenerAttached = false;
+  let mobileObserver = null;
 
-  const onScroll = () => {
+  const onScrollDesktop = () => {
     if (!section || !wheelInstance) return;
     const rect = section.getBoundingClientRect();
     const vh = window.innerHeight;
     
-    // Total scrollable distance for the interaction
+    // Total scrollable distance for the desktop interaction
     const totalScroll = rect.height - vh;
     if (totalScroll <= 0) return;
 
@@ -74,6 +70,100 @@ document.addEventListener("DOMContentLoaded", () => {
     wheelInstance.setTarget(targetPos);
   };
 
-  window.addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
-  onScroll();
+  const handleDesktopScroll = () => {
+    requestAnimationFrame(onScrollDesktop);
+  };
+
+  // Setup Desktop 3D Wheel
+  const initDesktopWheel = () => {
+    if (wheelInstance || !worksEl) return;
+    wheelInstance = new WorksWheel(worksEl, {
+      label: "",
+      items: allWorksData
+    });
+    if (!scrollListenerAttached) {
+      window.addEventListener('scroll', handleDesktopScroll, { passive: true });
+      scrollListenerAttached = true;
+    }
+    handleDesktopScroll();
+  };
+
+  // Teardown Desktop 3D Wheel
+  const destroyDesktopWheel = () => {
+    if (scrollListenerAttached) {
+      window.removeEventListener('scroll', handleDesktopScroll);
+      scrollListenerAttached = false;
+    }
+    if (wheelInstance) {
+      wheelInstance.destroy();
+      wheelInstance = null;
+    }
+    if (worksEl) {
+      worksEl.innerHTML = '';
+    }
+  };
+
+  // Setup Mobile Showcase
+  const initMobileShowcase = () => {
+    const cards = document.querySelectorAll('.works-mobile-card');
+    if (!cards.length) return;
+
+    if ('IntersectionObserver' in window) {
+      mobileObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            // Reverse transition naturally when scrolling upward
+            // If the element exited below the viewport (boundingClientRect.top > 0), remove is-visible
+            if (entry.boundingClientRect.top > 0) {
+              entry.target.classList.remove('is-visible');
+            }
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -6% 0px'
+      });
+
+      cards.forEach((card) => {
+        mobileObserver.observe(card);
+      });
+    } else {
+      // Fallback if IntersectionObserver is not supported
+      cards.forEach((card) => card.classList.add('is-visible'));
+    }
+  };
+
+  // Teardown Mobile Showcase
+  const destroyMobileShowcase = () => {
+    if (mobileObserver) {
+      mobileObserver.disconnect();
+      mobileObserver = null;
+    }
+  };
+
+  // Orchestrate based on viewport breakpoint (768px)
+  const syncExperience = () => {
+    const isDesktop = window.innerWidth >= 768;
+    if (isDesktop) {
+      destroyMobileShowcase();
+      initDesktopWheel();
+    } else {
+      destroyDesktopWheel();
+      initMobileShowcase();
+    }
+  };
+
+  // Initial sync
+  syncExperience();
+
+  // Resize handler with debounce
+  let resizeTimeout = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      syncExperience();
+    }, 150);
+  }, { passive: true });
 });

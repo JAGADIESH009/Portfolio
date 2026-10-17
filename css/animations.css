@@ -1,61 +1,92 @@
-/* Custom Animations & Interactions */
-
 /* ==========================================================================
-   Scroll Reveals
+   PREMIUM EDITORIAL SCROLL REVEAL SYSTEM
    ========================================================================== */
 
-/* Base transition for reveal classes */
-.reveal, .reveal-up, .reveal-fade, .reveal-line {
-  transition: transform var(--transition-cinematic), 
-              opacity var(--transition-cinematic), 
-              width var(--transition-cinematic),
-              filter var(--transition-slow);
+/* Hardware acceleration & anti-aliasing for text & images during reveal */
+.about-giant-typo,
+.about-bio,
+.journey-main-title,
+.journey-content,
+.skills-title,
+.skills-subtitle,
+.skills-row,
+.works-mobile-title,
+.works-mobile-subtitle,
+.works-mobile-tagline,
+.works-mobile-name,
+.works-mobile-media,
+.contact-heading,
+.contact-subheading,
+.contact-copy,
+.editorial-form-card,
+.action-buttons .action-btn {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
-/* Standard Fade up (legacy support & generic) */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  filter: blur(4px);
-}
-.reveal.active, .reveal-mask.active .reveal {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
+/* Image mask containers */
+.works-mobile-media {
+  overflow: hidden;
+  position: relative;
 }
 
-/* Typography Reveal Up (used with headline-line masks) */
+.works-mobile-media-inner img {
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Mask reveal wrapper utilities */
+.reveal-mask-wrap {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.reveal-mask-wrap-inline {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  vertical-align: top;
+}
+
+/* Base styles for existing .reveal and legacy classes */
 .reveal-up {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(120%);
-}
-.reveal-up.active, .reveal-mask.active .reveal-up {
-  opacity: 1;
-  transform: translateY(0);
 }
 
-/* Simple Fade */
-.reveal-fade {
-  opacity: 0;
-}
-.reveal-fade.active, .reveal-mask.active .reveal-fade {
-  opacity: 1;
-}
-
-/* Line expansion */
+/* Subtle line expansion */
 .reveal-line {
   width: 0%;
-}
-.reveal-line.active, .reveal-mask.active .reveal-line {
-  width: 40px; /* target width */
-}
-.proj-line.reveal-line.active, .reveal-mask.active .proj-line.reveal-line {
-  width: 60px;
+  transition: width var(--transition-cinematic);
 }
 
-/* Transition Delays */
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-line.active {
+  width: 40px;
+}
+
+/* prefers-reduced-motion full support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .about-giant-typo,
+  .about-bio,
+  .journey-main-title,
+  .skills-title,
+  .skills-row,
+  .works-mobile-card,
+  .contact-heading,
+  .contact-subheading,
+  .contact-copy,
+  .editorial-form-card,
+  .action-buttons .action-btn {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

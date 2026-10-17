@@ -213,8 +213,8 @@ class ParticleRevealEngine {
 
 // Initialize on DOM ready
 document.addEventListener("DOMContentLoaded", () => {
-    // Only initialize on non-touch devices
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    // Only initialize on non-touch devices with screen width > 768px (desktop/laptop only)
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && window.innerWidth > 768) {
         // Small delay to ensure GSAP is loaded if loaded defer
         setTimeout(() => {
             if (typeof gsap !== 'undefined') {

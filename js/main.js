@@ -62,6 +62,10 @@ function initHeroVideoGlobalTransform() {
   const heroSection = document.getElementById('hero');
 
   if (!heroVideo || !portfolioText || !heroSection) return;
+  if (window.innerWidth <= 768) {
+    if (heroVideo && !heroVideo.paused) heroVideo.pause();
+    return;
+  }
 
   // The video element must have a fixed coordinate space of 1920x1080 to map predictably.
   heroVideo.style.width = '1920px';
@@ -135,6 +139,11 @@ class VideoWarpEngine {
         this.canvas = document.getElementById('alignment-canvas');
         if (!this.video || !this.canvas) return;
 
+        if (window.innerWidth <= 768) {
+            if (this.video && !this.video.paused) this.video.pause();
+            return;
+        }
+
         this.ctx = this.canvas.getContext('2d', { alpha: false }); // Opaque for performance
         this.spans = document.querySelectorAll('#portfolio-text span');
         
@@ -166,6 +175,13 @@ class VideoWarpEngine {
     }
 
     resize() {
+        if (window.innerWidth <= 768) {
+            if (this.video && !this.video.paused) this.video.pause();
+            return;
+        } else {
+            if (this.video && this.video.paused) this.video.play().catch(() => {});
+        }
+
         const heroSection = document.getElementById('hero');
         const heroRect = heroSection.getBoundingClientRect();
 
@@ -199,6 +215,11 @@ class VideoWarpEngine {
     }
 
     render() {
+        if (window.innerWidth <= 768) {
+            requestAnimationFrame(this.render);
+            return;
+        }
+
         if (this.video.readyState >= 2) {
             // Fill with the cream background color so the edges blend seamlessly outside the video bounds
             this.ctx.fillStyle = '#EAE4D9';

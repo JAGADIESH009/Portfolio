@@ -102,14 +102,100 @@ function initNavbar() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const heroNav = document.getElementById('hero-nav');
+  const heroNavToggle = document.getElementById('hero-nav-toggle');
+  const heroNavMenu = document.getElementById('hero-nav-menu');
+
+  // Section-aware liquid glass theme controller for mobile
+  function updateMobileMenuTheme() {
+    if (!heroNav) return;
+    if (window.innerWidth >= 768) {
+      heroNav.classList.remove('theme-dark', 'theme-contact');
+      return;
+    }
+
+    const hero = document.getElementById('hero');
+    const contact = document.getElementById('motion-footer-wrapper') || document.getElementById('contact');
+    
+    // Probe point at top-right menu position (~55px from top)
+    const probeY = 55;
+
+    // 1. Cream Hero Section
+    if (hero) {
+      const heroRect = hero.getBoundingClientRect();
+      if (heroRect.bottom > probeY) {
+        heroNav.classList.remove('theme-dark', 'theme-contact');
+        return;
+      }
+    }
+
+    // 2. Contact Section (Motion Footer Scene)
+    if (contact) {
+      const contactRect = contact.getBoundingClientRect();
+      if (contactRect.top <= probeY) {
+        heroNav.classList.remove('theme-dark');
+        heroNav.classList.add('theme-contact');
+        return;
+      }
+    }
+
+    // 3. Black sections: WHO AM I, JOURNEY, SKILLS, WORKS
+    heroNav.classList.remove('theme-contact');
+    heroNav.classList.add('theme-dark');
+  }
+
+  if (heroNavToggle && heroNavMenu) {
+    heroNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = heroNav.classList.toggle('is-open');
+      heroNavToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      const textSpan = heroNavToggle.querySelector('.nav-toggle-text');
+      if (textSpan) textSpan.textContent = isOpen ? 'CLOSE' : 'MENU';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (heroNav && heroNav.classList.contains('is-open') && !heroNav.contains(e.target)) {
+        heroNav.classList.remove('is-open');
+        heroNavToggle.setAttribute('aria-expanded', 'false');
+        const textSpan = heroNavToggle.querySelector('.nav-toggle-text');
+        if (textSpan) textSpan.textContent = 'MENU';
+      }
+    });
+  }
+
   document.querySelectorAll('.hero-ui-top-right a').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
+      if (heroNav && heroNav.classList.contains('is-open')) {
+        heroNav.classList.remove('is-open');
+        if (heroNavToggle) {
+          heroNavToggle.setAttribute('aria-expanded', 'false');
+          const textSpan = heroNavToggle.querySelector('.nav-toggle-text');
+          if (textSpan) textSpan.textContent = 'MENU';
+        }
+      }
       const targetId = link.getAttribute('href').substring(1);
       const targetEl = document.getElementById(targetId);
       if (targetEl) {
         targetEl.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(updateMobileMenuTheme, 150);
+        setTimeout(updateMobileMenuTheme, 500);
+        setTimeout(updateMobileMenuTheme, 900);
       }
     });
   });
+
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(() => {
+        updateMobileMenuTheme();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', updateMobileMenuTheme, { passive: true });
+  updateMobileMenuTheme();
 });

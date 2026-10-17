@@ -505,76 +505,336 @@
   font-size: 1rem;
 }
 
-/* Mobile Adjustments */
-@media (max-width: 768px) {
+/* ==========================================================================
+   MOBILE-ONLY RESPONSIVE CONTACT SECTION (< 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Allow natural scrolling - eliminate forced 100svh overflow trap */
+  .motion-footer-wrapper {
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
   .motion-footer {
-    /* STRICTLY KEEP 100SVH ON MOBILE */
-    padding-top: 48px; /* ticker space */
-    padding-bottom: 1rem;
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-top: 0 !important;
+    padding-bottom: 4.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    position: relative !important;
+    box-sizing: border-box !important;
   }
+
+  /* 1. Compact, smoothly scrolling ticker at the top in normal document flow */
+  .editorial-ticker-wrapper {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: 44px !important;
+    margin-bottom: 2.75rem !important;
+    overflow: hidden !important;
+    z-index: 10 !important;
+  }
+
+  .editorial-ticker {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: 44px !important;
+    border-bottom: 1px solid rgba(241, 235, 221, 0.08) !important;
+    background: rgba(11, 11, 11, 0.75) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+  }
+
+  .ticker-item {
+    font-size: 11px !important;
+    letter-spacing: 0.14em !important;
+    gap: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  .ticker-item .star {
+    font-size: 0.65em !important;
+  }
+
+  /* 2. Main content container in natural flow */
   .contact-page-content {
-    padding: 1rem 1.25rem 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%; /* fill remaining space */
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 1.25rem !important;
+    box-sizing: border-box !important;
+    z-index: 10 !important;
+    gap: 0 !important;
   }
+
   .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem; /* Ultra tight */
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 2.5rem !important;
   }
+
+  /* 3. Top hierarchy: Headings & Copy */
+  .contact-left {
+    text-align: left !important;
+    width: 100% !important;
+  }
+
   .contact-heading {
-    font-size: clamp(2rem, 8vw, 3rem);
-    margin-bottom: 0.25rem;
+    font-family: 'Anton', sans-serif !important;
+    font-size: clamp(2.4rem, 10.5vw, 3.4rem) !important;
+    line-height: 0.96 !important;
+    letter-spacing: 0.02em !important;
+    margin: 0 0 0.65rem 0 !important;
+    color: #F1EBDD !important;
+    background: linear-gradient(180deg, #F1EBDD 0%, rgba(241, 235, 221, 0.8) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
   }
+
   .contact-subheading {
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.14em !important;
+    color: #CFC8BA !important;
+    margin: 0 0 0.85rem 0 !important;
+    text-transform: uppercase !important;
   }
+
   .contact-copy {
-    font-size: 0.75rem;
-    max-width: 100%;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.86rem !important;
+    line-height: 1.55 !important;
+    color: #8C877D !important;
+    max-width: 100% !important;
+    margin: 0 0 1.5rem 0 !important;
   }
+
+  /* 4. Optimized Social/Action Links */
+  .action-buttons {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .action-btn {
+    flex: 1 1 auto !important;
+    min-width: 90px !important;
+    height: 40px !important;
+    padding: 0 14px !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.06em !important;
+    font-weight: 500 !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .action-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 5. Contact Form Glass Card */
+  .contact-right {
+    width: 100% !important;
+  }
+
   .glass-card {
-    width: 100%;
-    padding: 22px;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 20px !important;
+    padding: 24px 20px !important;
+    box-sizing: border-box !important;
+    background: rgba(18, 18, 18, 0.7) !important;
+    border: 1px solid rgba(241, 235, 221, 0.12) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5) !important;
   }
+
+  .glass-card-header {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.14em !important;
+    color: #F1EBDD !important;
+    margin-bottom: 20px !important;
+  }
+
+  .glass-card-sub {
+    font-size: 10px !important;
+    letter-spacing: 0.16em !important;
+    opacity: 0.45 !important;
+    margin-top: 3px !important;
+  }
+
+  /* Form Layout */
   .custom-form {
-    gap: 16px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
+
   .form-row {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+    width: 100% !important;
   }
+
+  .form-group {
+    width: 100% !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+
   .form-group label {
-    font-size: 10px;
-    margin-bottom: 2px;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.10em !important;
+    margin-bottom: 4px !important;
+    color: #CFC8BA !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
   }
+
+  .optional-text {
+    font-size: 9px !important;
+    opacity: 0.4 !important;
+    font-weight: 400 !important;
+  }
+
   .form-group input,
   .form-group textarea {
-    padding: 6px 0;
-    height: 40px;
-    font-size: 13px;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    font-size: 14px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: #F1EBDD !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(241, 235, 221, 0.18) !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    padding: 8px 0 !important;
+    height: 42px !important;
+    transition: border-color 0.25s ease !important;
   }
+
   .form-group textarea {
-    min-height: 75px;
-    height: 75px;
+    height: 90px !important;
+    min-height: 90px !important;
+    resize: vertical !important;
+    padding-top: 8px !important;
+    line-height: 1.5 !important;
   }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-bottom-color: rgba(241, 235, 221, 0.7) !important;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(241, 235, 221, 0.3) !important;
+    font-size: 13.5px !important;
+  }
+
+  /* Accessible, easy-to-tap submit button */
   .editorial-submit-btn {
-    margin-top: 4px;
-    padding: 6px 0;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 48px !important;
+    padding: 0 20px !important;
+    border-radius: 999px !important;
+    background: rgba(241, 235, 221, 0.12) !important;
+    border: 1px solid rgba(241, 235, 221, 0.25) !important;
+    color: #F1EBDD !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    margin-top: 8px !important;
+    cursor: pointer !important;
+    transition: background 0.25s, border-color 0.25s, transform 0.15s !important;
+    box-sizing: border-box !important;
+    align-self: stretch !important;
+    text-transform: uppercase !important;
   }
-  .action-buttons {
-    margin-top: 1rem;
-    gap: 0.4rem;
+
+  .editorial-submit-btn:active {
+    background: rgba(241, 235, 221, 0.22) !important;
+    transform: scale(0.99) !important;
   }
-  .action-btn {
-    height: 38px;
-    padding: 0 12px;
-    font-size: 0.75rem;
+
+  .editorial-submit-btn .arrow {
+    margin-left: 6px !important;
   }
-  .action-btn svg {
-    width: 14px;
-    height: 14px;
+
+  /* Background watermark text scaled down and subtle */
+  .huge-background-text {
+    font-size: clamp(80px, 22vw, 120px) !important;
+    opacity: 0.015 !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    pointer-events: none !important;
   }
 }
+
+/* Extra small devices (<= 360px) */
+@media (max-width: 360px) {
+  .contact-page-content {
+    padding: 0 0.85rem !important;
+  }
+
+  .glass-card {
+    padding: 20px 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .contact-heading {
+    font-size: 2.2rem !important;
+  }
+
+  .action-btn {
+    min-width: 80px !important;
+    font-size: 0.72rem !important;
+    padding: 0 8px !important;
+  }
+
+  .editorial-ticker-wrapper {
+    margin-bottom: 2rem !important;
+  }
+}
+
