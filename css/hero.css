@@ -23,7 +23,6 @@
   width: 100%;
   height: 100vh;
   min-height: 720px;
-  max-height: 1200px;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   user-select: none;
@@ -99,10 +98,6 @@
   box-sizing: border-box;
 }
 
-@media (min-width: 1800px) {
-  .hero-poster-giant { font-size: 200px; }
-}
-
 /* ==========================================================================
    LAYER 2: PORTRAIT
    ========================================================================== */
@@ -112,7 +107,6 @@
   left: 50%; 
   transform: translateX(-50%); 
   width: auto;
-  /* Reduced size by approx 7% from 125vh to 116vh */
   height: 116vh; 
   max-height: none; 
   z-index: 20; 
@@ -128,6 +122,24 @@
   object-fit: contain;
   object-position: bottom center;
   filter: drop-shadow(0 40px 60px rgba(0,0,0,0.2)) contrast(1.05);
+}
+
+@media (min-width: 1025px) {
+  .hero-poster-layer-image {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-poster-portrait {
+    display: block;
+    width: auto;
+    height: 133.33vh;
+    max-height: none;
+    max-width: none;
+    object-fit: contain;
+    filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.2)) contrast(1.05);
+  }
 }
 
 /* ==========================================================================
