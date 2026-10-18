@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
       html: `<img src="assets/images/smart-campus.jpg" alt="Smart Campus" style="width: 100%; height: 100%; object-fit: contain; display: block;" />`
     },
     {
+      title: "SAFEHER",
+      type: "MOBILE APP · WEB VERSION",
+      href: "https://safeherweb.vercel.app/",
+      html: `<img src="assets/images/safeher.png" alt="SafeHer" style="width: 100%; height: 100%; object-fit: contain; display: block;" />`
+    },
+    {
       title: "VANYA FARM AI",
       type: "PROJECT",
       status: "IN DEVELOPMENT",
@@ -62,11 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Intro exits, gap, first project is strictly hidden
       targetPos = -1;
     } else {
-      // Phase 2 (0.14 to 0.80): Balanced wheel sequence through all 4 projects
-      // Project 1 (Smart Campus) active around progress = 0.305
-      // Project 2 (Vanya Farm AI) active around progress = 0.470
-      // Project 3 (Sri Dental Clinic) active around progress = 0.635
-      // Project 4 (Yam Real Estate) active around progress = 0.800
+      // Phase 2 (0.14 to 0.80): Balanced wheel sequence through all 5 projects
+      // Project 1 (Smart Campus) active around progress = 0.272
+      // Project 2 (SafeHer) active around progress = 0.404
+      // Project 3 (Vanya Farm AI) active around progress = 0.536
+      // Project 4 (Sri Dental Clinic) active around progress = 0.668
+      // Project 5 (Yam Real Estate) active around progress = 0.800
       // Progress 0.80 to 1.00: Yam Real Estate rests with complete stability and bottom separation buffer
       const p = Math.min((progress - 0.14) / 0.66, 1);
       targetPos = -1 + p * (wheelInstance.last + 1);
