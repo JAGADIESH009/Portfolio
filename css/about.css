@@ -39,8 +39,8 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: min(1600px, 92vw);
-  padding: 0 clamp(2rem, 4vw, 4.5rem);
+  max-width: 1440px;
+  padding: 0 5vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

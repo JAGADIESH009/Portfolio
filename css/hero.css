@@ -83,7 +83,7 @@
 .hero-poster-giant {
   font-family: 'Anton', sans-serif;
   /* Reduced font size + increased letter spacing naturally creates a shorter vertical height while maintaining full width */
-  font-size: clamp(220px, 22.45vw, 380px); 
+  font-size: 22.45vw; 
   line-height: 0.8;
   letter-spacing: 0.05em;
   /* Perfect horizontal centering for positive letter-spacing */
@@ -97,6 +97,10 @@
   white-space: nowrap; 
   text-transform: uppercase;
   box-sizing: border-box;
+}
+
+@media (min-width: 1800px) {
+  .hero-poster-giant { font-size: 200px; }
 }
 
 /* ==========================================================================
@@ -132,8 +136,8 @@
 
 /* Spacing Variables */
 :root {
-  --poster-inset-x: clamp(2.5rem, 3.5vw, 4.5rem);
-  --poster-inset-y: clamp(1.75rem, 2.5vh, 3.5rem);
+  --poster-inset-x: 3.5rem;
+  --poster-inset-y: 2.5rem;
 }
 
 /* -------------- TOP LEFT -------------- */

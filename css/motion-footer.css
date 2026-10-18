@@ -67,13 +67,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  max-width: min(1600px, 92vw);
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(480px, 0.9fr);
   align-items: center;
-  gap: clamp(30px, 4vw, 80px);
-  padding: 30px clamp(1.5rem, 4vw, 4rem);
+  gap: clamp(30px, 5vw, 90px);
+  padding: 30px 8vw;
   box-sizing: border-box;
   z-index: 10;
 }

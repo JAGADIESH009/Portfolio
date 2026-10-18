@@ -79,14 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
           const stretchTarget = (mouseX / window.innerWidth) * 40;
           let currentStretch = parseFloat(row.style.getPropertyValue('--stretch-amount')) || 0;
           currentStretch += (stretchTarget - currentStretch) * 0.1; // Smooth interpolation
-          row.style.setProperty('--stretch-amount', \`\${currentStretch}px\`);
+          row.style.setProperty('--stretch-amount', `${currentStretch}px`);
           isAnimating = true;
         } else {
           // Smoothly return stretch to 0
           let currentStretch = parseFloat(row.style.getPropertyValue('--stretch-amount')) || 0;
           if (currentStretch > 0.1) {
             currentStretch += (0 - currentStretch) * 0.1;
-            row.style.setProperty('--stretch-amount', \`\${currentStretch}px\`);
+            row.style.setProperty('--stretch-amount', `${currentStretch}px`);
             isAnimating = true;
           }
         }
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!settling) isAnimating = true;
   
           // Apply
-          state.el.style.transform = \`translate(\${state.x}px, \${state.y}px) scale(\${state.scale})\`;
+          state.el.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
         });
   
         if (isAnimating || isHovered) {
