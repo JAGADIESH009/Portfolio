@@ -39,6 +39,15 @@ async function handleFormSubmit(e) {
   const phone = phoneInput ? phoneInput.value.trim() : '';
   const subject = subjectInput ? subjectInput.value.trim() : '';
   const message = messageInput.value.trim();
+  const hpInput = document.getElementById('website_url');
+  const website_url = hpInput ? hpInput.value.trim() : '';
+
+  // Client-side rate-limit cooldown (5 seconds)
+  const lastSubTime = sessionStorage.getItem('portfolio_contact_last_sub');
+  if (lastSubTime && Date.now() - Number(lastSubTime) < 5000) {
+    showError(messageInput, 'Please wait a few seconds before sending another message.');
+    return;
+  }
 
   let hasError = false;
 
@@ -87,11 +96,13 @@ async function handleFormSubmit(e) {
         phone: phone,
         subject: subject || 'New Inquiry',
         message: message,
+        website_url: website_url,
         time: new Date().toLocaleString()
       })
     });
     
     if (response.ok) {
+      sessionStorage.setItem('portfolio_contact_last_sub', String(Date.now()));
       const data = await response.json().catch(() => ({ success: true }));
       if (data.success !== false) {
         if (successOverlay) successOverlay.classList.add('active');
