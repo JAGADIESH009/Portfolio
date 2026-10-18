@@ -701,3 +701,24 @@
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   MOBILE HERO REFINEMENTS (<= 768px)
+   - Zoom out hero portrait ~6.25% (within 5-8% range)
+   - Widen PORTFOLIO headline to cleanly use available screen width
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero-poster-layer-typo {
+    top: clamp(58px, 8.2svh, 92px) !important;
+  }
+
+  .hero-poster-giant {
+    font-size: clamp(77px, 22.3vw, 98px) !important;
+    letter-spacing: 0.016em !important;
+  }
+
+  .hero-poster-portrait {
+    height: clamp(500px, 82.5svh, 800px) !important;
+    bottom: -10px !important;
+  }
+}
