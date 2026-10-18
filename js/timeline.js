@@ -4,7 +4,7 @@ function initTimeline() {
   const section = document.getElementById('journey');
   if (!section) return;
 
-  const isMobile = window.innerWidth < 768;
+  const isMobile = window.innerWidth <= 1024;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const items = section.querySelectorAll('.journey-item');
@@ -19,7 +19,7 @@ function initTimeline() {
   });
 
   if (isMobile || reducedMotion) {
-    // Mobile or Reduced Motion: Vertical scroll reveals
+    // Mobile/Tablet or Reduced Motion: Vertical scroll reveals
     
     // Set initial states for items
     items.forEach(item => {
@@ -155,10 +155,19 @@ function initTimeline() {
 }
 
 // Attach to DOMContentLoaded or window load
+let lastTimelineWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     initTimeline();
   } else {
     window.addEventListener('load', initTimeline);
+  }
+});
+
+window.addEventListener('resize', () => {
+  const currentWidth = window.innerWidth;
+  if ((lastTimelineWidth <= 1024 && currentWidth > 1024) || (lastTimelineWidth > 1024 && currentWidth <= 1024)) {
+    lastTimelineWidth = currentWidth;
+    initTimeline();
   }
 });

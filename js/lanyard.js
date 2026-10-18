@@ -271,12 +271,14 @@ class LanyardBadge {
     
     // 1. Calculate screen-specific card dimensions first
     if (this.isDesktop) {
-      this.cw = this.options.cardWidth;
+      // Desktop / Ultrawide: scale smoothly from laptop reference (cw=240 at 1366)
+      this.cw = Math.min(290, Math.max(220, Math.round(this.W * 0.175)));
       this.ch = Math.round(this.cw * 1.5);
       this.ringR = Math.max(7, Math.round(this.cw * 0.036));
       this.clipH = Math.round(this.cw * 0.1);
     } else if (this.W >= 768) {
-      this.cw = 220;
+      // Tablet: mobile-style stacking, comfortable card size
+      this.cw = Math.min(230, Math.max(190, Math.round(this.W * 0.24)));
       this.ch = Math.round(this.cw * 1.5);
       this.ringR = Math.max(7, Math.round(this.cw * 0.036));
       this.clipH = Math.round(this.cw * 0.1);
@@ -296,7 +298,10 @@ class LanyardBadge {
     let spread, sw, lowLen, arm, N, bY;
 
     if (this.isDesktop) {
-      cx = Math.max(this.W * 0.5, this.W - 350);
+      const maxContainerW = Math.min(1600, this.W * 0.92);
+      const containerRight = (this.W + maxContainerW) / 2;
+      // Proportional anchor within the composition bounds
+      cx = Math.round(Math.min(this.W * 0.74, containerRight - this.cw * 0.5 - 20));
       spread = Math.min(this.W * 0.16, this.cw * 0.55);
       sw = Math.max(14, Math.round(this.cw * 0.1));
       this.lanyardTop = -sw * 2;
@@ -304,17 +309,8 @@ class LanyardBadge {
       arm = this.ringR * 2 + this.clipH + this.ch * 0.55;
       N = 14;
       bY = Math.max(this.H * 0.16, Math.min(this.H * 0.42, this.H - (lowLen + this.ringR * 2 + this.clipH + this.ch) - 28));
-    } else if (this.W >= 768) {
-      cx = this.W - 220; // Tablet: right side
-      spread = Math.min(this.W * 0.16, this.cw * 0.55);
-      sw = Math.max(14, Math.round(this.cw * 0.1));
-      this.lanyardTop = -sw * 2;
-      lowLen = sw * 2.2;
-      arm = this.ringR * 2 + this.clipH + this.ch * 0.55;
-      N = 14;
-      bY = Math.max(this.H * 0.16, this.H * 0.28);
     } else {
-      // Mobile layout: centered text and centered hanging card beneath
+      // Mobile & Tablet: centered layout with lanyard hanging below bio text
       cx = this.W / 2;
       sw = Math.max(12, Math.round(this.cw * 0.082));
       spread = Math.round(this.cw * 0.22);
@@ -335,7 +331,7 @@ class LanyardBadge {
 
       // Visibly extended lanyard thread hanging downward and lowering the card
       this.lanyardTop = textBottom + Math.max(14, Math.round(this.H * 0.018));
-      const strapDrop = Math.max(112, Math.round(this.H * 0.145));
+      const strapDrop = Math.max(90, Math.min(140, Math.round(this.H * 0.12)));
       bY = this.lanyardTop + strapDrop;
     }
 

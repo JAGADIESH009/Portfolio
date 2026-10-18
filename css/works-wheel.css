@@ -120,7 +120,9 @@
 
 .works-wheel-card-inner {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -137,7 +139,7 @@
 .works-wheel-card-inner img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   border-radius: 14px;
   transform: translateZ(0);
@@ -202,7 +204,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 0.65rem;
-  z-index: 35;
+  z-index: 120;
   pointer-events: auto;
   box-sizing: border-box;
 }
@@ -259,20 +261,20 @@
   border-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Hide mobile showcase by default on desktop / tablet (>= 768px) */
+/* Hide mobile showcase by default on desktop (> 1024px) */
 .works-mobile-showcase {
   display: none;
 }
 
 /* ==========================================================================
-   MOBILE-ONLY WORKS SHOWCASE (< 768px)
+   MOBILE & TABLET WORKS SHOWCASE (<= 1024px)
    ========================================================================== */
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   /* Section expands naturally with content, removing the 400vh scroll container */
   .works-editorial {
     height: auto !important;
     min-height: auto !important;
-    padding: 4.5rem 1.25rem 5rem 1.25rem !important;
+    padding: clamp(4.5rem, 8vh, 6.5rem) clamp(1.25rem, 5vw, 3.5rem) clamp(5rem, 10vh, 7rem) clamp(1.25rem, 5vw, 3.5rem) !important;
     overflow: visible !important;
     border-bottom-left-radius: 32px;
     border-bottom-right-radius: 32px;
@@ -290,7 +292,7 @@
     display: flex !important;
     flex-direction: column !important;
     width: 100% !important;
-    max-width: 520px;
+    max-width: min(720px, 92vw);
     margin: 0 auto;
     box-sizing: border-box;
   }
@@ -440,7 +442,7 @@
     border-radius: 12px;
     overflow: hidden;
     position: relative;
-    background: #141414;
+    background: #0B0B0B;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.85);
     touch-action: manipulation;
@@ -451,12 +453,16 @@
     width: 100%;
     aspect-ratio: 16 / 10;
     overflow: hidden;
+    background: #0B0B0B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .works-mobile-media img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     transition: transform 0.4s ease;
   }

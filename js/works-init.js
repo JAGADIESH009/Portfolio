@@ -1,30 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
   const allWorksData = [
     {
+      title: "SMART CAMPUS",
+      type: "PROJECT",
+      href: "https://smartcampusportal.vercel.app/",
+      html: `<img src="assets/images/smart-campus.jpg" alt="Smart Campus" style="width: 100%; height: 100%; object-fit: contain; display: block;" />`
+    },
+    {
+      title: "VANYA FARM AI",
+      type: "PROJECT",
+      status: "IN DEVELOPMENT",
+      statusClass: "in-progress",
+      href: "https://vanya-farm-ai.vercel.app/",
+      html: `<img src="assets/images/vanya-farm.png" alt="Vanya Farm AI" style="width: 100%; height: 100%; object-fit: contain; display: block;" />`
+    },
+    {
       title: "SRI DENTAL CLINIC",
       type: "WEBSITE",
       href: "https://demodentalclinicweb.vercel.app/",
-      html: `<img src="assets/images/sri-dental.jpg" alt="Sri Dental Clinic" style="width: 100%; height: 100%; object-fit: cover; display: block;" />`
+      html: `<img src="assets/images/sri-dental.jpg" alt="Sri Dental Clinic" style="width: 100%; height: 100%; object-fit: contain; display: block;" />`
     },
     {
       title: "YAM REAL ESTATE",
       type: "WEBSITE",
       href: "https://demorealestateweb.vercel.app/",
-      html: `<img src="assets/images/yam-real-estate.jpg" alt="Yam Real Estate" style="width: 100%; height: 100%; object-fit: cover; display: block;" />`
-    },
-    {
-      title: "SMART CAMPUS",
-      type: "WEBSITE",
-      href: "https://smartcampusportal.vercel.app/",
-      html: `<img src="assets/images/smart-campus.jpg" alt="Smart Campus" style="width: 100%; height: 100%; object-fit: cover; display: block;" />`
-    },
-    {
-      title: "VANYA FARM AI",
-      type: "WEBSITE",
-      status: "IN DEVELOPMENT",
-      statusClass: "in-progress",
-      href: "https://vanya-farm-ai.vercel.app/",
-      html: `<img src="assets/images/vanya-farm.png" alt="Vanya Farm AI" style="width: 100%; height: 100%; object-fit: cover; display: block;" />`
+      html: `<img src="assets/images/yam-real-estate.jpg" alt="Yam Real Estate" style="width: 100%; height: 100%; object-fit: contain; display: block;" />`
     }
   ];
 
@@ -63,11 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
       targetPos = -1;
     } else {
       // Phase 2 (0.14 to 0.80): Balanced wheel sequence through all 4 projects
-      // Project 1 (Sri Dental Clinic) active around progress = 0.305
-      // Project 2 (Yam Real Estate) active around progress = 0.470
-      // Project 3 (Smart Campus) active around progress = 0.635
-      // Project 4 (Vanya Farm AI) active around progress = 0.800
-      // Progress 0.80 to 1.00: Vanya Farm AI rests with complete stability and bottom separation buffer
+      // Project 1 (Smart Campus) active around progress = 0.305
+      // Project 2 (Vanya Farm AI) active around progress = 0.470
+      // Project 3 (Sri Dental Clinic) active around progress = 0.635
+      // Project 4 (Yam Real Estate) active around progress = 0.800
+      // Progress 0.80 to 1.00: Yam Real Estate rests with complete stability and bottom separation buffer
       const p = Math.min((progress - 0.14) / 0.66, 1);
       targetPos = -1 + p * (wheelInstance.last + 1);
     }
@@ -148,9 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Orchestrate based on viewport breakpoint (768px)
+  // Orchestrate based on viewport breakpoint (1024px)
   const syncExperience = () => {
-    const isDesktop = window.innerWidth >= 768;
+    const isDesktop = window.innerWidth > 1024;
     if (isDesktop) {
       destroyMobileShowcase();
       initDesktopWheel();

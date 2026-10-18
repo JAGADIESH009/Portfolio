@@ -1,7 +1,7 @@
 /**
  * Vanilla JS Works Wheel - 4 Items
  */
-const CARD_RATIO = 1.5; // Landscape ratio 1.5 / 1
+const CARD_RATIO = 1.6; // 16:10 aspect ratio matching project screenshots (1280x800)
 const STEP = 90; // 4 items -> 90 degrees apart in drum
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
@@ -128,7 +128,22 @@ class WorksWheel {
     this.items.forEach((item, i) => {
       const li = document.createElement('li');
       const btn = document.createElement('button');
+      btn.type = 'button';
       btn.innerHTML = `<span class="index-num">0${i+1}</span> ${item.title}`;
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = document.getElementById('works');
+        if (!section) return;
+        const totalScroll = section.offsetHeight - window.innerHeight;
+        if (totalScroll <= 0) return;
+        const targetP = (i + 1) / (this.last + 1);
+        const targetProgress = 0.14 + 0.66 * targetP;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: sectionTop + targetProgress * totalScroll,
+          behavior: 'smooth'
+        });
+      });
       li.appendChild(btn);
       this.indexEl.appendChild(li);
     });

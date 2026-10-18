@@ -62,7 +62,7 @@ function initHeroVideoGlobalTransform() {
   const heroSection = document.getElementById('hero');
 
   if (!heroVideo || !portfolioText || !heroSection) return;
-  if (window.innerWidth <= 768) {
+  if (window.innerWidth <= 1024) {
     if (heroVideo && !heroVideo.paused) heroVideo.pause();
     return;
   }

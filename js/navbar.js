@@ -12,7 +12,7 @@ function initNavbar() {
     if (!activeIndicator || !navList) return;
     
     // Disable indicator logic on mobile drawer
-    if (window.innerWidth <= 768 && navList.classList.contains('open')) {
+    if (window.innerWidth <= 1024 && navList.classList.contains('open')) {
       return;
     }
     
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Section-aware liquid glass theme controller for mobile
   function updateMobileMenuTheme() {
     if (!heroNav) return;
-    if (window.innerWidth >= 768) {
+    if (window.innerWidth > 1024) {
       heroNav.classList.remove('theme-dark', 'theme-contact');
       return;
     }

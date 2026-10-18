@@ -67,11 +67,13 @@
   left: 0;
   right: 0;
   bottom: 0;
+  max-width: min(1600px, 92vw);
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(480px, 0.9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.9fr);
   align-items: center;
-  gap: clamp(30px, 5vw, 90px);
-  padding: 30px 8vw;
+  gap: clamp(30px, 4vw, 80px);
+  padding: 30px clamp(1.5rem, 4vw, 4rem);
   box-sizing: border-box;
   z-index: 10;
 }
@@ -506,9 +508,9 @@
 }
 
 /* ==========================================================================
-   MOBILE-ONLY RESPONSIVE CONTACT SECTION (< 768px)
+   MOBILE & TABLET RESPONSIVE CONTACT SECTION (<= 1024px)
    ========================================================================== */
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   /* Allow natural scrolling - eliminate forced 100svh overflow trap */
   .motion-footer-wrapper {
     height: auto !important;
@@ -576,10 +578,10 @@
     bottom: auto !important;
     height: auto !important;
     width: 100% !important;
-    max-width: 520px !important;
+    max-width: min(650px, 92vw) !important;
     display: flex !important;
     flex-direction: column !important;
-    padding: 0 1.25rem !important;
+    padding: 0 clamp(1rem, 4vw, 2.5rem) !important;
     box-sizing: border-box !important;
     z-index: 10 !important;
     gap: 0 !important;
@@ -600,7 +602,7 @@
 
   .contact-heading {
     font-family: 'Anton', sans-serif !important;
-    font-size: clamp(2.4rem, 10.5vw, 3.4rem) !important;
+    font-size: clamp(2.4rem, 8.5vw, 4.2rem) !important;
     line-height: 0.96 !important;
     letter-spacing: 0.02em !important;
     margin: 0 0 0.65rem 0 !important;

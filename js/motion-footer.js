@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!wrapper || !leftContent || !contactContent) return;
 
-  // Desktop-only cinematic parallax scroll (>= 768px)
+  // Desktop-only cinematic parallax scroll (> 1024px)
   const mm = gsap.matchMedia();
 
-  mm.add("(min-width: 768px)", () => {
+  mm.add("(min-width: 1025px)", () => {
     // Cinematic Parallax Reveal applied ONLY to the content, not the footer wrapper.
     // This ensures the CSS ticker animation in the parent does not freeze during scroll scrub.
     gsap.fromTo(

@@ -22,8 +22,8 @@
 
 .nav-container {
   width: 100%;
-  max-width: 1400px;
-  padding: 0 4rem;
+  max-width: min(1600px, 92vw);
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
   pointer-events: auto;
 }
 
@@ -92,8 +92,8 @@
 }
 .menu-bar { width: 100%; height: 1px; background-color: var(--text-primary); transition: all var(--transition-normal); }
 
-@media (max-width: 768px) {
-  .nav-container { padding: 0 2rem; }
+@media (max-width: 1024px) {
+  .nav-container { padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
   .menu-toggle { display: flex; }
   .nav-list {
     position: fixed; top: 0; right: -100%; width: 100vw; height: 100vh;
